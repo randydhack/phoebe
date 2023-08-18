@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
         as: "Section",
       });
 
+       // Card belongs to Section
+       Card.belongsTo(models.Project, {
+        foreignKey: "projectId",
+        as: "Project",
+      });
+
       // Card have many Comments, one-to-many
       Card.hasMany(models.Comment, {
         foreignKey: "cardId",
@@ -36,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       description: { type: DataTypes.STRING, allowNull: true },
       userId: { type: DataTypes.INTEGER, allowNull: false },
       sectionId: { type: DataTypes.INTEGER, allowNull: false },
+      projectId: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       sequelize,

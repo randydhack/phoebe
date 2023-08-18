@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
-const { Project, Section, Member } = require("../../db/models");
+const { Project, Section, Member, Card } = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 
@@ -49,6 +49,26 @@ router.get("/:id/sections", async (req, res) => {
   });
 
   res.status(200).json(sections);
+});
+
+// **** GET ALL CARDS BY PROJECT ID ****
+router.get("/:id/cards", requireAuth, async (req, res, next) => {
+  const cards = await Card.findAll({
+    where: { projectId: 1 },
+    include: {
+      model: Project,
+      as: "Project",
+      attributes: ["id", "name", "ownerId"]
+    },
+  });
+
+  if (!cards) {
+    const err = new Error("Project does not have any cards.");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.status(200).json(cards);
 });
 
 // ------------------------------------ POST ENDPOINTS ---------------------------------------------
@@ -119,7 +139,6 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 
 // DELETE PROJECT BY ID
 router.delete("/:id", requireAuth, async (req, res, next) => {
-
   const project = await Project.findByPk(req.params.id);
 
   if (!project) {

@@ -14,13 +14,15 @@ module.exports = {
           title: "Fix Bug",
           description: "bug is in found in frontend",
           userId: 1,
-          sectionId: 1
+          sectionId: 1,
+          projectId: 1,
         },
         {
           title: "Working on Login",
           description: "Login frontend css",
           userId: 2,
-          sectionId: 1
+          sectionId: 1,
+          projectId: 1,
         },
       ],
       {}

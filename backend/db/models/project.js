@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Project.hasMany(models.Member, {
-        foreignKey: 'projectId'
+        foreignKey: 'projectId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
+
+      Project.hasMany(models.Card, {
+        foreignKey: 'projectId',
       })
 
     }
