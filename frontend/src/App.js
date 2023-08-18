@@ -15,6 +15,7 @@ function App() {
     <>
       {isLoaded && (
         <Switch>
+          <Route exact path="/"/>
           <Route path="/login"/>
           <Route path="/signup"/>
           <Route path='/home' component={Main}/>
