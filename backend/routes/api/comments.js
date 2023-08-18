@@ -6,7 +6,8 @@ const { requireAuth } = require("../../utils/auth");
 const { Card, Comment } = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
-// NOTES: GET ALL COMMENTS BY SECTION ID IS LOCATED IN SECTIONS ROUTE
+// NOTES: GET ALL COMMENTS BY SECTION ID IS LOCATED IN CARD ROUTE
+
 
 // GET ALL CARDS BY ID
 router.get("/:id", requireAuth, async (req, res, next) => {
