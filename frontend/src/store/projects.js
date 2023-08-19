@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 // Action Type
 const GET_USER_PROJECTS = "projects/GET_USER_PROJECTS ";
 const CREATE_PROJECT = "projects/CREATE_PROJECT";
+const GET_SINGLE_PROJECT = 'projects/GET_SINGLE_PROJECT'
 
 // Action Creators
 
@@ -16,6 +17,11 @@ const createProjectAction = (project) => ({
   payload: project
 })
 
+const getSingleProjectAction = (project) => ({
+  type: GET_SINGLE_PROJECT,
+  payload: project
+})
+
 // Thunk action creators
 export const userProjectsThunk = () => async (dispatch) => {
   const res = await fetch("/api/projects");
@@ -24,15 +30,18 @@ export const userProjectsThunk = () => async (dispatch) => {
     const data = await res.json();
     await dispatch(getUserProjectsAction(data));
     return data;
+  } else {
+    return res.error
   }
 };
 
 export const getSingleProjectThunk = (id) => async (dispatch) => {
-  const res = await fetch(`/api/projects/${id}`)
+  const res = await csrfFetch(`/api/projects/${id}`)
 
   if (res.ok) {
     const data = await res.json()
-
+    console.log(data, 'dasdsadasd')
+    await dispatch(getSingleProjectAction(data))
     return data
   }
 }
@@ -51,7 +60,7 @@ export const createProjectThunk = (name, category, description, projectImage) =>
 
   if (res.ok) {
     const data = await res.json()
-    await dispatch(createProjectAction(data))
+    dispatch(createProjectAction(data))
     return data
   }
 }
@@ -63,13 +72,13 @@ const projectReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
     case GET_USER_PROJECTS:
-      console.log(action.payload)
       newState = {...state};
       action.payload.forEach((project) => (newState[project.id] = project));
       return newState;
     case CREATE_PROJECT:
-      newState = { ...state }
-      newState[action.payload.id] = action.payload
+      return { ...state, [action.payload.id]: action.payload}
+    case GET_SINGLE_PROJECT:
+      newState = {...state, project: action.payload}
       return newState
     default:
       return state;
