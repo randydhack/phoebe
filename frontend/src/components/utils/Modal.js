@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { ModalContext } from "../../context/modalContext";
+import { ModalContext } from "../../context/Modal";
 import "./modal.css";
-import TestPage from "../modal-pages/TestPage";
+import CreateProjectModal from "../ModalPages/CreateProjectModal";
 
 export default function Modal(props) {
   const { type, setType } = useContext(ModalContext);
@@ -30,7 +30,7 @@ export default function Modal(props) {
         <div className="modalContent">
           <div className="closeButtonWrapper"></div>
           {/* EXAMPLE HOW TO SET UP A MODAL PAGE */}
-          {type === "TEST" && <TestPage />}
+          {type === "Create Project" && <CreateProjectModal />}
         </div>
         <div className="modalBackdrop" onClick={handleContent} />
       </div>

@@ -1,17 +1,29 @@
+import { useState } from "react";
 import AppNavigation from "./Application/Navigation/AppNavigation";
 import SideMenu from "./Application/SideMenu/SideMenu";
 import AppHome from "./Application/AppHome/AppHome";
-function Main() {
+import Modal from "./utils/Modal";
+
+function Main(props) {
+  const [closeSideMenu, setCloseSideMenu] = useState(true);
+  const {compType} = props
+
   return (
-    <div className="h-screen overflow-hidden">
+    <>
+    <Modal />
+    <div className="h-full overflow-hidden">
       <section>
-        <AppNavigation />
+        <AppNavigation
+          setCloseSideMenu={setCloseSideMenu}
+          closeSideMenu={closeSideMenu}
+        />
       </section>
-      <section className="flex h-full">
-        <SideMenu />
-        <AppHome />
+      <section className="flex h-screen overflow-hidden">
+        {closeSideMenu && <SideMenu />}
+        {compType === 'home' && <AppHome />}
       </section>
     </div>
+    </>
   );
 }
 
