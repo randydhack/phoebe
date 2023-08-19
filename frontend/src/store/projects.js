@@ -40,9 +40,11 @@ export const getSingleProjectThunk = (id) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json()
-    console.log(data, 'dasdsadasd')
     await dispatch(getSingleProjectAction(data))
     return data
+  } else {
+    const error = await res.json()
+      return error
   }
 }
 
