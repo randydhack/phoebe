@@ -13,9 +13,8 @@ export const ModalProvider = ({ children }) => {
   //     setType("login");
   //   };
 
-  const createProjectModal = () => {
-    setType('Create Project')
-    console.log(type)
+  const addMemberModal = () => {
+    setType('Add Member')
   }
 
   return (
@@ -25,7 +24,7 @@ export const ModalProvider = ({ children }) => {
         setIsModalOpen,
         type,
         setType,
-        createProjectModal,
+        addMemberModal,
       }}
     >
       {children}

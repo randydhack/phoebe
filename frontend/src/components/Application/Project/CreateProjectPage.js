@@ -25,7 +25,7 @@ function CreateProjectPage() {
     <div className="bg-white w-screen h-screen">
       <div className="bg-[#d9d9d9] h-full w-[650px]">
         <div className="w-[64px] flex">
-          <div>return back to prev page</div>
+          <div onClick={() => history.goBack()}>return back to prev page</div>
           <div>exit</div>
         </div>
         <div>
