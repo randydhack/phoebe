@@ -13,6 +13,11 @@ export const ModalProvider = ({ children }) => {
   //     setType("login");
   //   };
 
+  const createProjectModal = () => {
+    setType('Create Project')
+    console.log(type)
+  }
+
   return (
     <ModalContext.Provider
       value={{
@@ -20,6 +25,7 @@ export const ModalProvider = ({ children }) => {
         setIsModalOpen,
         type,
         setType,
+        createProjectModal,
       }}
     >
       {children}

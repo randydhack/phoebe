@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from './components/Main'
+import LoginPage from "./components/LoginFormPage/LoginPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,9 +16,12 @@ function App() {
     <>
       {isLoaded && (
         <Switch>
-          <Route path="/login"/>
+          <Route exact path="/"/>
+          <Route path="/login" component={LoginPage}/>
           <Route path="/signup"/>
-          <Route path='/home' component={Main}/>
+          <Route path='/home' component={e => <Main compType='home'/>}/>
+          <Route path='/projects' component={e => <Main compType='projects'/>}/>
+          <Route path='/new-project' component={e => <Main compType='new-project'/>} />
         </Switch>
       )}
     </>
