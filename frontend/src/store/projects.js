@@ -14,7 +14,8 @@ export const userProjectsThunk = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    getUserProjectsAction(data);
+    await getUserProjectsAction(data);
+    console.log(data)
     return data;
   }
 };
@@ -27,7 +28,9 @@ const sessionReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_USER_PROJECTS:
       newState = { ...state };
+      console.log(action, 'dasdsadsa')
       action.payload.forEach((project) => (newState[project.id] = project));
+      console.log(newState)
       return newState;
     default:
       return state;
