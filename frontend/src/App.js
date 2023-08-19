@@ -4,10 +4,13 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from './components/Main'
 import LoginPage from "./components/LoginFormPage/LoginPage";
+import CreateProjectPage from "./components/Application/Project/CreateProjectPage";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -21,7 +24,10 @@ function App() {
           <Route path="/signup"/>
           <Route path='/home' component={e => <Main compType='home'/>}/>
           <Route path='/projects' component={e => <Main compType='projects'/>}/>
-          <Route path='/new-project' component={e => <Main compType='new-project'/>} />
+          <Route path='/new-project' component={CreateProjectPage} />
+          <Route path='/project/:id/overview' component={e => <Main compType='project page'/>} />
+
+          <Route path='' component={ErrorPage}/>
         </Switch>
       )}
     </>
