@@ -8,7 +8,6 @@ function ProjectMembers() {
     const dispatch = useDispatch();
     const { id } = useParams()
 
-    console.log(id)
     const members = useSelector(state => state.projects.project.Members)
 
     useEffect(() => {
@@ -17,7 +16,6 @@ function ProjectMembers() {
       })()
     }, []);
 
-    console.log(members)
 
     return (
         <div className="mt-[20px]">
