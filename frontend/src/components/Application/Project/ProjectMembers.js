@@ -1,30 +1,22 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { getSingleProjectThunk } from "../../../store/projects";
-import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { ModalContext } from "../../../context/Modal";
+import { InfoContext } from "../../../context/InfoContext";
 
-function ProjectMembers() {
-  const dispatch = useDispatch();
-  const { id } = useParams();
+function ProjectMembers({ project }) {
+  const { addMemberModal } = useContext(ModalContext);
+  const { setProject } = useContext(InfoContext);
 
-  const members = useSelector((state) => state.projects.project.Members);
-  const project = useSelector((state) => state.projects.project);
-
-  useEffect(() => {
-    (async () => {
-      await dispatch(getSingleProjectThunk(id));
-    })();
-  }, []);
-
-  console.log(project);
   return (
     <div className="mt-[30px] ml-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>
       <div className="grid grid-cols-3 w-[100%] box-content h-[120px] items-center">
         <div
           className="hover:bg-[#e3e3e35a] p-[10px] rounded-[10px] cursor-pointer"
-          onClick={""}
+          onClick={(e) => {
+            addMemberModal();
+            setProject(project);
+          }}
         >
           <div className="flex items-center text-[#6D6E6F] font-medium">
             <div className="border-dotted border-[2px] border-[#c3c3c3] h-[35px] w-[35px] rounded-[50%] flex items-center justify-center">
@@ -33,7 +25,7 @@ function ProjectMembers() {
             <p className="ml-[10px]">Add Member</p>
           </div>
         </div>
-        {members.map((member, i) => {
+        {project.Members.map((member, i) => {
           return (
             <div
               key={i}
@@ -52,7 +44,11 @@ function ProjectMembers() {
                   <p className=" overflow-hidden text-ellipsis whitespace-nowrap font-medium text-[14px]">
                     {member.User.firstName} {member.User.lastName}
                   </p>
-                    <div className="text-[12px] text-[#6D6E6F]">{member.User.id === project.ownerId ? 'Project Owner' : 'Member'}</div>
+                  <div className="text-[12px] text-[#6D6E6F]">
+                    {member.User.id === project.ownerId
+                      ? "Project Owner"
+                      : "Member"}
+                  </div>
                 </div>
               </div>
             </div>

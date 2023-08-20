@@ -5,7 +5,6 @@ import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getSingleProjectThunk } from "../../../store/projects";
 import ProjectOverviewBody from "./ProjectOverviewBody";
-import { getAllProjectMembersThunk } from "../../../store/members";
 
 
 function ProjectOverviewPage() {
@@ -18,15 +17,16 @@ function ProjectOverviewPage() {
   useEffect(() => {
     (async () => {
       try {
+        console.log(id)
         const data = await dispatch(getSingleProjectThunk(id));
-        if (data) setProject(data);
+        setProject(data)
       } catch (err) {
         history.push('/home')
       }
     })();
-  }, []);
+  }, [id]);
 
-  // console.log(project)
+  console.log(project)
 
 //   bg-[#1f1e21]
   return (
@@ -54,7 +54,7 @@ function ProjectOverviewPage() {
           </div>
         </div>
         {/* Overview Contents */}
-        <ProjectOverviewBody projectId={id}/>
+        <ProjectOverviewBody projectId={id} project={project}/>
       </div>
     )
   );

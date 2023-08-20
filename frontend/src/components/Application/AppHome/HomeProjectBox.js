@@ -1,7 +1,5 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { userProjectsThunk } from "../../../store/projects";
 import { NavLink } from "react-router-dom";
 
 function HomeProjectBox({projects}) {

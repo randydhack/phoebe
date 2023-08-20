@@ -1,6 +1,6 @@
 import ProjectMembers from "./ProjectMembers";
 
-function ProjectOverviewPage() {
+function ProjectOverviewPage({project}) {
   return (
     <div className="flex text-black justify-between w-full h-full pt-[50px]">
         {/* Project Description */}
@@ -11,11 +11,12 @@ function ProjectOverviewPage() {
           <textarea
             className="w-[100%] h-full p-[10px] rounded-[5px] resize-none text-[14px]"
             placeholder="What is this project about?"
+            value={project.description}
           />
           </div>
         </div>
         {/* Project Members Comtainer */}
-        <ProjectMembers />
+        <ProjectMembers project={project}/>
       </div>
 
       <div className="">dasdadadaddasdasdasdjsakdsaldji2323232</div>
