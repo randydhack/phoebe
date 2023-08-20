@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 function HomeProjectBox({projects}) {
-  const dispatch = useDispatch();
 
   return (
     projects && (
