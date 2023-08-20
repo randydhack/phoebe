@@ -2,7 +2,7 @@ import ProjectMembers from "./ProjectMembers";
 
 function ProjectOverviewPage({project}) {
   return (
-    <div className="flex text-black justify-between w-full h-full pt-[50px]">
+    <div className="flex text-black justify-between w-full pt-[50px]">
         {/* Project Description */}
       <div className="w-full px-[25px]">
         <div className="flex flex-col">
