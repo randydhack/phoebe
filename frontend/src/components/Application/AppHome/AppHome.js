@@ -17,9 +17,10 @@ function AppHome() {
 
 
     return (
+        projects &&
         <div className="w-full px-[32px] background-gradient">
             <div className="my-[20px]">
-                <h1 className="font-bold text-[20px] text-black">Home</h1>
+                <h1 className="font-medium text-[20px] text-black">Home</h1>
             </div>
             <div className="flex items-center flex-col mb-[20px]">
                 <div className='font-semibold text-black'>{moment().format('dddd, MMMM Do')}</div>

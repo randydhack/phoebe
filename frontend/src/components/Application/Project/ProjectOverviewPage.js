@@ -1,29 +1,32 @@
 import { useDispatch } from "react-redux";
 import { BsClipboardData } from "react-icons/bs";
 import { LiaProjectDiagramSolid } from 'react-icons/lia'
-import { NavLink, Redirect, useParams } from "react-router-dom";
+import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getSingleProjectThunk } from "../../../store/projects";
 import ProjectOverviewBody from "./ProjectOverviewBody";
-import { getAllProjectMembersThunk } from "../../../store/members";
 
 
 function ProjectOverviewPage() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const { id } = useParams();
 
   const [project, setProject] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const data = await dispatch(getSingleProjectThunk(id));
-
-      if (data) setProject(data);
-
+      try {
+        console.log(id)
+        const data = await dispatch(getSingleProjectThunk(id));
+        setProject(data)
+      } catch (err) {
+        history.push('/home')
+      }
     })();
-  }, []);
+  }, [id]);
 
-  // console.log(project)
+  console.log(project)
 
 //   bg-[#1f1e21]
   return (
@@ -36,7 +39,7 @@ function ProjectOverviewPage() {
               src="https://i.imgur.com/aNTNv.jpeg"
               className="mr-[20px] w-[50px] h-[50px] rounded-[10px]"
             />
-            <div className="text-black font-medium">{project.name}</div>
+            <div className="text-black font-semibold text-[20px]">{project.name}</div>
           </div>
           {/* TAB TO MOVE AROUND PROJECT */}
           <div className="flex mt-[1px] ml-[12px]">
@@ -51,7 +54,7 @@ function ProjectOverviewPage() {
           </div>
         </div>
         {/* Overview Contents */}
-        <ProjectOverviewBody projectId={id}/>
+        <ProjectOverviewBody projectId={id} project={project}/>
       </div>
     )
   );
