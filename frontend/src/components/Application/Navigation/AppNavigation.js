@@ -1,12 +1,22 @@
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../context/Modal";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../store/session";
 
 function AppNavigation(props) {
+
+  const dispatch = useDispatch()
+  const history = useHistory()
   const { createProjectModal, type } = useContext(ModalContext);
   const { setCloseSideMenu, closeSideMenu } = props;
 
+  const logoutHandler = async (e) => {
+    e.preventDefault()
+    await dispatch(logout())
+    return history.push('/login')
+  }
 
   return (
     <section className="bg-[#2E2E30] h-[50px] flex items-center justify-between border-solid border-[#424244] border-b-[1px]">
@@ -26,7 +36,7 @@ function AppNavigation(props) {
           CREATE PROJECT
         </NavLink>
       </div>
-      <div className="text-white">Profile Picture</div>
+      <div className="text-white cursor-pointer" onClick={logoutHandler}>Profile Picture</div>
     </section>
   );
 }

@@ -18,14 +18,14 @@ function Main(props) {
   return (
     <>
     <Modal />
-    <div className="h-full">
+    <div className="h-screen overflow-hidden">
       <section>
         <AppNavigation
           setCloseSideMenu={setCloseSideMenu}
           closeSideMenu={closeSideMenu}
         />
       </section>
-      <section className="flex h-screen">
+      <section className="flex h-full">
         {closeSideMenu && <SideMenu />}
         {compType === 'home' && <AppHome />}
         {compType === 'project page' && <ProjectOverviewPage />}
