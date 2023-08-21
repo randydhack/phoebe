@@ -14,7 +14,7 @@ function HomeProjectBox({projects}) {
               to="/new-project"
               className="mt-[10px] flex items-center p-[10px] cursor-pointer hover:bg-[#e3e3e35a] rounded-[10px]"
             >
-              <div className="flex items-center justify-center rounded-[10px] border-dotted border-2 border-black w-[50px] h-[50px]">
+              <div className="flex items-center justify-center rounded-[10px] border-dotted border-2 border-black w-[40px] h-[40px]">
                 <AiOutlinePlus className="w-[25px] h-[25px] text-black" />
               </div>
               <p className="ml-[10px] text-black text-ellipsis whitespace-nowrap overflow-hidden">Create Project</p>
@@ -26,7 +26,7 @@ function HomeProjectBox({projects}) {
                   className="mt-[10px] flex items-center p-[10px] cursor-pointer hover:bg-[#e3e3e35a] rounded-[10px]"
                   to={`/project/${project.id}/overview`}
                 >
-                  <div className="flex items-center justify-center rounded-[10px] border-dotted border-2 border-black w-[50px] h-[50px]">
+                  <div className="flex items-center justify-center rounded-[10px] border-dotted border-2 border-black w-[40px] h-[40px]">
                     <AiOutlinePlus className="w-[25px] h-[25px] text-black" />
                   </div>
                   <div className="ml-[10px] text-black w-[150px] text-ellipsis whitespace-nowrap overflow-hidden">{project.name}</div>
