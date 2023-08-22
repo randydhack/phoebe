@@ -75,7 +75,7 @@ const projectReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
     case GET_USER_PROJECTS:
-      newState = {...state};
+      newState = {};
       action.payload.forEach((project) => (newState[project.id] = project));
       return newState;
     case CREATE_PROJECT:
