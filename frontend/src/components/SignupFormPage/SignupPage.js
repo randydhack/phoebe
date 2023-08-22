@@ -18,30 +18,25 @@ function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      return dispatch(
-        signup({
-          firstName,
-          lastName,
-          email,
-          password,
-          confirmPassword,
-        })
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          if (data.errors.email) setEmail("");
-          setErrors(data.errors);
-        }
-      });
-    }
-    return setErrors({
-      confirmPassword: "Password must match",
+    setErrors({});
+
+    return dispatch(
+      signup({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+      })
+    ).catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
     });
   };
 
-  console.log(errors.lastName);
+  console.log(errors);
 
   return (
     <div className="items-center flex flex-col mx-[32px] min-h-screen">
@@ -66,10 +61,11 @@ function SignupPage() {
             </span>
 
             <form onSubmit={handleSubmit} className="w-full">
+              {/* ----------------- FIRST AND LAST NAMES ------------------ */}
               <div className="flex w-full mb-[10px]">
                 <div className="mr-[5px]">
                   <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                    First Name
+                    First Name <span className="text-red-500 ">*</span>
                   </label>
                   <input
                     type="text"
@@ -80,15 +76,9 @@ function SignupPage() {
                   />
                 </div>
                 <div>
-                  {errors.lastName ? (
-                    <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                      Last Name
-                    </label>
-                  ) : (
-                    <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                      Last Name - {errors.lastName}
-                    </label>
-                  )}
+                  <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
+                    Last Name <span className="text-red-500 ">*</span>
+                  </label>
                   <input
                     type="text"
                     required
@@ -98,40 +88,91 @@ function SignupPage() {
                   />
                 </div>
               </div>
+
+              {/* ----------------- EMAIL ------------------ */}
               <div className="flex flex-col w-full mb-[10px]">
-                <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                  Email Address
+                <label
+                  className={`text-[#6D6E6F] text-[12px] font-medium mb-[6px]`}
+                >
+                  {!errors.email ? (
+                    <span>
+                      Email Address <span className="text-red-500">*</span>
+                    </span>
+                  ) : (
+                    <span className="text-red-500 ">
+                      Email Address -{" "}
+                      <span className="text-red-500 italic text-[10px]">
+                        {errors.email}
+                      </span>
+                    </span>
+                  )}
                 </label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="border-[#CECBCB] border-[1px] p-[5px] text-[14px] rounded-[5px] w-full"
+                  className={`${
+                    !errors.email ? "border-[#CECBCB]" : "border-red-500"
+                  } border-[1px] p-[5px] text-[14px] rounded-[5px]`}
                 />
               </div>
+
+              {/* ----------------- PASSWORD ------------------ */}
               <div className="w-full flex flex-col mb-[10px]">
                 <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                  Password
+                  {!errors.password ? (
+                    <span className=" ">
+                      Password <span className="text-red-500">*</span>
+                    </span>
+                  ) : (
+                    <span className="text-red-500 ">
+                      Password -{" "}
+                      <span className="text-red-500 italic text-[10px]">
+                        {errors.password}
+                      </span>
+                    </span>
+                  )}
                 </label>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="border-[#CECBCB] border-[1px] p-[5px] text-[14px] rounded-[5px]"
+                  className={`${
+                    !errors.password
+                      ? "border-[#CECBCB]"
+                      : "border-red-500"
+                  } border-[1px] p-[5px] text-[14px] rounded-[5px]`}
                 />
               </div>
+
+              {/* ----------------- CONFIRM PASSWORD ------------------ */}
               <div className="w-full flex flex-col mb-[25px]">
                 <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                  Confirm Password
+                  {!errors.password ? (
+                    <span>
+                      Confirm Password <span className="text-red-500">*</span>
+                    </span>
+                  ) : (
+                    <span className="text-red-500 ">
+                      Confirm Password -{" "}
+                      <span className="text-red-500 italic text-[10px]">
+                        {errors.password}
+                      </span>
+                    </span>
+                  )}
                 </label>
                 <input
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="border-[#CECBCB] border-[1px] p-[5px] text-[14px] rounded-[5px]"
+                  className={`${
+                    !errors.password
+                      ? "border-[#CECBCB]"
+                      : "border-red-500"
+                  } border-[1px] p-[5px] text-[14px] rounded-[5px]`}
                 />
               </div>
               <button
@@ -144,7 +185,7 @@ function SignupPage() {
 
             <NavLink
               to="/login"
-              className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit"
+              className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit hover:underline"
             >
               Already have an account?
             </NavLink>
