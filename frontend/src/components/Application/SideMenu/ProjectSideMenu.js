@@ -28,7 +28,7 @@ function ProjectSideMenu() {
                         <NavLink key={i} to={`/project/${project.id}/overview`} className="flex items-center mx-[12px] hover:bg-[#454547af] rounded-[8px] px-[10px] py-[3px] cursor-pointer hover:ease-out duration-300">
                             <div className="h-[16px] w-[16px] bg-blue-200 rounded-[5px] mr-[10px]">
                             </div>
-                            <div className="text-white text-[14px]">
+                            <div className="text-white text-[14px] text-ellipsis overflow-hidden whitespace-nowrap w-[140px]">
                                 {project.name}
                             </div>
                         </NavLink>

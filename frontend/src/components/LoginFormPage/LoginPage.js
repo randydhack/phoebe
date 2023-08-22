@@ -17,7 +17,6 @@ function LoginPage() {
         password: "password",
       })
     );
-
     return history.push("/home");
   };
 
@@ -75,7 +74,7 @@ function LoginPage() {
               <button type="submit" className="flex items-center justify-center w-full h-[38px] bg-[#4573D1] rounded-[5px] text-white">Continue</button>
             </form>
 
-            <div className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit ">Don't have an account?</div>
+            <NavLink to='/signup' className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit" >Don't have an account?</NavLink>
           </div>
         </div>
       </div>

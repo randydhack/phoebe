@@ -10,7 +10,7 @@ function ProjectMembers({ project }) {
   return (
     <div className="mt-[30px] ml-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>
-      <div className="grid grid-cols-3 w-[100%] box-content h-[120px] items-center">
+      <div className="grid grid-cols-4 w-[100%] box-content h-[120px] items-center">
         <div
           className="hover:bg-[#e3e3e35a] p-[10px] rounded-[10px] cursor-pointer"
           onClick={(e) => {
