@@ -36,8 +36,6 @@ function SignupPage() {
     });
   };
 
-  console.log(errors);
-
   return (
     <div className="items-center flex flex-col mx-[32px] min-h-screen">
       <div className="flex items-center box-border h-[80px] justify-center pl-[32px] fixed w-full z-[100]">
