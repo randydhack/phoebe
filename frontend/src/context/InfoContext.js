@@ -6,6 +6,7 @@ export const InfoContext = createContext();
 export const InfoProvider = ({ children }) => {
 
     const [project, setProject] = useState(null)
+
     return (
         <InfoContext.Provider
           value={{

@@ -40,12 +40,8 @@ export const getSingleProjectThunk = (id) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json()
-
-    await dispatch(getSingleProjectAction(data))
+    dispatch(getSingleProjectAction(data))
     return data
-  } else {
-    const error = await res.json()
-      return error
   }
 }
 
@@ -81,9 +77,6 @@ const projectReducer = (state = {}, action) => {
     case CREATE_PROJECT:
       return { ...state, [action.payload.id]: action.payload}
     case GET_SINGLE_PROJECT:
-      newState = {...state}
-      console.log(action.payload.id, 'payload')
-      console.log(newState[4])
       return {...state, [action.payload.id]: action.payload}
     default:
       return state;
