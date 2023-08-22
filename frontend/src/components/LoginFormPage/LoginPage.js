@@ -1,11 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/session";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
+import { useState } from "react";
 
 function LoginPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const userSession = useSelector((state) => state.session.user);
+
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState(null);
 
   if (userSession) return <Redirect to="home" />;
 
@@ -19,6 +24,29 @@ function LoginPage() {
     );
     return history.push("/home");
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+     const data = await dispatch(
+      login({
+        credential,
+        password,
+      })
+    ).catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
+    });
+
+    if (data) {
+      setErrors({})
+      return history.push("/home");
+    }
+
+  };
+
+  console.log(password, credential);
 
   return (
     <div className="items-center flex flex-col mx-[32px] min-h-screen">
@@ -50,31 +78,67 @@ function LoginPage() {
               <span className="border-t-[1px] border-solid border-[#edeae9] flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
             </span>
 
-            <form onSubmit={""} className="w-full">
+            <form onSubmit={handleSubmit} className="w-full">
               <div className="flex flex-col w-full mb-[10px]">
                 <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                  Email Address
+                  {!errors ? (
+                    "Email Address"
+                  ) : (
+                    <span className="text-red-500 ">
+                      Email Address -{" "}
+                      <span className="text-red-500 italic text-[10px]">
+                        Invalid email or password
+                      </span>
+                    </span>
+                  )}
                 </label>
                 <input
                   type="email"
                   required
-                  className="border-[#CECBCB] border-[1px] p-[5px] text-[14px] rounded-[5px] w-full"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  className={`${
+                    !errors ? "border-[#CECBCB]" : "border-red-500"
+                  } border-[1px] p-[5px] text-[14px] rounded-[5px]`}
                 />
               </div>
               <div className="w-full flex flex-col mb-[25px]">
                 <label className="text-[#6D6E6F] text-[12px] font-medium mb-[6px]">
-                  Password
+                  {!errors ? (
+                    "Password"
+                  ) : (
+                    <span className="text-red-500 ">
+                      Password -{" "}
+                      <span className="text-red-500 italic text-[10px]">
+                        Invalid email or password
+                      </span>
+                    </span>
+                  )}
                 </label>
                 <input
                   type="password"
                   required
-                  className="border-[#CECBCB] border-[1px] p-[5px] text-[14px] rounded-[5px]"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={`${
+                    !errors ? "border-[#CECBCB]" : "border-red-500"
+                  } border-[1px] p-[5px] text-[14px] rounded-[5px]`}
                 />
               </div>
-              <button type="submit" className="flex items-center justify-center w-full h-[38px] bg-[#4573D1] rounded-[5px] text-white">Continue</button>
+              <button
+                type="submit"
+                className="flex items-center justify-center w-full h-[38px] bg-[#4573D1] rounded-[5px] text-white"
+              >
+                Continue
+              </button>
             </form>
 
-            <NavLink to='/signup' className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit" >Don't have an account?</NavLink>
+            <NavLink
+              to="/signup"
+              className="mt-[10px] text-[#6D6E6F] cursor-pointer w-fit hover:underline"
+            >
+              Don't have an account?
+            </NavLink>
           </div>
         </div>
       </div>
