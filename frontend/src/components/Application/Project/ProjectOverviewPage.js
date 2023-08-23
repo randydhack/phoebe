@@ -14,9 +14,9 @@ function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { setProject } = useContext(InfoContext);
+  const { setProject, project } = useContext(InfoContext);
 
-  const project = useSelector((state) => state.projects)[id];
+  const project1 = useSelector((state) => state.projects)[id];
   const [projectName, setProjectName] = useState(project?.name);
   const [description, setDescription] = useState(project?.description);
 
@@ -33,23 +33,19 @@ function ProjectOverviewPage({ compType }) {
     })();
   }, [id]);
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(updateProjectThunk(projectName, description, id));
-  }, [])
+  }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (projectName.length > 0) {
-      dispatch(updateProjectThunk(projectName, description, project.id));
-    } else {
-      dispatch(updateProjectThunk(projectName, description, project.id));
-    }
-
+    e.preventDefault();
+    await dispatch(updateProjectThunk(projectName, description, project.id));
   };
 
+  console.log(project)
   //   bg-[#1f1e21]
   return (
-    project && (
+    project1 && (
       <div className="bg-[white] w-full h-full">
         {/* Overview Info and Navigation */}
         <div className="bg-[white] w-full h-[100px] px-[20px] border-b-[1px] border-[#ECEAE9]">

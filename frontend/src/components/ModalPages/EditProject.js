@@ -4,7 +4,6 @@ import { ModalContext } from "../../context/Modal";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  getSingleProjectThunk,
   updateProjectThunk,
 } from "../../store/projects";
 

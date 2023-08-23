@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 function ProjectOverviewPage({props}) {
   const { project, setDescription, description, handleSubmit } = props
 
+  console.log(project)
   return (
     project &&
     <div className="flex text-black justify-between w-full h-full">
