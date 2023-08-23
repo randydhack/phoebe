@@ -28,7 +28,7 @@ function App() {
           <Route path='/projects' component={() => <Main compType='projects'/>}/>
           <Route path='/new-project' component={CreateProjectPage} />
           <Route path='/project/:id/overview' component={() => <Main compType='project page'/>} />
-          <Route path='/project/:id/board'/>
+          <Route path='/project/:id/board' component={() => <Main compType='project board'/>}/>
 
           <Route path='' component={ErrorPage}/>
         </Switch>

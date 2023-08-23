@@ -8,3 +8,5 @@ function ProjectBoard() {
         </div>
     )
 }
+
+export default ProjectBoard

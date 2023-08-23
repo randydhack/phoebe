@@ -4,6 +4,7 @@ import { csrfFetch } from './csrf';
 const GET_USER_PROJECTS = "projects/GET_USER_PROJECTS ";
 const CREATE_PROJECT = "projects/CREATE_PROJECT";
 const GET_SINGLE_PROJECT = 'projects/GET_SINGLE_PROJECT'
+const DELETE_PROJECT = 'projects/DELETE_PROJECT'
 
 // Action Creators
 
@@ -20,6 +21,11 @@ const createProjectAction = (project) => ({
 const getSingleProjectAction = (project) => ({
   type: GET_SINGLE_PROJECT,
   payload: project
+})
+
+const deleteProjectAction = (id) => ({
+  type: DELETE_PROJECT,
+  payload: id
 })
 
 // Thunk action creators
@@ -41,6 +47,18 @@ export const getSingleProjectThunk = (id) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json()
     dispatch(getSingleProjectAction(data))
+    return data
+  }
+}
+
+export const deleteProjectThunk = (id) => async (dispatch) => {
+  const res = await csrfFetch(`/api/projects/${id}`, {
+    method: 'DELETE'
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    dispatch(deleteProjectAction(id))
     return data
   }
 }
@@ -78,6 +96,10 @@ const projectReducer = (state = {}, action) => {
       return { ...state, [action.payload.id]: action.payload}
     case GET_SINGLE_PROJECT:
       return {...state, [action.payload.id]: action.payload}
+    case DELETE_PROJECT:
+      newState = {...state}
+      delete newState[action.payload]
+      return newState
     default:
       return state;
   }

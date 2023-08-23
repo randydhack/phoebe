@@ -5,6 +5,7 @@ import { InfoContext } from "../../../context/InfoContext";
 
 function ProjectMembers({ project }) {
   const { addMemberModal } = useContext(ModalContext);
+  const {setProject} = useContext(InfoContext)
 
   return (
     <div className="mt-[30px] ml-[10px]">
@@ -14,6 +15,7 @@ function ProjectMembers({ project }) {
           className="hover:bg-[#e3e3e35a] p-[10px] rounded-[10px] cursor-pointer"
           onClick={(e) => {
             addMemberModal();
+            setProject(project)
           }}
         >
           <div className="flex items-center text-[#6D6E6F] font-medium">

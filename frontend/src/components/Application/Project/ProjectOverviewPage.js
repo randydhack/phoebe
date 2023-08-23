@@ -2,13 +2,14 @@ import { useDispatch } from "react-redux";
 import { BsClipboardData } from "react-icons/bs";
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { getSingleProjectThunk } from "../../../store/projects";
 import ProjectOverviewBody from "./ProjectOverviewBody";
-import { BsThreeDots } from "react-icons/bs";
 import { InfoContext } from "../../../context/InfoContext";
+import ProjectDropdown from "./ProjectDropdown";
+import ProjectBoard from "./Board/ProjectBoard";
 
-function ProjectOverviewPage() {
+function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
@@ -16,6 +17,8 @@ function ProjectOverviewPage() {
   const [project, setProject ] = useState(null)
   const [projectName, setProjectName] = useState('')
   const [description, setDescription] = useState('')
+
+  const formNameRef = useRef()
 
   useEffect(() => {
     (async () => {
@@ -30,7 +33,6 @@ function ProjectOverviewPage() {
     })();
   }, [id]);
 
-  console.log(project)
   //   bg-[#1f1e21]
   return (
     project && (
@@ -42,21 +44,19 @@ function ProjectOverviewPage() {
               src="https://i.imgur.com/aNTNv.jpeg"
               className="mr-[20px] w-[50px] h-[50px] rounded-[10px]"
             />
-            <div className="text-black font-semibold text-[20px] flex items-center w-full">
-              <input type='text' value={projectName} className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap" onChange={e => setProjectName(e.target.value)}/>
-              <span className="ml-[20px] hover:bg-[#e3e3e35a] px-[5px] py-[3px] rounded-[5px] cursor-pointer">
-                <BsThreeDots />
-              </span>
-            </div>
+            <form className="text-black font-semibold text-[20px] flex items-center w-full">
+              <input type='text' ref={formNameRef} value={projectName} onChange={e=> setProjectName(e.target.value)} className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"/>
+                <ProjectDropdown />
+            </form>
           </div>
           {/* TAB TO MOVE AROUND PROJECT */}
           <div className="flex mt-[1px] ml-[12px]">
-            <div className="flex items-center border-b-2 border-[#6D6E6F] px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer">
+            <NavLink to={`/project/${id}/overview`} className={`flex items-center border-b-2 px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer ${compType === 'overview' && 'border-[#6D6E6F]'}`}>
               <BsClipboardData className="text-[14px] text-black" />
               <span className="text-[14px] ml-[5px] text-black font-medium">
                 Overview
               </span>
-            </div>
+            </NavLink>
             <NavLink
               to={`/project/${id}/board`}
               className="ml-[20px] flex items-center px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer hover:border-b-2 border-[#6D6E6F]"
@@ -69,7 +69,10 @@ function ProjectOverviewPage() {
           </div>
         </div>
         {/* Overview Contents */}
+        {compType === 'overview' &&
         <ProjectOverviewBody props={{project, description, setDescription}}/>
+        }
+        {compType === 'board' && <ProjectBoard />}
       </div>
     )
   );
