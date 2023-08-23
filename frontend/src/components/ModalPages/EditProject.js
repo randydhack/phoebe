@@ -22,7 +22,11 @@ function EditProject() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await dispatch(updateProjectThunk(name, description, project.id));
+    if (name.length > 1) {
+       const data = await dispatch(updateProjectThunk(name, description, project.id));
+       setProject(data)
+    }
+
   };
 
   console.log(project)

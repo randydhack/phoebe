@@ -98,9 +98,8 @@ export const updateProjectThunk = (name, description, id) => async (dispatch) =>
 
 
   if (res.ok) {
-    console.log('dsadasdasda')
     const data = await res.json()
-    dispatch(updateProjectAction(data))
+    await dispatch(updateProjectAction(data))
     return data
   }
 };

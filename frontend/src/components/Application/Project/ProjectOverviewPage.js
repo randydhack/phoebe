@@ -14,32 +14,37 @@ function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { setProject } = useContext(InfoContext);
+  const { setProject, project} = useContext(InfoContext);
 
-  const project = useSelector((state) => state.projects)[id];
-  const [projectName, setProjectName] = useState('');
-  const [description, setDescription] = useState('');
+  // const project = useSelector((state) => state.projects)[id];
+  const [projectName, setProjectName] = useState(project?.name);
+  const [description, setDescription] = useState(project?.description);
 
   useEffect(() => {
     (async () => {
       try {
         const data = await dispatch(getSingleProjectThunk(id));
         setProject(data);
-        setProjectName(project.name)
-        setDescription(project.description)
-        // setProjectName(data.name);
-        // setDescription(data.description);
+        setProjectName(data.name);
+        setDescription(data.description);
       } catch (err) {
         history.push("/home");
       }
     })();
-  }, [id, projectName, description]);
+  }, [id]);
 
-  useEffect(() => {}, [projectName, description]);
+  useEffect(() =>{
+    dispatch(updateProjectThunk(projectName, description, id));
+  })
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(updateProjectThunk(projectName, description, project.id));
+    e.preventDefault()
+    if (projectName.length > 0) {
+      dispatch(updateProjectThunk(projectName, description, project.id));
+    } else {
+      dispatch(updateProjectThunk(projectName, description, project.id));
+    }
+
   };
 
   //   bg-[#1f1e21]
@@ -94,7 +99,7 @@ function ProjectOverviewPage({ compType }) {
         {/* Overview Contents */}
         {compType === "overview" && (
           <ProjectOverviewBody
-            props={{ project, description, setDescription }}
+            props={{ project, description, setDescription, handleSubmit }}
           />
         )}
         {compType === "board" && <ProjectBoard />}

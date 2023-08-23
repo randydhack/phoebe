@@ -6,9 +6,7 @@ import { getSingleProjectThunk } from "../../../store/projects";
 import { useHistory } from "react-router-dom";
 
 function ProjectOverviewPage({props}) {
-  const { project, setDescription, description } = props
-
-
+  const { project, setDescription, description, handleSubmit } = props
 
   return (
     project &&
@@ -22,7 +20,10 @@ function ProjectOverviewPage({props}) {
             className="w-[100%] h-full p-[10px] rounded-[5px] resize-none text-[14px]"
             placeholder="What is this project about?"
             value={description}
-            onChange={e => setDescription(e.target.value)}
+            onChange={e => {
+              setDescription(e.target.value)
+            handleSubmit(e)
+            }}
           />
           </div>
         </div>
