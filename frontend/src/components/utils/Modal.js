@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { ModalContext } from "../../context/Modal";
 import "./modal.css";
 import AddMemberModal from "../ModalPages/AddMemberModal";
+import EditProject from "../ModalPages/EditProject";
 
 export default function Modal(props) {
   const { type, setType } = useContext(ModalContext);
@@ -31,6 +32,7 @@ export default function Modal(props) {
           <div className="closeButtonWrapper"></div>
           {/* EXAMPLE HOW TO SET UP A MODAL PAGE */}
           {type === "Add Member" && <AddMemberModal />}
+          {type === 'Edit Project' && <EditProject />}
         </div>
         <div className="modalBackdrop" onClick={handleContent} />
       </div>

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsClipboardData } from "react-icons/bs";
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
@@ -8,30 +8,39 @@ import ProjectOverviewBody from "./ProjectOverviewBody";
 import { InfoContext } from "../../../context/InfoContext";
 import ProjectDropdown from "./ProjectDropdown";
 import ProjectBoard from "./Board/ProjectBoard";
+import { updateProjectThunk } from "../../../store/projects";
 
 function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
+  const { setProject } = useContext(InfoContext);
 
-  const [project, setProject ] = useState(null)
-  const [projectName, setProjectName] = useState('')
-  const [description, setDescription] = useState('')
-
-  const formNameRef = useRef()
+  const project = useSelector((state) => state.projects)[id];
+  const [projectName, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
         const data = await dispatch(getSingleProjectThunk(id));
         setProject(data);
-        setProjectName(data.name);
-        setDescription(data.description)
+        setProjectName(project.name)
+        setDescription(project.description)
+        // setProjectName(data.name);
+        // setDescription(data.description);
       } catch (err) {
         history.push("/home");
       }
     })();
-  }, [id]);
+  }, [id, projectName, description]);
+
+  useEffect(() => {}, [projectName, description]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(updateProjectThunk(projectName, description, project.id));
+  };
 
   //   bg-[#1f1e21]
   return (
@@ -44,14 +53,28 @@ function ProjectOverviewPage({ compType }) {
               src="https://i.imgur.com/aNTNv.jpeg"
               className="mr-[20px] w-[50px] h-[50px] rounded-[10px]"
             />
-            <form className="text-black font-semibold text-[20px] flex items-center w-full">
-              <input type='text' ref={formNameRef} value={projectName} onChange={e=> setProjectName(e.target.value)} className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"/>
-                <ProjectDropdown />
-            </form>
+            <div className="text-black font-semibold text-[20px] flex items-center w-full">
+              <input
+                type="text"
+                value={projectName}
+                onChange={(e) => {
+                  setProjectName(e.target.value);
+                  handleSubmit(e);
+                }}
+                minLength={1}
+                className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
+              />
+              <ProjectDropdown project={project} />
+            </div>
           </div>
           {/* TAB TO MOVE AROUND PROJECT */}
           <div className="flex mt-[1px] ml-[12px]">
-            <NavLink to={`/project/${id}/overview`} className={`flex items-center border-b-2 px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer ${compType === 'overview' && 'border-[#6D6E6F]'}`}>
+            <NavLink
+              to={`/project/${id}/overview`}
+              className={`flex items-center border-b-2 px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer ${
+                compType === "overview" && "border-[#6D6E6F]"
+              }`}
+            >
               <BsClipboardData className="text-[14px] text-black" />
               <span className="text-[14px] ml-[5px] text-black font-medium">
                 Overview
@@ -69,10 +92,12 @@ function ProjectOverviewPage({ compType }) {
           </div>
         </div>
         {/* Overview Contents */}
-        {compType === 'overview' &&
-        <ProjectOverviewBody props={{project, description, setDescription}}/>
-        }
-        {compType === 'board' && <ProjectBoard />}
+        {compType === "overview" && (
+          <ProjectOverviewBody
+            props={{ project, description, setDescription }}
+          />
+        )}
+        {compType === "board" && <ProjectBoard />}
       </div>
     )
   );

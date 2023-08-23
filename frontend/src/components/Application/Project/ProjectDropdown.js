@@ -1,15 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
-import { useState, useEffect, useRef } from "react";
-import { deleteProjectThunk } from '../../../store/projects'
-import { useParams, useHistory } from 'react-router-dom'
+import { useState, useEffect, useRef, useContext } from "react";
+import { deleteProjectThunk } from "../../../store/projects";
+import { useParams, useHistory } from "react-router-dom";
+import { ModalContext } from "../../../context/Modal";
+import { InfoContext } from "../../../context/InfoContext";
 
-function ProjectDropdown() {
-    const dispatch = useDispatch()
-    const history = useHistory()
-    const { id } = useParams()
-  const user = useSelector((state) => state.session.user);
+function ProjectDropdown({ project }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { id } = useParams();
+  const { editProjectModal } = useContext(ModalContext);
+  const { setProject } = useContext(InfoContext)
 
   const [openDropdown, setToggleDropdown] = useState(false);
   const navRef = useRef();
@@ -29,19 +32,17 @@ function ProjectDropdown() {
   }, [openDropdown]);
 
   const handleDeleteProject = async () => {
-    await dispatch(deleteProjectThunk(id))
-    return history.push('/home')
-  }
-
-
+    await dispatch(deleteProjectThunk(id));
+    return history.push("/home");
+  };
 
   return (
     <div className="cursor-pointer text-white ml-[20px] hover:bg-[#e3e3e35a] px-[5px] py-[3px] rounded-[5px]">
       <div className="flex items-center">
         <BsThreeDots
-                  className="flex items-center text-black"
-                  onClick={(e) => setToggleDropdown(!openDropdown)}
-                  forwardref={navRef}
+          className="flex items-center text-black"
+          onClick={(e) => setToggleDropdown(!openDropdown)}
+          forwardref={navRef}
         />
 
         {!openDropdown ? null : (
@@ -50,13 +51,17 @@ function ProjectDropdown() {
             onClick={(e) => e.stopPropagation()}
             ref={dropdownRef}
           >
-            <div className="w-full flex mt-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-[#222324]">
+            <div className="w-full flex mt-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-[#222324]"
+            onClick={e => {editProjectModal(); setProject(project)}}>
               <BsPencil className="mr-[15px] text-[14px]" />
               <div className="text-[14px] font-normal">
                 Edit project details
               </div>
             </div>
-            <div className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-red-600" onClick={e => handleDeleteProject()}>
+            <div
+              className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-red-600"
+              onClick={(e) => handleDeleteProject()}
+            >
               <PiTrashThin className="mr-[10px] text-[18px]" />
               <div className="text-[14px] font-normal">Delete Project</div>
             </div>
