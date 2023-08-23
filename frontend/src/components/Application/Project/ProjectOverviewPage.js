@@ -35,7 +35,7 @@ function ProjectOverviewPage({ compType }) {
 
   useEffect(() => {
     dispatch(updateProjectThunk(projectName, description, id));
-  }, []);
+  }, [projectName, description]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -25,10 +25,17 @@ router.get("/", requireAuth, async (req, res) => {
 // **** GET PROJECT BY ID, only if they are a member of the Project ****
 router.get("/:id", requireAuth, async (req, res, next) => {
   // Finds project by id
-  const project = await Project.findOne({where: {id: req.params.id}, include: {model: Member, as: "Members", include: {model: User, as: "User"}}});
+  const project = await Project.findOne({
+    where: { id: req.params.id },
+    include: {
+      model: Member,
+      as: "Members",
+      include: { model: User, as: "User" },
+    },
+  });
   // Finds if user is a member of the project
   const member = await Member.findOne({
-    where: { projectId: req.params.id, userId: req.user.id }
+    where: { projectId: req.params.id, userId: req.user.id },
   });
 
   // if user is not a member or a project does not exist, throw error
@@ -73,7 +80,10 @@ router.get("/:id/cards", requireAuth, async (req, res, next) => {
 
 // GET ALL MEMBERS FOR A PROJECT BY ID
 router.get("/:id/members", async (req, res, next) => {
-  const members = await Member.findAll({ where: { projectId: req.params.id }, include: {model: User, as: 'User'} });
+  const members = await Member.findAll({
+    where: { projectId: req.params.id },
+    include: { model: User, as: "User" },
+  });
 
   console.log(members);
   res.status(200).json(members);
@@ -87,7 +97,7 @@ router.post("/", requireAuth, async (req, res, next) => {
   const { name, category, description, projectImage } = req.body;
   // Finds existing project by name and id to prevent same Project name
   const existingProject = await Project.findOne({
-    where: { name: name, ownerId: req.user.id }
+    where: { name: name, ownerId: req.user.id },
   });
 
   // If the project name exist by user, throw error
@@ -123,11 +133,25 @@ router.post("/", requireAuth, async (req, res, next) => {
 // **** UPDATES PROJECT BY ID, only if user is owner of project ****
 router.put("/:id", requireAuth, async (req, res, next) => {
   // Body request from form
-  const { name, category, description, projectImage } = req.body;
+  const { name, description } = req.body;
 
   // Finds project by user id and project id so only owners can edit
   const project = await Project.findOne({
     where: { id: req.params.id, ownerId: req.user.id },
+    include: [
+      {
+        model: Member,
+        as: "Members",
+        include: {
+          model: User,
+          as: "User",
+        },
+      },
+      {
+        model: User,
+        as: "Owner",
+      },
+    ],
   });
 
   // throws error if project doesnt exist
@@ -138,7 +162,7 @@ router.put("/:id", requireAuth, async (req, res, next) => {
   }
 
   // Updates the project details
-  await project.update({ name, category, description, projectImage });
+  await project.update({ name, description });
 
   // return json
   res.status(200).json(project);

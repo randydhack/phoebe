@@ -5,10 +5,10 @@ import { useDispatch } from "react-redux";
 import { getSingleProjectThunk } from "../../../store/projects";
 import { useHistory } from "react-router-dom";
 
-function ProjectOverviewPage({props}) {
+function ProjectOverviewBody({props}) {
   const { project, setDescription, description, handleSubmit } = props
 
-  console.log(project)
+  console.log(project, 'dasdasdsad')
   return (
     project &&
     <div className="flex text-black justify-between w-full h-full">
@@ -37,4 +37,4 @@ function ProjectOverviewPage({props}) {
   );
 }
 
-export default ProjectOverviewPage;
+export default ProjectOverviewBody;

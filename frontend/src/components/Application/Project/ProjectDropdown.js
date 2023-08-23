@@ -4,14 +4,13 @@ import { PiTrashThin } from "react-icons/pi";
 import { useState, useEffect, useRef, useContext } from "react";
 import { deleteProjectThunk } from "../../../store/projects";
 import { useParams, useHistory } from "react-router-dom";
-import { ModalContext } from "../../../context/Modal";
 import { InfoContext } from "../../../context/InfoContext";
 
-function ProjectDropdown({ project }) {
+function ProjectDropdown({project }) {
+
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { editProjectModal } = useContext(ModalContext);
   const { setProject } = useContext(InfoContext)
 
   const [openDropdown, setToggleDropdown] = useState(false);
@@ -41,7 +40,7 @@ function ProjectDropdown({ project }) {
       <div className="flex items-center">
         <BsThreeDots
           className="flex items-center text-black"
-          onClick={(e) => setToggleDropdown(!openDropdown)}
+          onClick={(e) => {setToggleDropdown(!openDropdown); setProject(project)}}
           forwardref={navRef}
         />
 
@@ -51,13 +50,6 @@ function ProjectDropdown({ project }) {
             onClick={(e) => e.stopPropagation()}
             ref={dropdownRef}
           >
-            <div className="w-full flex mt-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-[#222324]"
-            onClick={e => {editProjectModal(); setProject(project)}}>
-              <BsPencil className="mr-[15px] text-[14px]" />
-              <div className="text-[14px] font-normal">
-                Edit project details
-              </div>
-            </div>
             <div
               className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-red-600"
               onClick={(e) => handleDeleteProject()}

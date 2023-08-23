@@ -17,10 +17,6 @@ export const ModalProvider = ({ children }) => {
     setType('Add Member')
   }
 
-  const editProjectModal = () => {
-    setType('Edit Project')
-  }
-
   return (
     <ModalContext.Provider
       value={{
@@ -29,7 +25,6 @@ export const ModalProvider = ({ children }) => {
         type,
         setType,
         addMemberModal,
-        editProjectModal
       }}
     >
       {children}
