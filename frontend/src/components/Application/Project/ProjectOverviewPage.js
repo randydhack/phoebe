@@ -42,7 +42,6 @@ function ProjectOverviewPage({ compType }) {
     await dispatch(updateProjectThunk(projectName, description, project.id));
   };
 
-  console.log(project)
   //   bg-[#1f1e21]
   return (
     project1 && (

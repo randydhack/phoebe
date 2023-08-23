@@ -10,6 +10,8 @@ import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import * as projectActions from "./store/projects";
 import * as memberActions from "./store/members";
+import * as sectionActions from './store/sections'
+
 import { ModalProvider } from "./context/Modal";
 import { InfoProvider } from "./context/InfoContext";
 
@@ -23,6 +25,7 @@ if (process.env.NODE_ENV !== "production") {
   window.sessionActions = sessionActions;
   window.projectActions = projectActions;
   window.memberActions = memberActions;
+  window.sectionActions = sectionActions;
 }
 
 function Root() {

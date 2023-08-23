@@ -7,8 +7,6 @@ function ProjectMembers({ project }) {
   const { addMemberModal } = useContext(ModalContext);
   const {setProject} = useContext(InfoContext)
 
-  console.log(project, 'members')
-
   return (
     <div className="mt-[30px] ml-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>

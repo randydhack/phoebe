@@ -90,7 +90,6 @@ export const createProjectThunk =
   };
 
 export const updateProjectThunk = (name, description, id) => async (dispatch) => {
-  console.log(name, description, id)
   const res = await csrfFetch(`/api/projects/${id}`, {
     method: "PUT",
     body: JSON.stringify({ name, description }),
