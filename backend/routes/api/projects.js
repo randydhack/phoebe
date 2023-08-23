@@ -52,7 +52,10 @@ router.get("/:id", requireAuth, async (req, res, next) => {
 // **** GET ALL SECTIONS BY PROJECT ID ****
 router.get("/:id/sections", async (req, res) => {
   const sections = await Section.findAll({
-    where: { projectId: req.params.id },
+    where: { projectId: req.params.id }, include: {
+      model: Card,
+      as: 'Cards'
+    }
   });
 
   res.status(200).json(sections);

@@ -1,18 +1,18 @@
 import { csrfFetch } from "./csrf";
 
 // Action Type
-const GET_PROJECT_SECTION = "projects/GET_PROJECT_SECTION ";
+const GET_CARDS = "projects/GET_CARDS ";
 
 // Action Creators
 
 const getProjectSectionsAction = (sections) => ({
-  type: GET_PROJECT_SECTION,
+  type: GET_CARDS,
   payload: sections,
 });
 
 // Thunk action creators
 export const getProjectSectionsThunk = (id) => async (dispatch) => {
-  const res = await fetch(`/api/projects/${id}/sections`);
+  const res = await fetch(`/api/projects/${id}/cards`);
 
   if (res.ok) {
     const data = await res.json();
@@ -31,9 +31,9 @@ export const getProjectSectionsThunk = (id) => async (dispatch) => {
 const sectionReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
-    case GET_PROJECT_SECTION:
+    case GET_CARDS:
       newState = {};
-      action.payload.forEach((section) => (newState[section.id] = section));
+      action.payload.forEach((card) => (newState[card.id] = card));
       return newState;
     default:
       return state;
