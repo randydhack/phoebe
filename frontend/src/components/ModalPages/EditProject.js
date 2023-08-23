@@ -16,20 +16,19 @@ function EditProject() {
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(updateProjectThunk(name, description, project.id));
-  }, [name, description, project])
+  }, [name, description, project]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (name.length > 1) {
-       const data = await dispatch(updateProjectThunk(name, description, project.id));
-       setProject(data)
-    }
-
+    e.preventDefault();
+    const data = await dispatch(
+      updateProjectThunk(name, description, project.id)
+    );
+    setProject(data);
   };
 
-  console.log(project)
+  console.log(project);
 
   return (
     <div className="w-[560px] h-[500px] bg-white rounded-[10px]">
@@ -54,9 +53,11 @@ function EditProject() {
               type="text"
               placeholder={project.name}
               value={name}
-              onChange={async (e) => {
-                await setName(e.target.value);
-                handleSubmit(e);
+              onChange={(e) => {
+                if (e.target.value.length >= 1) {
+                  setName(e.target.value);
+                  handleSubmit(e);
+                }
               }}
               className="w-full mr-[10px] px-[15px] py-[8px] outline-none border-[1px] border-[#aeabaa] rounded-[10px] text-[14px] "
             />

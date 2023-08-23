@@ -14,9 +14,9 @@ function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { setProject, project} = useContext(InfoContext);
+  const { setProject } = useContext(InfoContext);
 
-  // const project = useSelector((state) => state.projects)[id];
+  const project = useSelector((state) => state.projects)[id];
   const [projectName, setProjectName] = useState(project?.name);
   const [description, setDescription] = useState(project?.description);
 
@@ -35,7 +35,7 @@ function ProjectOverviewPage({ compType }) {
 
   useEffect(() =>{
     dispatch(updateProjectThunk(projectName, description, id));
-  })
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -63,8 +63,10 @@ function ProjectOverviewPage({ compType }) {
                 type="text"
                 value={projectName}
                 onChange={(e) => {
-                  setProjectName(e.target.value);
-                  handleSubmit(e);
+                  if (e.target.value.length >= 1) {
+                    setProjectName(e.target.value);
+                    handleSubmit(e);
+                  }
                 }}
                 minLength={1}
                 className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
