@@ -16,8 +16,8 @@ function AppHome() {
 
   return (
     projects && (
-      <div className="w-full px-[32px] background-gradient">
-        <div className="overflow-hidden">
+      <div className="w-full px-[32px] background-gradient overflow-scroll pb-[20px]">
+        <div className="h-full">
           <div className="my-[20px]">
             <h1 className="font-medium text-[20px] text-black">Home</h1>
           </div>

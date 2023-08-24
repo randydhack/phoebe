@@ -1,4 +1,4 @@
-import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
+import { RiMenuLine } from 'react-icons/ri'
 import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../context/Modal";
 import { NavLink, useHistory } from "react-router-dom";
@@ -20,15 +20,15 @@ function AppNavigation(props) {
 
   return (
     <section className="bg-[#2E2E30] h-[50px] flex items-center justify-between border-solid border-[#424244] border-b-[1px]">
-      <div className="ml-[20px] flex items-center">
+      <div className="ml-[25px] flex items-center">
         {closeSideMenu ? (
-          <AiOutlineMenuUnfold
-            className="text-[#f5f4f3] h-[25px] w-[25px] cursor-pointer"
+          <RiMenuLine
+            className="text-[#f5f4f3] h-[20px] w-[20px] cursor-pointer "
             onClick={(e) => setCloseSideMenu(!closeSideMenu)}
           />
         ) : (
-          <AiOutlineMenuFold
-            className="text-[#f5f4f3] h-[25px] w-[25px] cursor-pointer"
+          <RiMenuLine
+            className="text-[#f5f4f3] h-[20px] w-[20px] cursor-pointer"
             onClick={(e) => setCloseSideMenu(!closeSideMenu)}
           />
         )}
