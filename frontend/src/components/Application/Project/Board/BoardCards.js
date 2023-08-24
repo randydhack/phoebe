@@ -13,7 +13,7 @@ function BoardCards ({ section }) {
                   <span>
                     <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px]" />
                   </span>
-                  <span className="break-words max-w-[230px] overflow-scroll h-[100px]">
+                  <span className="break-words max-w-[230px] overflow-scroll h-[100px] textarea-cards">
                     {card.title}{" "}
                     dasdksjadlkasjdklasjdksaldjasdklasjdlksajdlsajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldas
                   </span>

@@ -10,3 +10,11 @@
     content: "Write a task name";
     color: gray;
 }
+
+.textarea::-webkit-scrollbar {
+    display: none;
+  }
+
+.textarea-cards::-webkit-scrollbar {
+    display: none;
+  }
