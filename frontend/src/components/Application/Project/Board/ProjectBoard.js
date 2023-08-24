@@ -62,7 +62,7 @@ function ProjectBoard() {
                 <BsThreeDots className="cursor-pointer" />
               </div>
             </div>
-            <div className="overflow-x-hidden overflow-y-scroll">
+            <div className="overflow-y-auto h-full overflow-x-hidden">
               {addCard.status && section.id === addCard.id ? (
                 <CreateCard resize={resize} i={i} section={section} title={title} setTitle={setTitle}/>
               ) : null}
