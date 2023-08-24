@@ -9,8 +9,9 @@ import { GoCheckCircle } from "react-icons/go";
 function ProjectBoard() {
   const dispatch = useDispatch();
   const { id } = useParams();
-
   const sections = Object.values(useSelector((state) => state.sections));
+
+  const [cardForm, setCardForm] = useState(false)
 
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
@@ -29,15 +30,17 @@ function ProjectBoard() {
             <div className="flex items-center justify-between p-[10px] w-full">
               <p className="font-medium text-[16px]">{section.name}</p>
               <div className="flex">
-                <HiPlus className="mr-[10px] cursor-pointer" />
+                <HiPlus className="mr-[10px] cursor-pointer" onClick={e => setCardForm(!cardForm)}/>
                 <BsThreeDots className="cursor-pointer" />
               </div>
             </div>
             <div className="overflow-x-hidden overflow-y-scroll">
+                {cardForm && <form className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
 
+                    </form>}
               {section.Cards.map((card, i) => {
                 return (
-                  <div className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
+                  <div key={i} className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
                     <span className="break-normal max-w-[270px] break-words flex">
                       <span><GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[3px]" /></span>
                       <span className="break-words max-w-[230px]">{card.title} dasdksjadlkasjdklasjdksaldjasdklasjdlksajdlsajdklajkldas</span>

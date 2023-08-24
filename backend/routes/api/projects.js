@@ -27,11 +27,15 @@ router.get("/:id", requireAuth, async (req, res, next) => {
   // Finds project by id
   const project = await Project.findOne({
     where: { id: req.params.id },
-    include: {
+    include: [{
       model: Member,
       as: "Members",
       include: { model: User, as: "User" },
-    },
+
+    },{
+      model: User,
+      as: 'Owner'
+    }]
   });
   // Finds if user is a member of the project
   const member = await Member.findOne({
