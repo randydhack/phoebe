@@ -6,7 +6,7 @@ function HomeProjectBox({projects}) {
 
   return (
     projects && (
-      <div className="w-[550px] bg-white m-[5px] max-h-[350px] h-[350px] rounded-[10px] border-[1px] border-[#424244] overflow-scroll">
+      <div className="w-[550px] bg-white m-[5px] max-h-[350px] h-[350px] rounded-[10px] hover:border-[1px] hover:border-[#42424467] hover:ease-out duration-100 overflow-scroll hover:shadow-lg shadow-[0_0_1px_1px_white]">
         <div className="m-[20px]">
           <p className="font-medium text-[20px] text-black">Projects</p>
           <div className="grid grid-cols-2 mt-[10px]">
