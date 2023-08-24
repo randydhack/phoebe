@@ -12,17 +12,20 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(null);
 
-  if (userSession) return <Redirect to="home" />;
+  if (userSession) return <Redirect to="/home" />;
 
   const demoHandleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(
+    const data = await dispatch(
       login({
         credential: "demo@aa.io",
         password: "password",
       })
     );
-    return history.push("/home");
+    if (data) {
+
+      return history.push("/home");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -67,7 +70,7 @@ function LoginPage() {
           <div className="flex flex-col w-full">
             <div
               className="border-solid border-[#cfcbcb] border-[1px] cursor-pointer text-[16px] h-[48px] px-[16px] leading-[48px] w-full flex items-center justify-center rounded-[5px] mb-[20px]"
-              onClick={demoHandleSubmit}
+              onClick={e=> demoHandleSubmit(e)}
             >
               Continue with Demo
             </div>
