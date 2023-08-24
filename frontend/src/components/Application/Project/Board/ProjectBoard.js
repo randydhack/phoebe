@@ -11,7 +11,7 @@ function ProjectBoard() {
   const { id } = useParams();
   const sections = Object.values(useSelector((state) => state.sections));
 
-  const [cardForm, setCardForm] = useState(false)
+  const [addCard, setAddCard] = useState({ id: null, status: false })
 
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
@@ -30,14 +30,14 @@ function ProjectBoard() {
             <div className="flex items-center justify-between p-[10px] w-full">
               <p className="font-medium text-[16px]">{section.name}</p>
               <div className="flex">
-                <HiPlus className="mr-[10px] cursor-pointer" onClick={e => setCardForm(!cardForm)}/>
+                <HiPlus className="mr-[10px] cursor-pointer" onClick={e => setAddCard({id: section.id, status: !addCard.status})}/>
                 <BsThreeDots className="cursor-pointer" />
               </div>
             </div>
             <div className="overflow-x-hidden overflow-y-scroll">
-                {cardForm && <form className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
+                {addCard.status && section.id === addCard.id ? <form className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
 
-                    </form>}
+                    </form> : null}
               {section.Cards.map((card, i) => {
                 return (
                   <div key={i} className="w-[280px] bg-white rounded-[8px] h-fit my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]">
