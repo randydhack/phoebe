@@ -4,11 +4,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import projectReducer from './projects';
 import memberReducer from './members'
+import sectionReducer from "./sections";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectReducer,
-  members: memberReducer
+  members: memberReducer,
+  sections: sectionReducer
 
 });
 

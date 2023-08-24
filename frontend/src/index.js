@@ -8,9 +8,12 @@ import App from "./App";
 import configureStore from "./store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
-import * as projectActions from './store/projects'
-import * as memberActions from './store/members'
+import * as projectActions from "./store/projects";
+import * as memberActions from "./store/members";
+import * as sectionActions from './store/sections'
+
 import { ModalProvider } from "./context/Modal";
+import { InfoProvider } from "./context/InfoContext";
 
 const store = configureStore();
 
@@ -21,17 +24,20 @@ if (process.env.NODE_ENV !== "production") {
   window.store = store;
   window.sessionActions = sessionActions;
   window.projectActions = projectActions;
-  window.memberActions = memberActions
+  window.memberActions = memberActions;
+  window.sectionActions = sectionActions;
 }
 
 function Root() {
   return (
     <ReduxProvider store={store}>
-      <ModalProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ModalProvider>
+      <InfoProvider>
+        <ModalProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ModalProvider>
+      </InfoProvider>
     </ReduxProvider>
   );
 }
