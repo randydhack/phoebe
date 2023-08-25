@@ -13,6 +13,7 @@ import { updateProjectThunk } from "../../../store/projects";
 function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const { id } = useParams();
   const { setProject, project } = useContext(InfoContext);
 
@@ -35,7 +36,7 @@ function ProjectOverviewPage({ compType }) {
 
   useEffect(() => {
     dispatch(updateProjectThunk(projectName, description, id));
-  }, [projectName, description]);
+  }, [projectName, description, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +44,9 @@ function ProjectOverviewPage({ compType }) {
   };
 
   //   bg-[#1f1e21]
+
+
+
   return (
     project1 && (
       <div className="bg-[white] w-full h-full">

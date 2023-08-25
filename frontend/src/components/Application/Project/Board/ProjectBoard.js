@@ -8,16 +8,18 @@ import { HiPlus } from "react-icons/hi";
 import "./ProjectBoard.css";
 import BoardCards from "./BoardCards";
 import CreateCard from "./CreateCard";
+import { createCardThunk } from "../../../../store/cards";
 
 function ProjectBoard() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const sections = Object.values(useSelector((state) => state.sections));
 
-  const inside = useRef();
-  const outside = useRef(null);
+  const insideRef = useRef();
+  const outsideRef = useRef(null);
 
   const [addCard, setAddCard] = useState({ id: null, status: false });
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
@@ -31,17 +33,36 @@ function ProjectBoard() {
 
     if (newHeight < 100) return newHeight;
   }
+
   const resize = () => {
     let textarea = document.querySelector(".textarea");
-
     textarea.addEventListener("keyup", () => {
-      textarea.style.height = calcHeight(textarea.value) + "px";
+      textarea.style.height = calcHeight(title) + "px";
     });
   };
 
-//   const scrollToCreateCard = () => {
-//     document.querySelector(`.createCard`).scrollIntoView()
-//   };
+  const handleClickOutside = async (event) => {
+    if (insideRef.current && insideRef.current.contains(event.target)) {
+      return;
+    }
+
+    if (outsideRef.current && !outsideRef.current.contains(event.target)) {
+        console.log(title !== null, 'dasdsad')
+
+        if (title !== null) {
+            await dispatch(createCardThunk(title, addCard.id, id));
+        }
+        setAddCard({ id: null, status: false });
+        setTitle('')
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [addCard, title]);
 
   return (
     sections && (
@@ -60,8 +81,9 @@ function ProjectBoard() {
                     className="mr-[10px] cursor-pointer"
                     onClick={(e) => {
                       setAddCard({ id: section.id, status: !addCard.status });
-                    //   scrollToCreateCard();
+                      //   scrollToCreateCard();
                     }}
+                    forwardRef={insideRef}
                   />
                   <BsThreeDots className="cursor-pointer" />
                 </div>
@@ -74,6 +96,9 @@ function ProjectBoard() {
                     i={i}
                     section={section}
                     setAddCard={setAddCard}
+                    title={title}
+                    setTitle={setTitle}
+                    outsideRef={outsideRef}
                   />
                 ) : null}
 
