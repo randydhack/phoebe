@@ -49,7 +49,7 @@ function ProjectOverviewPage({ compType }) {
 
   return (
     project1 && (
-      <div className="bg-[white] w-full h-full">
+      <>
         {/* Overview Info and Navigation */}
         <div className="bg-[white] w-full h-[100px] px-[20px] border-b-[1px] border-[#ECEAE9]">
           <div className="flex p-[12px] items-center w-full">
@@ -104,7 +104,7 @@ function ProjectOverviewPage({ compType }) {
           />
         )}
         {compType === "board" && <ProjectBoard />}
-      </div>
+        </>
     )
   );
 }

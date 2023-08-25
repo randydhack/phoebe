@@ -19,7 +19,7 @@ function ProjectBoard() {
   const outsideRef = useRef(null);
 
   const [addCard, setAddCard] = useState({ id: null, status: false });
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
@@ -27,8 +27,7 @@ function ProjectBoard() {
 
   // Dealing with Textarea Height
   function calcHeight(value) {
-
-    const numberOfLineBreaks = (value.match(/.{35}/g) || 0).length
+    const numberOfLineBreaks = (value.match(/.{35}/g) || 0).length;
     // const numberOfLineBreaks = (value.match(/\n/g) || []).length;
     // min-height + lines x line-height + padding + border
 
@@ -43,7 +42,6 @@ function ProjectBoard() {
     textarea.addEventListener("keyup", () => {
       textarea.style.height = calcHeight(title) + "px";
     });
-
   };
 
   const handleClickOutside = async (event) => {
@@ -52,12 +50,11 @@ function ProjectBoard() {
     }
 
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
-
-        if (title.length !== 0) {
-            await dispatch(createCardThunk(title, addCard.id, id));
-        }
-        setAddCard({ id: null, status: false });
-        setTitle('')
+      if (title.length !== 0) {
+        await dispatch(createCardThunk(title, addCard.id, id));
+      }
+      setAddCard({ id: null, status: false });
+      setTitle("");
     }
   };
 
@@ -70,48 +67,58 @@ function ProjectBoard() {
 
   return (
     sections && (
-      <div className="pt-[20px] px-[10px] h-full flex bg-[#F9F8F8]">
-        {/* ---------------- SECTIONS MAPPING -------------------- */}
-        {sections.map((section, i) => {
-          return (
-            <div
-              key={i}
-              className="h-full w-[300px] mx-[10px] rounded-[5px] flex flex-col items-center border-[#ECEAE9] border-solid border-[1px]"
-            >
-              <div className="flex items-center justify-between p-[10px] w-full">
-                <p className="font-medium text-[16px]">{section.name}</p>
-                <div className="flex">
-                  <HiPlus
-                    className="mr-[10px] cursor-pointer"
-                    onClick={(e) => {
-                      setAddCard({ id: section.id, status: !addCard.status });
-                      //   scrollToCreateCard();
-                    }}
-                    forwardRef={insideRef}
-                  />
-                  <BsThreeDots className="cursor-pointer" />
+      <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8]">
+        <div className="absolute h-full w-full">
+          <div className="flex h-[87%] z-0 flex-auto overflow-hidden mb-[20px]">
+            {/* ---------------- SECTIONS MAPPING -------------------- */}
+            {sections.map((section, i) => {
+              return (
+                <div
+                  key={i}
+                  className="w-[300px] mx-[10px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center border-[#ECEAE9] border-solid border-[1px]"
+                >
+                  <div className="h-full overflow-scroll flex flex-col">
+                    <div className="flex items-center justify-between p-[10px] w-full">
+                      <p className="font-medium text-[16px]">{section.name}</p>
+                      <div className="flex">
+                        <HiPlus
+                          className="mr-[10px] cursor-pointer"
+                          onClick={(e) => {
+                            setAddCard({
+                              id: section.id,
+                              status: !addCard.status,
+                            });
+                            //   scrollToCreateCard();
+                          }}
+                          forwardRef={insideRef}
+                        />
+                        <BsThreeDots className="cursor-pointer" />
+                      </div>
+                    </div>
+                    <div className="overflow-scroll cardContainer">
+                        <div className="overflow-scroll">
+                      {/* ---------------------------- CREATE CARD ---------------------------- */}
+                      {addCard.status && section.id === addCard.id ? (
+                        <CreateCard
+                          resize={resize}
+                          i={i}
+                          section={section}
+                          setAddCard={setAddCard}
+                          title={title}
+                          setTitle={setTitle}
+                          outsideRef={outsideRef}
+                        />
+                      ) : null}
+                      {/* ---------------------------- CARDS MAPPING ---------------------------- */}
+                      <BoardCards section={section} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="overflow-y-auto h-full overflow-x-hidden cardContainer">
-                {/* ---------------------------- CREATE CARD ---------------------------- */}
-                {addCard.status && section.id === addCard.id ? (
-                  <CreateCard
-                    resize={resize}
-                    i={i}
-                    section={section}
-                    setAddCard={setAddCard}
-                    title={title}
-                    setTitle={setTitle}
-                    outsideRef={outsideRef}
-                  />
-                ) : null}
-
-                {/* ---------------------------- CARDS MAPPING ---------------------------- */}
-                <BoardCards section={section} />
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        </div>
       </div>
     )
   );

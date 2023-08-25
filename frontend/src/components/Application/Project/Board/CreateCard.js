@@ -52,15 +52,6 @@ function CreateCard(props) {
               {user.lastName[0].toUpperCase()}
             </div>
           )}
-          <div
-            onClick={(e) => {
-              cardHandleSubmit(e);
-              setAddCard({ id: null, status: false });
-            }}
-            className="hover:bg-gray-500 cursor-pointer"
-          >
-            create task
-          </div>
         </div>
       </form>
     </>
