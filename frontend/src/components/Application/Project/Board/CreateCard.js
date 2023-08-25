@@ -38,15 +38,15 @@ function CreateCard(props) {
             <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
           </span>
           <ContentEditable
-            className="textarea break-words max-w-[230px] h-auto resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
+            className="textarea break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
             innerRef={contentEditable}
             onChange={(e) => {
               //Whatever you put here will act just like an onChange event
               setTitle(e.target.value);
               resize();
-              // setTitle(e.target.innerHTML);
             }}
             html={title}
+            role='textbox'
           />
         </div>
         <div className="mt-[10px] flex justify-between cursor-default">

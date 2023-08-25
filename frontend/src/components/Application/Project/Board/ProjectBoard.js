@@ -27,18 +27,26 @@ function ProjectBoard() {
 
   // Dealing with Textarea Height
   function calcHeight(value) {
-    const numberOfLineBreaks = (value.match(/\n/g) || []).length;
+    console.log(value, 'value')
+    let numberOfLineBreaks = 0;
+    numberOfLineBreaks = (value.match(/.{35}/g) || 0).length
+    // const numberOfLineBreaks = (value.match(/\n/g) || []).length;
     // min-height + lines x line-height + padding + border
+    console.log(numberOfLineBreaks)
     const newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
-
-    if (newHeight < 100) return newHeight;
+    console.log(newHeight)
+    return newHeight;
   }
 
   const resize = () => {
     let textarea = document.querySelector(".textarea");
+
+    console.log(title)
     textarea.addEventListener("keyup", () => {
       textarea.style.height = calcHeight(title) + "px";
     });
+
+    console.log(textarea.style.height)
   };
 
   const handleClickOutside = async (event) => {
@@ -47,7 +55,6 @@ function ProjectBoard() {
     }
 
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
-        console.log(title !== null, 'dasdsad')
 
         if (title !== null) {
             await dispatch(createCardThunk(title, addCard.id, id));
