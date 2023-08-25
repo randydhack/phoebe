@@ -18,7 +18,7 @@ function Main(props) {
 
   return (
     <>
-      <div className="">
+      <div className="absolute w-full">
         <Modal />
         <div>
           <section>

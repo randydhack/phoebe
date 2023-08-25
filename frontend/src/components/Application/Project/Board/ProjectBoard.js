@@ -69,7 +69,7 @@ function ProjectBoard() {
     sections && (
       <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8]">
         <div className="absolute h-full w-full">
-          <div className="flex h-[87%] z-0 flex-auto overflow-hidden mb-[20px]">
+          <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-hidden mb-[20px]">
             {/* ---------------- SECTIONS MAPPING -------------------- */}
             {sections.map((section, i) => {
               return (
@@ -111,6 +111,7 @@ function ProjectBoard() {
                       ) : null}
                       {/* ---------------------------- CARDS MAPPING ---------------------------- */}
                       <BoardCards section={section} />
+                      <div className="mb-[20px]">ADD CARD</div>
                       </div>
                     </div>
                   </div>
