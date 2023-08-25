@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { GoCheckCircle } from "react-icons/go";
 import { createCardThunk } from "../../../../store/cards";
 import { useParams } from "react-router-dom";
-import ContentEditable from "react-contenteditable";
 
 function CreateCard(props) {
   const dispatch = useDispatch();
@@ -11,7 +10,6 @@ function CreateCard(props) {
 
   const { resize, i, section, setAddCard, title, setTitle, outsideRef } = props;
   const user = useSelector((state) => state.session.user);
-  const contentEditable = useRef();
 
   const cardHandleSubmit = async (e) => {
     e.preventDefault();
@@ -37,16 +35,14 @@ function CreateCard(props) {
           <span>
             <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
           </span>
-          <ContentEditable
+          <textarea
             className="textarea break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
-            innerRef={contentEditable}
+            value={title}
             onChange={(e) => {
               //Whatever you put here will act just like an onChange event
               setTitle(e.target.value);
               resize();
             }}
-            html={title}
-            role='textbox'
           />
         </div>
         <div className="mt-[10px] flex justify-between cursor-default">
