@@ -5,12 +5,14 @@ import sessionReducer from "./session";
 import projectReducer from './projects';
 import memberReducer from './members'
 import sectionReducer from "./sections";
+import cardReducer from './cards'
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectReducer,
   members: memberReducer,
-  sections: sectionReducer
+  sections: sectionReducer,
+  cards: cardReducer
 
 });
 

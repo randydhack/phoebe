@@ -27,15 +27,17 @@ router.get("/:id", requireAuth, async (req, res, next) => {
   // Finds project by id
   const project = await Project.findOne({
     where: { id: req.params.id },
-    include: [{
-      model: Member,
-      as: "Members",
-      include: { model: User, as: "User" },
-
-    },{
-      model: User,
-      as: 'Owner'
-    }]
+    include: [
+      {
+        model: Member,
+        as: "Members",
+        include: { model: User, as: "User" },
+      },
+      {
+        model: User,
+        as: "Owner",
+      },
+    ],
   });
   // Finds if user is a member of the project
   const member = await Member.findOne({
@@ -56,14 +58,17 @@ router.get("/:id", requireAuth, async (req, res, next) => {
 // **** GET ALL SECTIONS BY PROJECT ID ****
 router.get("/:id/sections", async (req, res) => {
   const sections = await Section.findAll({
-    where: { projectId: req.params.id }, include: {
+    where: { projectId: req.params.id },
+    include: {
       model: Card,
-      as: 'Cards',
+      as: "Cards",
+      order: [["id", "DESC"]],
+      separate: true,
       include: {
         model: User,
-        as: 'User'
-      }
-    }
+        as: "User",
+      },
+    },
   });
 
   res.status(200).json(sections);
@@ -72,12 +77,13 @@ router.get("/:id/sections", async (req, res) => {
 // **** GET ALL CARDS BY PROJECT ID ****
 router.get("/:id/cards", requireAuth, async (req, res, next) => {
   const cards = await Card.findAll({
-    where: { projectId: 1 },
+    where: { projectId: req.params.id },
     include: {
       model: Project,
       as: "Project",
       attributes: ["id", "name", "ownerId"],
     },
+    order: [["id", "desc"]],
   });
 
   if (!cards) {

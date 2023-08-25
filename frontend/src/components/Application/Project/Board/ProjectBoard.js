@@ -18,7 +18,7 @@ function ProjectBoard() {
   const outside = useRef(null);
 
   const [addCard, setAddCard] = useState({ id: null, status: false });
-  const [title, setTitle] = useState("");
+
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
   }, [id]);
@@ -39,6 +39,10 @@ function ProjectBoard() {
     });
   };
 
+//   const scrollToCreateCard = () => {
+//     document.querySelector(`.createCard`).scrollIntoView()
+//   };
+
   return (
     sections && (
       <div className="pt-[20px] px-[10px] h-full flex bg-[#F9F8F8]">
@@ -56,21 +60,20 @@ function ProjectBoard() {
                     className="mr-[10px] cursor-pointer"
                     onClick={(e) => {
                       setAddCard({ id: section.id, status: !addCard.status });
-                      setTitle("");
+                    //   scrollToCreateCard();
                     }}
                   />
                   <BsThreeDots className="cursor-pointer" />
                 </div>
               </div>
-              <div className="overflow-y-auto h-full overflow-x-hidden">
+              <div className="overflow-y-auto h-full overflow-x-hidden cardContainer">
                 {/* ---------------------------- CREATE CARD ---------------------------- */}
                 {addCard.status && section.id === addCard.id ? (
                   <CreateCard
                     resize={resize}
                     i={i}
                     section={section}
-                    title={title}
-                    setTitle={setTitle}
+                    setAddCard={setAddCard}
                   />
                 ) : null}
 

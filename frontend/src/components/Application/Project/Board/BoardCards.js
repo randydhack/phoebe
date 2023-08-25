@@ -11,10 +11,9 @@ function BoardCards({ section }) {
             <span className="break-normal max-w-[270px] break-words flex min-w-0">
               <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px]" />
               <div
-                className="break-words w-[230px] h-[100px] max-h-[100px] textarea-cards text-ellipsis overflow-hidden"
+                className="break-words w-[230px] max-h-[100px] textarea-cards text-ellipsis overflow-hidden"
               >
-                {card.title}{" "}
-                dasdksjadlkasjdklasjdksaldjasdklasjdlksajdlsajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldassajdklajkldas
+                {card.title}
               </div>
             </span>
             <div className="mt-[10px]">
