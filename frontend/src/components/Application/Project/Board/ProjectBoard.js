@@ -27,8 +27,8 @@ function ProjectBoard() {
 
   // Dealing with Textarea Height
   function calcHeight(value) {
-    let numberOfLineBreaks = 0;
-    numberOfLineBreaks = (value.match(/.{35}/g) || 0).length
+
+    const numberOfLineBreaks = (value.match(/.{35}/g) || 0).length
     // const numberOfLineBreaks = (value.match(/\n/g) || []).length;
     // min-height + lines x line-height + padding + border
 
