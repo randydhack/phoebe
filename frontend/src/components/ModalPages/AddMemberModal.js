@@ -8,6 +8,7 @@ function AddMemberModal() {
   const { project } = useContext(InfoContext);
   const { setType } = useContext(ModalContext)
 
+  console.log(project)
 
   return (
     <div className="w-[500px] h-[350px] bg-white rounded-[10px]">

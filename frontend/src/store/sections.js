@@ -1,8 +1,8 @@
 import { csrfFetch } from "./csrf";
 
 // Action Type
-const GET_PROJECT_SECTION = "projects/GET_PROJECT_SECTION ";
-
+const GET_PROJECT_SECTION = "sections/GET_PROJECT_SECTION ";
+const ADD_CARD_TO_SECTION = "sections/ADD_CARD_TO_SECTION"
 // Action Creators
 
 const getProjectSectionsAction = (sections) => ({
@@ -22,8 +22,6 @@ export const getProjectSectionsThunk = (id) => async (dispatch) => {
     return res.error;
   }
 };
-
-
 
 // Initial state
 

@@ -1,0 +1,30 @@
+.textarea {
+    width: 100%;
+    overflow: hidden;
+    resize: none;
+    min-height: 40px;
+    line-height: 20px;
+  }
+
+.textarea[contentEditable]:empty::before {
+    content: "Write a task name";
+    color: gray;
+}
+
+.textarea::-webkit-scrollbar {
+    display: none;
+  }
+
+.textarea-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+.textarea-cards {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+.cardContainer::-webkit-scrollbar {
+  display: none;
+}

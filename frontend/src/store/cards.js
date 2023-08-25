@@ -1,43 +1,50 @@
 import { csrfFetch } from "./csrf";
+import { addCardToSectionAction, getProjectSectionsThunk } from "./sections";
 
 // Action Type
-const GET_CARDS = "projects/GET_CARDS ";
+const CREATE_CARDS = "cards/CREATE_CARDS ";
 
 // Action Creators
 
-const getProjectSectionsAction = (sections) => ({
-  type: GET_CARDS,
-  payload: sections,
+const createCardAction = (card) => ({
+  type: CREATE_CARDS,
+  payload: card,
 });
 
 // Thunk action creators
-export const getProjectSectionsThunk = (id) => async (dispatch) => {
-  const res = await fetch(`/api/projects/${id}/cards`);
+export const createCardThunk = (title, sectionId, projectId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/cards`, {
+    method: "POST",
+    body: JSON.stringify({
+        title,
+        sectionId,
+        projectId
+    }),
+  });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getProjectSectionsAction(data));
+    await dispatch(createCardAction(data));
+    await dispatch(getProjectSectionsThunk(projectId))
     return data;
   } else {
     return res.error;
   }
 };
 
-
-
 // Initial state
 
 // Reducer
-const sectionReducer = (state = {}, action) => {
+const cardReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
-    case GET_CARDS:
-      newState = {};
-      action.payload.forEach((card) => (newState[card.id] = card));
+    case CREATE_CARDS:
+      newState = {...state};
+      newState[action.payload.id] = action.payload
       return newState;
     default:
       return state;
   }
 };
 
-export default sectionReducer;
+export default cardReducer;
