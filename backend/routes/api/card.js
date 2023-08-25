@@ -24,7 +24,7 @@ router.get('/:id/comments', requireAuth, async (req, res, next) => {
 // ------------------------------------ POST ENDPOINTS ---------------------------------------------
 
 router.post("/", requireAuth, async (req, res, next) => {
-  const { sectionId, title, description, projectId } = req.body;
+  const { sectionId, title, projectId } = req.body;
 
   const section = await Section.findByPk(sectionId);
 
@@ -38,7 +38,6 @@ router.post("/", requireAuth, async (req, res, next) => {
     sectionId,
     title,
     userId: req.user.id,
-    description,
     projectId,
   });
 

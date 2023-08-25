@@ -1,13 +1,17 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsPersonWorkspace } from "react-icons/bs";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { logout } from "../../../store/session";
 import moment from "moment";
-
 import { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 
 function ProfileIcon() {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
   const user = useSelector((state) => state.session.user);
 
   const [openDropdown, setToggleDropdown] = useState(false);
@@ -27,6 +31,12 @@ function ProfileIcon() {
       setToggleDropdown(false);
     }
   };
+
+  const logoutHandler = async (e) => {
+    e.preventDefault()
+    await dispatch(logout())
+    return history.push('/login')
+  }
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -79,6 +89,12 @@ function ProfileIcon() {
               <IoSettingsOutline className="mr-[10px] text-[18px]" />
               <div className="text-white">Settings</div>
             </div>
+
+            <div className="bg-[#454547] h-[1px] w-full my-[5px]"></div>
+
+            <div onClick={e => logoutHandler(e)}>
+              logout
+              </div>
           </div>
         )}
       </div>
