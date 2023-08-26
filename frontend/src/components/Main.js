@@ -18,20 +18,28 @@ function Main(props) {
 
   return (
     <>
-      <Modal />
-      <div className="h-screen overflow-hidden">
-        <section>
-          <AppNavigation
-            setCloseSideMenu={setCloseSideMenu}
-            closeSideMenu={closeSideMenu}
-          />
-        </section>
-        <section className="flex h-full">
-          {closeSideMenu && <SideMenu />}
-          {compType === "home" && <AppHome />}
-          {compType === "project page" && <ProjectOverviewPage compType='overview'/>}
-          {compType === "project board" && <ProjectOverviewPage compType='board'/>}
-        </section>
+      <div className="absolute w-full">
+        <Modal />
+        <div>
+          <section>
+            <AppNavigation
+              setCloseSideMenu={setCloseSideMenu}
+              closeSideMenu={closeSideMenu}
+            />
+          </section>
+        </div>
+        <div className="flex flex-auto">
+          <section>{closeSideMenu && <SideMenu />}</section>
+          <section className="w-full flex flex-col flex-1">
+            {compType === "home" && <AppHome />}
+            {compType === "project page" && (
+              <ProjectOverviewPage compType="overview" />
+            )}
+              {compType === "project board" && (
+                <ProjectOverviewPage compType="board" />
+              )}
+          </section>
+        </div>
       </div>
     </>
   );

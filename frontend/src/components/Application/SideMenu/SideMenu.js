@@ -8,7 +8,7 @@ function SideMenu() {
 
 
   return (
-    <div className="w-[250px] bg-[#2E2E30] border-solid border-l-[1px] border-r-[1px] border-[#424244]">
+    <div className="w-[250px] bg-[#2E2E30] border-solid border-l-[1px] border-r-[1px] border-[#424244] h-screen overflow-auto">
       <div className="list-none p-[15px]">
         <li className="list-none p-[8px] bg-[#454547] rounded-[10px] mb-[2px]">
         <NavLink to="/home" className="text-white flex items-center">
