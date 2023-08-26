@@ -11,14 +11,6 @@ function CreateCard(props) {
   const { resize, i, section, setAddCard, title, setTitle, outsideRef } = props;
   const user = useSelector((state) => state.session.user);
 
-  const cardHandleSubmit = async (e) => {
-    e.preventDefault();
-    // title, sectionId, projectId
-    if (title !== null) {
-      await dispatch(createCardThunk(title, section.id, id));
-    }
-  };
-
 
   return (
     <>
@@ -39,6 +31,7 @@ function CreateCard(props) {
               setTitle(e.target.value);
               resize();
             }}
+            placeholder="Write a task name"
           />
         </div>
         <div className="mt-[10px] flex justify-between cursor-default">
