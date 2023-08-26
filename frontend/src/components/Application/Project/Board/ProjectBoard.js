@@ -80,9 +80,9 @@ function ProjectBoard() {
                   <div className="h-full overflow-scroll flex flex-col">
                     <div className="flex items-center justify-between p-[10px] w-full">
                       <p className="font-medium text-[16px]">{section.name}</p>
-                      <div className="flex">
+                      <div className="flex items-center">
                         <BsPlus
-                          className="mr-[10px] cursor-pointer text-[25px]"
+                          className="mr-[10px] cursor-pointer text-[25px] hover:bg-[#ECEAE9] rounded-[5px]"
                           onClick={(e) => {
                             setAddCard({
                               id: section.id,
@@ -92,7 +92,7 @@ function ProjectBoard() {
                           }}
                           forwardRef={insideRef}
                         />
-                        <BsThreeDots className="cursor-pointer" />
+                        <BsThreeDots className="cursor-pointer hover:bg-[#ECEAE9] rounded-[5px] p-[5px] text-[25px]" />
                       </div>
                     </div>
                     <div className="overflow-scroll cardContainer">
@@ -152,7 +152,7 @@ function ProjectBoard() {
                         ) : null}
 
                         <div
-                          className="mb-[20px] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
+                          className="mb-[5px] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
                           ref={insideRef}
                           onClick={(e) => {
                             console.log(section.id, title, id)

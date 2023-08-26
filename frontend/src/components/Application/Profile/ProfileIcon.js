@@ -4,7 +4,8 @@ import { BsPersonWorkspace } from "react-icons/bs";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { logout } from "../../../store/session";
-import moment from "moment";
+import { IoIosLogOut} from 'react-icons/io'
+
 import { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -65,7 +66,7 @@ function ProfileIcon() {
 
         {!openDropdown ? null : (
           <div
-            className="absolute top-[45px] right-[20px] bg-[#1E1F21] border-[#454547] border-solid border-[1px] w-[240px] rounded-[2px]"
+            className="absolute top-[45px] right-[20px] bg-[#1E1F21] border-[#454547] border-solid border-[1px] w-[240px] rounded-[2px] z-[100]"
             onClick={(e) => e.stopPropagation()}
             ref={dropdownRef}
           >
@@ -92,8 +93,12 @@ function ProfileIcon() {
 
             <div className="bg-[#454547] h-[1px] w-full my-[5px]"></div>
 
-            <div onClick={e => logoutHandler(e)}>
-              logout
+            <div onClick={e => logoutHandler(e)} className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#454547af] items-center hover:text-white text-[#A2A0A2]">
+              <IoIosLogOut className="mr-[10px] text-[18px]"/>
+              <div className="text-white">
+
+              Logout
+              </div>
               </div>
           </div>
         )}
