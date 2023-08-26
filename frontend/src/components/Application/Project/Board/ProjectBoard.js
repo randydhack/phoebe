@@ -5,6 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { getProjectSectionsThunk } from "../../../../store/sections";
 import { BsPlus } from "react-icons/bs";
 import { GoCheckCircle } from "react-icons/go";
+import CreateSection from "../CreateSection";
 
 import "./ProjectBoard.css";
 import BoardCards from "./BoardCards";
@@ -172,14 +173,8 @@ function ProjectBoard() {
                 </div>
               );
             })}
+            <CreateSection />
 
-            <div className="w-[300px]">
-              <div className="p-[5px] m-[5px] flex w-fit items-center cursor-pointer text-[#6D6E6F] hover:text-black ease-in duration-100 hover:bg-[#ECEAE9] rounded-[5px]">
-                <BsPlus className="text-[25px]" />
-                <div className="pr-[8px] text-[16px]">Add Section</div>
-              </div>
-              <div className="gradient-bg"></div>
-            </div>
           </div>
         </div>
       </div>
