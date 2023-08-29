@@ -6,20 +6,20 @@ import { useParams } from "react-router-dom";
 import { getProjectSectionsThunk } from "../../../../store/sections";
 
 function CardDetails() {
-    const { id } = useParams()
-    const dispatch = useDispatch()
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
 
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
-  const sections = Object.values(useSelector((state) => state.sections))
+  const sections = Object.values(useSelector((state) => state.sections));
 
   return (
     <div
-      className="bg-white border-l-[1px] z-30 absolute right-0 top-0 h-full w-[600px]"
+      className="bg-white border-l-[1px] z-30 absolute right-0 top-0 h-full w-[600px] flex flex-col justify-between"
       ref={cardRef}
     >
-      <div>
+      <div className="overflow-hidden overflow-y-scroll">
         <div className="flex items-center">
           <input
             type="text"
@@ -67,19 +67,41 @@ function CardDetails() {
             </div>
           </div>
 
-          <div className="flex">
-            <label className="w-[120px] text-[#6e6d6f] text-[12px]" for='section-dropdown'>
+          <div className="flex mb-[20px]">
+            <label
+              className="w-[120px] text-[#6e6d6f] text-[12px]"
+              for="section-dropdown"
+            >
               Sections
             </label>
-            <select name='section-dropdown' id='section-dropdown' className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[100px]">
+            <select
+              name="section-dropdown"
+              id="section-dropdown"
+              className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[120px] text-ellipsis overflow-hidden whitespace-nowrap"
+            >
               {sections.map((section, i) => {
                 return (
-                    <option key={`${section}${i}`} >{section.name}</option>
-                )
+                  <option
+                    key={`${section}${i}`}
+                    className="text-ellipsis overflow-hidden whitespace-nowrap"
+                  >
+                    {section.name}
+                  </option>
+                );
               })}
             </select>
           </div>
+
+          <div className="relative">
+            <div className="text-[#6e6d6f] text-[12px]">Description</div>
+            <div className="">
+              <textarea className="resize-none w-full h-[150px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]" />
+            </div>
+          </div>
         </div>
+      </div>
+      <div className="border-[#ECEAE9] border-t-[1px] w-full h-[200px]">
+        Comments
       </div>
     </div>
   );

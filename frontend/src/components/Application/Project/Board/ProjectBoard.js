@@ -101,7 +101,7 @@ function ProjectBoard() {
                   >
                     <div className="h-full overflow-scroll flex flex-col w-full">
                       <div className="flex items-center justify-between p-[10px] w-full">
-                        <p className="font-medium text-[16px]">
+                        <p className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden">
                           {section.name}
                         </p>
                         <div className="flex items-center">
