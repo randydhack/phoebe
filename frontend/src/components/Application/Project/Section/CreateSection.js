@@ -22,7 +22,7 @@ function CreateSection() {
         if (sectionName.length > 0) {
             await dispatch(createSectionThunk(id, sectionName))
         }
-      setSectionForm(!sectionForm);
+      setSectionForm(false);
       setSectionName('')
     }
   };
