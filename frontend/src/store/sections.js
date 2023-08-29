@@ -50,14 +50,12 @@ export const createSectionThunk = (id, name) => async (dispatch) => {
 };
 
 export const deleteSectionThunk = (id) => async (dispatch) => {
-  console.log(id)
   const res = await csrfFetch(`/api/sections/${id}`, {
     method: 'DELETE'
   })
 
   if (res.ok) {
     const data = await res.json()
-    console.log(data)
     await dispatch(deleteSectionAction(id))
     // await dispatch(getProjectSectionsThunk(id))
     return data
@@ -77,7 +75,6 @@ const sectionReducer = (state = {}, action) => {
     case CREATE_SECTION:
       newState = { ...state };
       newState[action.payload.id] = action.payload
-      console.log(newState)
       return newState
     case DELETE_SECTION:
       newState = {...state}
