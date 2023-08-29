@@ -6,12 +6,15 @@ export const InfoContext = createContext();
 export const InfoProvider = ({ children }) => {
 
     const [project, setProject] = useState(null)
+    const [cardDetail, setCardDetail] = useState(null)
 
     return (
         <InfoContext.Provider
           value={{
             project,
-            setProject
+            setProject,
+            cardDetail,
+            setCardDetail
           }}
         >
           {children}

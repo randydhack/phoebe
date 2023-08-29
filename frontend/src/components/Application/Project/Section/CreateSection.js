@@ -23,6 +23,7 @@ function CreateSection() {
             await dispatch(createSectionThunk(id, sectionName))
         }
       setSectionForm(!sectionForm);
+      setSectionName('')
     }
   };
 
@@ -34,7 +35,7 @@ function CreateSection() {
   }, [sectionName]);
 
   return (
-    <div className="w-full">
+    <div>
     <div className="w-[300px]">
       {!sectionForm ? (
         <div
@@ -46,17 +47,17 @@ function CreateSection() {
           <div className="pr-[8px] text-[16px] overflow-hidden">Add Section</div>
         </div>
       ) : (
-        <form id="sectionForm" className="mt-[5px]">
+        <div id="sectionForm" className="mt-[5px]">
           <input
             ref={outsideSectionRef}
             value={sectionName}
             onClick={(e) =>
                 e.stopPropagation()}
             onChange={e =>  setSectionName(e.target.value)}
-            className="p-[10px] w-full rounded-[5px] h-[35px] font-semibold text-[16px]"
+            className="p-[10px] rounded-[5px] h-[35px] font-semibold text-[16px]"
             placeholder="New Section"
           />
-        </form>
+        </div>
       )}
       <div className="gradient-bg"></div>
     </div>

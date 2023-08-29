@@ -8,8 +8,8 @@ import { GoCheckCircle } from "react-icons/go";
 import CreateSection from "../Section/CreateSection";
 
 import "./ProjectBoard.css";
-import BoardCards from "./BoardCards";
-import CreateCard from "./CreateCard";
+import BoardCards from "../Cards/BoardCards";
+import CreateCard from "../Cards/CreateCard";
 import { createCardThunk } from "../../../../store/cards";
 import SectionDropdown from "../Section/SectionDropdown";
 
@@ -68,9 +68,9 @@ function ProjectBoard() {
           )
         );
       }
+      setTitle("");
       setAddCard({ id: null, status: false });
       setCreateTaskBottom({ id: null, status: false, bottom: false });
-      setTitle("");
     }
   };
 
@@ -108,7 +108,7 @@ function ProjectBoard() {
                           }}
                           forwardRef={insideRef}
                         />
-                        <SectionDropdown />
+                        <SectionDropdown sectionId={section.id}/>
                       </div>
                     </div>
                     <div className="overflow-scroll cardContainer">

@@ -3,7 +3,7 @@ import { GoCheckCircle } from "react-icons/go";
 function BoardCards({ section }) {
   return (
     <>
-      {section.Cards.map((card, i) => {
+      {section.Cards ? section.Cards.map((card, i) => {
         return (
           <div
             key={i}
@@ -29,7 +29,7 @@ function BoardCards({ section }) {
             </div>
           </div>
         );
-      })}
+      }): null}
     </>
   );
 }

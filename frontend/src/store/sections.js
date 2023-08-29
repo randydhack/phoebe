@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // Action Type
 const GET_PROJECT_SECTION = "sections/GET_PROJECT_SECTION ";
 const CREATE_SECTION = "sections/CREATE_SECTION";
+const DELETE_SECTION = "sections/DELETE_SECTION";
 // Action Creators
 
 const getProjectSectionsAction = (sections) => ({
@@ -13,6 +14,11 @@ const getProjectSectionsAction = (sections) => ({
 const createSectionAction = (section) => ({
   type: CREATE_SECTION,
   payload: section,
+});
+
+const deleteSectionAction = (id) => ({
+  type: DELETE_SECTION,
+  payload: id,
 });
 
 // Thunk action creators
@@ -38,10 +44,25 @@ export const createSectionThunk = (id, name) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(createSectionAction(data));
+    await dispatch(createSectionAction(data));
     return data;
   }
 };
+
+export const deleteSectionThunk = (id) => async (dispatch) => {
+  console.log(id)
+  const res = await csrfFetch(`/api/sections/${id}`, {
+    method: 'DELETE'
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    console.log(data)
+    await dispatch(deleteSectionAction(id))
+    // await dispatch(getProjectSectionsThunk(id))
+    return data
+  }
+}
 
 // Initial state
 
@@ -55,8 +76,13 @@ const sectionReducer = (state = {}, action) => {
       return newState;
     case CREATE_SECTION:
       newState = { ...state };
-      console.log(newState);
       newState[action.payload.id] = action.payload
+      console.log(newState)
+      return newState
+    case DELETE_SECTION:
+      newState = {...state}
+      delete newState[action.payload]
+      return newState
     default:
       return state;
   }

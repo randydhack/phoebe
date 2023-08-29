@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
+import { deleteSectionThunk } from "../../../../store/sections";
 
-function SectionDropdown() {
-  const history = useHistory();
-  const { id } = useParams();
+function SectionDropdown({sectionId}) {
+    const dispatch = useDispatch()
 
   const [openDropdown, setToggleDropdown] = useState(false);
   const navRef = useRef();
@@ -18,6 +18,10 @@ function SectionDropdown() {
       setToggleDropdown(false);
   };
 
+  const closeDropdown = () => {
+    setToggleDropdown(!openDropdown)
+  }
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
     return () => {
@@ -25,8 +29,9 @@ function SectionDropdown() {
     };
   }, [openDropdown]);
 
-  const handleDeleteSection = async () => {
-
+  const handleDeleteSection = async (e) => {
+    e.preventDefault()
+    await dispatch(deleteSectionThunk(sectionId))
   };
 
   return (
@@ -34,7 +39,7 @@ function SectionDropdown() {
       <BsThreeDots
         className="cursor-pointer hover:bg-[#ECEAE9] rounded-[5px] p-[5px] text-[25px]"
         onClick={(e) => {
-          setToggleDropdown(!openDropdown);
+          closeDropdown();
         }}
         forwardref={navRef}
       />
@@ -46,7 +51,7 @@ function SectionDropdown() {
 
             <div>Rename Section</div>
           </div>
-          <div className="mb-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer text-red-600 flex items-center px-[15px] w-full">
+          <div className="mb-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer text-red-600 flex items-center px-[15px] w-full" onClick={e => {handleDeleteSection(e); closeDropdown()}}>
             <PiTrashThin className="mr-[10px] text-[18px]" />
             <div>Delete Section</div>
           </div>
