@@ -5,12 +5,13 @@ import { BsThreeDots } from "react-icons/bs";
 import { getProjectSectionsThunk } from "../../../../store/sections";
 import { BsPlus } from "react-icons/bs";
 import { GoCheckCircle } from "react-icons/go";
-import CreateSection from "../CreateSection";
+import CreateSection from "../Section/CreateSection";
 
 import "./ProjectBoard.css";
 import BoardCards from "./BoardCards";
 import CreateCard from "./CreateCard";
 import { createCardThunk } from "../../../../store/cards";
+import SectionDropdown from "../Section/SectionDropdown";
 
 function ProjectBoard() {
   const dispatch = useDispatch();
@@ -21,9 +22,16 @@ function ProjectBoard() {
   const insideRef = useRef();
   const outsideRef = useRef(null);
 
+  const navRef = useRef();
+
   const [addCard, setAddCard] = useState({ id: null, status: false });
   const [title, setTitle] = useState("");
-  const [createTaskBottom, setCreateTaskBottom] = useState({ id: null, status: false, bottom: false });
+  const [createTaskBottom, setCreateTaskBottom] = useState({
+    id: null,
+    status: false,
+    bottom: false,
+  });
+  const [openDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     dispatch(getProjectSectionsThunk(id));
@@ -51,10 +59,17 @@ function ProjectBoard() {
     }
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
       if (title.length !== 0) {
-        await dispatch(createCardThunk(title, (addCard && addCard.id || createTaskBottom && createTaskBottom.id), id));
+        await dispatch(
+          createCardThunk(
+            title,
+            (addCard && addCard.id) ||
+              (createTaskBottom && createTaskBottom.id),
+            id
+          )
+        );
       }
       setAddCard({ id: null, status: false });
-      setCreateTaskBottom({ id: null, status: false, bottom: false })
+      setCreateTaskBottom({ id: null, status: false, bottom: false });
       setTitle("");
     }
   };
@@ -70,7 +85,7 @@ function ProjectBoard() {
     sections && (
       <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8]">
         <div className="absolute h-full w-full">
-          <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-hidden mb-[20px]">
+          <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-x-scroll overflow-y-hidden mb-[20px]">
             {/* ---------------- SECTIONS MAPPING -------------------- */}
             {sections.map((section, i) => {
               return (
@@ -78,7 +93,7 @@ function ProjectBoard() {
                   key={i}
                   className="w-[300px] mx-[10px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
                 >
-                  <div className="h-full overflow-scroll flex flex-col">
+                  <div className="h-full overflow-scroll flex flex-col w-full">
                     <div className="flex items-center justify-between p-[10px] w-full">
                       <p className="font-medium text-[16px]">{section.name}</p>
                       <div className="flex items-center">
@@ -93,11 +108,11 @@ function ProjectBoard() {
                           }}
                           forwardRef={insideRef}
                         />
-                        <BsThreeDots className="cursor-pointer hover:bg-[#ECEAE9] rounded-[5px] p-[5px] text-[25px]" />
+                        <SectionDropdown />
                       </div>
                     </div>
                     <div className="overflow-scroll cardContainer">
-                      <div className="overflow-scroll">
+                      <div className="overflow-scroll items-center flex flex-col justify-center">
                         {/* ---------------------------- CREATE CARD ---------------------------- */}
                         {addCard.status && section.id === addCard.id ? (
                           <CreateCard
@@ -114,9 +129,9 @@ function ProjectBoard() {
                         <BoardCards section={section} />
 
                         {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
-                        {(createTaskBottom.status && createTaskBottom.bottom &&
-                        section.id === createTaskBottom.id)
-                         ? (
+                        {createTaskBottom.status &&
+                        createTaskBottom.bottom &&
+                        section.id === createTaskBottom.id ? (
                           <form
                             className="w-[280px] h-auto bg-white rounded-[8px] my-[5px] border-solid border-[1px] shadow-sm border-gray-400 hover:ease-out duration-200 p-[10px]"
                             onClick={(e) => e.stopPropagation()}
@@ -153,18 +168,18 @@ function ProjectBoard() {
                         ) : null}
 
                         <div
-                          className="mb-[5px] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
+                          className="mb-[5px] w-[95%] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
                           ref={insideRef}
                           onClick={(e) => {
-                            console.log(section.id, title, id)
+                            console.log(section.id, title, id);
                             setCreateTaskBottom({
-                                id: section.id,
-                                status: !addCard.status,
-                                bottom: !addCard.bottom
-                              });
+                              id: section.id,
+                              status: !addCard.status,
+                              bottom: !addCard.bottom,
+                            });
                           }}
                         >
-                          <BsPlus className="text-[25px] " />
+                          <BsPlus className="text-[25px]" />
                           <div>Add Task</div>
                         </div>
                       </div>
@@ -174,7 +189,6 @@ function ProjectBoard() {
               );
             })}
             <CreateSection />
-
           </div>
         </div>
       </div>

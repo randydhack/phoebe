@@ -1,4 +1,5 @@
 import { GoCheckCircle } from "react-icons/go";
+
 function BoardCards({ section }) {
   return (
     <>
