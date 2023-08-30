@@ -37,10 +37,6 @@ function CreateProjectPage() {
                 {!name && <div className="text-red-600 text-[12px] mt-[3px]">Project name is required</div>}
               </div>
               <div className="flex flex-col mb-[40px]">
-                <label className="font-semibold text-[12px] mb-[5px]">Type of Project</label>
-                <input type="text" className="outline-[1px] border-none p-[8px]" placeholder="Software project" value={type} onChange={e => setType(e.target.value)}/>
-              </div>
-              <div className="flex flex-col mb-[40px]">
                 <label className="font-semibold text-[12px] mb-[5px]">Description of the project</label>
                 <textarea className="outline-[1px] border-none resize-none p-[8px] h-[150px]" placeholder="What is this project about?" value={description} onChange={e => setDescription(e.target.value)}/>
               </div>
@@ -49,7 +45,7 @@ function CreateProjectPage() {
             </form>
           </div>
 
-          <div className="bg-red-300 w-full h-full ml-[60px] rounded-[10px]">
+          <div className="bg-red-300 w-[1000px] h-full ml-[60px] rounded-[10px]">
 
           </div>
         </div>

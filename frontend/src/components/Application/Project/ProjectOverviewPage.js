@@ -13,6 +13,7 @@ import { updateProjectThunk } from "../../../store/projects";
 function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const { id } = useParams();
   const { setProject, project } = useContext(InfoContext);
 
@@ -34,8 +35,14 @@ function ProjectOverviewPage({ compType }) {
   }, [id]);
 
   useEffect(() => {
-    dispatch(updateProjectThunk(projectName, description, id));
-  }, [projectName, description]);
+    (async () => {
+      try {
+        await dispatch(updateProjectThunk(projectName, description, id));
+      } catch (err) {
+          return history.push('/home')
+      }
+    })()
+  }, [projectName, description, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,9 +50,12 @@ function ProjectOverviewPage({ compType }) {
   };
 
   //   bg-[#1f1e21]
+
+
+
   return (
     project1 && (
-      <div className="bg-[white] w-full h-full">
+      <>
         {/* Overview Info and Navigation */}
         <div className="bg-[white] w-full h-[100px] px-[20px] border-b-[1px] border-[#ECEAE9]">
           <div className="flex p-[12px] items-center w-full">
@@ -100,7 +110,7 @@ function ProjectOverviewPage({ compType }) {
           />
         )}
         {compType === "board" && <ProjectBoard />}
-      </div>
+        </>
     )
   );
 }

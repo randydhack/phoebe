@@ -102,7 +102,7 @@ router.get("/:id/members", async (req, res, next) => {
     include: { model: User, as: "User" },
   });
 
-  console.log(members);
+
   res.status(200).json(members);
 });
 
