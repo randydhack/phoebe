@@ -1,22 +1,18 @@
-import { RiMenuLine } from 'react-icons/ri'
+import { RiMenuLine } from "react-icons/ri";
 import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../context/Modal";
 import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../store/session";
 import ProfileIcon from "../Profile/ProfileIcon";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 function AppNavigation(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { createProjectModal, type } = useContext(ModalContext);
   const { setCloseSideMenu, closeSideMenu } = props;
 
-  const logoutHandler = async (e) => {
-    e.preventDefault();
-    await dispatch(logout());
-    return history.push("/login");
-  };
+
 
   return (
     <section className="bg-[#2E2E30] h-[50px] flex items-center justify-between border-solid border-[#424244] border-b-[1px]">
@@ -24,12 +20,18 @@ function AppNavigation(props) {
         {closeSideMenu ? (
           <RiMenuLine
             className="text-[#f5f4f3] h-[20px] w-[20px] cursor-pointer "
-            onClick={(e) => setCloseSideMenu(!closeSideMenu)}
+            onClick={(e) => {
+              setCloseSideMenu(!closeSideMenu);
+              reactLocalStorage.set("sideMenu", closeSideMenu);
+            }}
           />
         ) : (
           <RiMenuLine
             className="text-[#f5f4f3] h-[20px] w-[20px] cursor-pointer"
-            onClick={(e) => setCloseSideMenu(!closeSideMenu)}
+            onClick={(e) => {
+              setCloseSideMenu(!closeSideMenu);
+              reactLocalStorage.set('sideMenu', closeSideMenu)
+            }}
           />
         )}
         <NavLink
