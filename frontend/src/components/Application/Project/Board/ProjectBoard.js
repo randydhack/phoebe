@@ -1,7 +1,7 @@
 // React
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 // Components
 import CreateSection from "../Section/CreateSection";
@@ -22,6 +22,7 @@ import { GoCheckCircle } from "react-icons/go";
 
 function ProjectBoard() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const { id } = useParams();
   const sections = Object.values(useSelector((state) => state.sections));
   const user = useSelector((state) => state.session.user);
@@ -39,7 +40,14 @@ function ProjectBoard() {
   });
 
   useEffect(() => {
-    dispatch(getProjectSectionsThunk(id));
+
+    (async () => {
+       const data = dispatch(getProjectSectionsThunk(id));
+       if (!data) {
+        return history.push('/home')
+       }
+    })()
+
   }, [id]);
 
   // Dealing with Textarea Height
