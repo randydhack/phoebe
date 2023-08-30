@@ -30,7 +30,7 @@ function Main(props) {
         </div>
         <div className="flex flex-auto">
           <section>{closeSideMenu && <SideMenu />}</section>
-          <section className="w-full flex flex-col flex-1">
+          <section className="w-full flex flex-col flex-1 h-screen">
             {compType === "home" && <AppHome />}
             {compType === "project page" && (
               <ProjectOverviewPage compType="overview" />
