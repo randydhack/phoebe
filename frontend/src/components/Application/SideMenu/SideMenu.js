@@ -2,13 +2,12 @@ import { NavLink } from "react-router-dom";
 import { BiHomeAlt2 } from "react-icons/bi";
 import { AiOutlineCheckCircle } from 'react-icons/ai'
 import ProjectSideMenu from "./ProjectSideMenu";
-import { useState } from "react";
 
 function SideMenu() {
 
 
   return (
-    <div className="w-[250px] bg-[#2E2E30] border-solid border-l-[1px] border-r-[1px] border-[#424244] h-screen overflow-auto">
+    <div className="w-[240px] bg-[#2E2E30] border-solid border-l-[1px] border-r-[1px] border-[#424244] h-screen overflow-auto">
       <div className="list-none p-[15px]">
         <li className="list-none p-[8px] bg-[#454547] rounded-[10px] mb-[2px]">
         <NavLink to="/home" className="text-white flex items-center">
