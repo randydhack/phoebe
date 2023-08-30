@@ -60,7 +60,10 @@ router.post("/", requireAuth, async (req, res, next) => {
 router.put("/:id", requireAuth, async (req, res, next) => {
   const { title, description } = req.body;
 
-  const card = await Card.findByPk(req.params.id);
+  const card = await Card.findOne({where: {id: req.params.id}, include: {
+    model: User,
+    as: 'User'
+  }});
 
   if (!card) {
     const err = new Error("Card does not exist.");

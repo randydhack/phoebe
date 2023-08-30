@@ -4,12 +4,18 @@ import { csrfFetch } from "./csrf";
 const GET_PROJECT_SECTION = "sections/GET_PROJECT_SECTION ";
 const CREATE_SECTION = "sections/CREATE_SECTION";
 const DELETE_SECTION = "sections/DELETE_SECTION";
+const CARD_SECTION_UPDATE = 'section/CARD_SECTION_UPDATE'
 // Action Creators
 
 const getProjectSectionsAction = (sections) => ({
   type: GET_PROJECT_SECTION,
   payload: sections,
 });
+
+export const updateCardSectionAction = (card) => ({
+  type: CARD_SECTION_UPDATE,
+  payload: card
+})
 
 const createSectionAction = (section) => ({
   type: CREATE_SECTION,
@@ -79,6 +85,20 @@ const sectionReducer = (state = {}, action) => {
     case DELETE_SECTION:
       newState = {...state}
       delete newState[action.payload]
+      return newState
+    case CARD_SECTION_UPDATE:
+      newState = {...state}
+      const cards = newState[action.payload.sectionId].Cards
+
+      for (let i = 0; i < cards.length; i++) {
+        if (cards[i].id === action.payload.id) {
+          cards[i] = action.payload
+          break;
+        }
+      }
+      console.log(cards)
+      console.log(newState)
+      console.log(action.payload)
       return newState
     default:
       return state;

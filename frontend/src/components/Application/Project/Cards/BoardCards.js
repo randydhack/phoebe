@@ -47,12 +47,12 @@ function BoardCards({ section }) {
               </div>
             </span>
             <div className="mt-[10px]">
-              {card.User.profileImage ? (
+              {card.User && card.User.profileImage ? (
                 card.User.profileImage
               ) : (
                 <div className="text-[10px] rounded-[50%] bg-yellow-300 h-[25px] w-[25px] flex items-center justify-center border-[1px] border-[#c3c3c3]">
-                  {card.User.firstName[0].toUpperCase()}
-                  {card.User.lastName[0].toUpperCase()}
+                  {card.User && card.User.firstName[0].toUpperCase()}
+                  {card.User && card.User.lastName[0].toUpperCase()}
                 </div>
               )}
             </div>

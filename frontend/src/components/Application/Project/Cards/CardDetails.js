@@ -4,17 +4,33 @@ import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 import { getProjectSectionsThunk } from "../../../../store/sections";
+import { updateCardThunk } from "../../../../store/cards";
 
 function CardDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
+  const [cardDescription, setCardDescription] = useState(cardDetail.description || '')
 
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
 
+
+  useEffect(() => {
+    dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription, id))
+  }, [cardDetail, cardTitle, cardDescription, id])
+
+
+  const updateCardHandler = async (e) => {
+    e.preventDefault();
+    if (cardTitle.length >= 1) {
+        await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription))
+    }
+  };
+
   return (
+    cardDetail &&
     <div
       className="bg-white border-l-[1px] z-30 absolute right-0 top-0 w-[600px] h-full"
       ref={cardRef}
@@ -25,7 +41,10 @@ function CardDetails() {
             <input
               type="text"
               value={cardTitle}
-              onChange={(e) => setCardTitle(e.target.value)}
+              onChange={(e) => {
+                setCardTitle(e.target.value);
+                updateCardHandler(e)
+              }}
               className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
             />
             <RxExit
@@ -104,6 +123,11 @@ function CardDetails() {
                 <div className="">
                   <textarea
                     placeholder="What is this task about?"
+                    value={cardDescription}
+                    onChange={e => {
+                        setCardDescription(e.target.value)
+                        updateCardHandler(e)
+                    }}
                     className="resize-none w-full h-[150px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                   />
                 </div>
