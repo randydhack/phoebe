@@ -35,7 +35,13 @@ function ProjectOverviewPage({ compType }) {
   }, [id]);
 
   useEffect(() => {
-    dispatch(updateProjectThunk(projectName, description, id));
+    (async () => {
+      try {
+        await dispatch(updateProjectThunk(projectName, description, id));
+      } catch (err) {
+          return history.push('/home')
+      }
+    })()
   }, [projectName, description, id]);
 
   const handleSubmit = async (e) => {

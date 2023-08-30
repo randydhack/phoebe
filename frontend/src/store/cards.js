@@ -11,6 +11,8 @@ const createCardAction = (card) => ({
   payload: card,
 });
 
+
+
 // Thunk action creators
 export const createCardThunk = (title, sectionId, projectId) => async (dispatch) => {
   const res = await csrfFetch(`/api/cards`, {
@@ -31,6 +33,15 @@ export const createCardThunk = (title, sectionId, projectId) => async (dispatch)
     return res.error;
   }
 };
+
+export const getCardByIdThunk = (id) => async (dispatch) => {
+  const res = await csrfFetch(`/api/cards/${id}`)
+
+  if (res.ok) {
+    const data = await res.json()
+    return data
+  }
+}
 
 // Initial state
 

@@ -53,8 +53,10 @@ export const getSingleProjectThunk = (id) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(getSingleProjectAction(data));
-
     return data;
+  } else {
+    const error = await res.json()
+    return error
   }
 };
 
@@ -95,11 +97,13 @@ export const updateProjectThunk = (name, description, id) => async (dispatch) =>
     body: JSON.stringify({ name, description }),
   });
 
-
   if (res.ok) {
     const data = await res.json()
     await dispatch(updateProjectAction(data))
     return data
+  } else {
+    const error = await res.json()
+    return error
   }
 };
 
