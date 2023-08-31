@@ -75,6 +75,23 @@ router.put("/:id", requireAuth, async (req, res, next) => {
   res.status(200).json(updatedCard);
 });
 
+
+router.put('/:id/section/:sectionId', async (req, res, next) => {
+  const { id, sectionId } = req.params
+
+  const card = await Card.findByPk(id)
+
+  if (!card) {
+    const err = new Error("Card does not exist.");
+    err.status = 404;
+    return next(err);
+  }
+
+  const updatedCard = await card.update({sectionId})
+
+
+})
+
 // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
 router.delete("/:id", requireAuth, async (req, res, next) => {
