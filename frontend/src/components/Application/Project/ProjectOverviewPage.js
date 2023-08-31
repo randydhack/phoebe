@@ -34,24 +34,12 @@ function ProjectOverviewPage({ compType }) {
     })();
   }, [id]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await dispatch(updateProjectThunk(projectName, description, id));
-      } catch (err) {
-          return history.push('/home')
-      }
-    })()
-  }, [projectName, description, id]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(updateProjectThunk(projectName, description, project.id));
   };
 
   //   bg-[#1f1e21]
-
-
 
   return (
     project1 && (
@@ -67,10 +55,10 @@ function ProjectOverviewPage({ compType }) {
               <input
                 type="text"
                 value={projectName}
+                onBlur={e => handleSubmit(e)}
                 onChange={(e) => {
                   if (e.target.value.length >= 1) {
                     setProjectName(e.target.value);
-                    handleSubmit(e);
                   }
                 }}
                 minLength={1}

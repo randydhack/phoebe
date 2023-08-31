@@ -8,7 +8,7 @@ function CreateCard(props) {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { resize, i, section, setAddCard, title, setTitle, outsideRef } = props;
+  const { resize, title, setTitle, outsideRef } = props;
   const user = useSelector((state) => state.session.user);
 
 

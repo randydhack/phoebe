@@ -20,9 +20,9 @@ function ProjectOverviewBody({props}) {
             className="w-[100%] h-full p-[10px] rounded-[5px] resize-none text-[14px]"
             placeholder="What is this project about?"
             value={description}
+            onBlur={e => handleSubmit(e)}
             onChange={e => {
               setDescription(e.target.value)
-            handleSubmit(e)
             }}
           />
           </div>

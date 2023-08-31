@@ -19,9 +19,6 @@ function CardDetails() {
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
 
-  useEffect(() => {
-    dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription, id));
-  }, [cardDetail, cardTitle, cardDescription, id]);
 
   const updateCardHandler = async (e) => {
     e.preventDefault();
@@ -44,10 +41,10 @@ function CardDetails() {
               <input
                 type="text"
                 value={cardTitle}
+                onBlur={e => updateCardHandler(e)}
                 onChange={(e) => {
                   if (e.target.value.length >= 1) {
                     setCardTitle(e.target.value);
-                    updateCardHandler(e);
                   }
                 }}
                 className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
