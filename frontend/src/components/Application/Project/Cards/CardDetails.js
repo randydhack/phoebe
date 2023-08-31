@@ -14,7 +14,7 @@ function CardDetails() {
   const [cardDescription, setCardDescription] = useState(
     cardDetail.description
   );
-  const [sectionDropdown, setSectionDropdown] = useState(null);
+  const [selectSection, setSelectSection] = useState(null);
 
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
@@ -112,7 +112,7 @@ function CardDetails() {
                         <option
                           key={`${section}${i}`}
                           className="text-ellipsis overflow-hidden whitespace-nowrap"
-                          onClick={(e) => setSectionDropdown(e.target.value)}
+                          onClick={(e) => setSelectSection(e.target.value)}
                         >
                           {section.name}
                         </option>
@@ -123,13 +123,13 @@ function CardDetails() {
 
                 <div className="relative">
                   <div className="text-[#6e6d6f] text-[12px]">Description</div>
-                  <div className="">
+                  <div>
                     <textarea
                       placeholder="What is this task about?"
                       value={cardDescription}
+                      onBlur={e => updateCardHandler(e)}
                       onChange={(e) => {
                         setCardDescription(e.target.value);
-                        updateCardHandler(e);
                       }}
                       className="resize-none w-full h-[150px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                     />

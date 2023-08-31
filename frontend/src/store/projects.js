@@ -73,14 +73,12 @@ export const deleteProjectThunk = (id) => async (dispatch) => {
 };
 
 export const createProjectThunk =
-  (name, category, description, projectImage) => async (dispatch) => {
+  (name, description) => async (dispatch) => {
     const res = await csrfFetch("/api/projects", {
       method: "POST",
       body: JSON.stringify({
         name,
-        category,
         description,
-        projectImage,
       }),
     });
 
