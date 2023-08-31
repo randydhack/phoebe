@@ -46,7 +46,6 @@ function App() {
               />
             </section>
             }
-
             <div className="flex flex-auto">
               {userSession && <section>{closeSideMenu && <SideMenu />}</section>}
               <Switch>
