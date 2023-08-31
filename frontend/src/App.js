@@ -22,15 +22,12 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    const data = window.sessionStorage.getItem("SET_SIDE_MENU");
+    const data = window.localStorage.getItem("SET_SIDE_MENU");
     setCloseSideMenu(JSON.parse(data));
   }, []);
 
   useEffect(() => {
-    window.sessionStorage.setItem(
-      "SET_SIDE_MENU",
-      JSON.stringify(closeSideMenu)
-    );
+    window.localStorage.setItem("SET_SIDE_MENU", JSON.stringify(closeSideMenu));
   }, [closeSideMenu]);
 
   return (
@@ -38,16 +35,18 @@ function App() {
       {isLoaded && (
         <>
           <div>
-            {userSession &&
-            <section>
-              <AppNavigation
-                setCloseSideMenu={setCloseSideMenu}
-                closeSideMenu={closeSideMenu}
-              />
-            </section>
-            }
+            {userSession && (
+              <section>
+                <AppNavigation
+                  setCloseSideMenu={setCloseSideMenu}
+                  closeSideMenu={closeSideMenu}
+                />
+              </section>
+            )}
             <div className="flex flex-auto">
-              {userSession && <section>{closeSideMenu && <SideMenu />}</section>}
+              {userSession && (
+                <section>{closeSideMenu && <SideMenu />}</section>
+              )}
               <Switch>
                 <Route
                   path="/home"
@@ -68,13 +67,28 @@ function App() {
               </Switch>
             </div>
           </div>
-          <Switch>
-            <Route exact path="/" />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/signup" component={SignupPage} />
-            <Route path="/new-project" component={CreateProjectPage} />
-            <Route path="" component={ErrorPage} />
-          </Switch>
+          {isLoaded && (
+            <Switch>
+              <Route exact path="/" />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/signup" component={SignupPage} />
+              <Route path="/new-project" component={CreateProjectPage} />
+              <Route
+                path="/project/:id/overview"
+                component={() => <Main compType="project page" />}
+              />
+              <Route
+                path="/project/:id/board"
+                component={() => <Main compType="project board" />}
+              />
+              <Route path="/home" component={() => <Main compType="home" />} />
+              <Route
+                path="/projects"
+                component={() => <Main compType="projects" />}
+              />
+              <Route component={ErrorPage} />
+            </Switch>
+          )}
         </>
       )}
     </>

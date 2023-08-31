@@ -23,14 +23,10 @@ function ProjectOverviewPage({ compType }) {
 
   useEffect(() => {
     (async () => {
-      try {
         const data = await dispatch(getSingleProjectThunk(id));
         setProject(data);
         setProjectName(data.name);
         setDescription(data.description);
-      } catch (err) {
-        history.push("/home");
-      }
     })();
   }, [id]);
 

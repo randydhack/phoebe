@@ -17,8 +17,10 @@ function CreateProjectPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    e.stopPropagation()
     const project = await dispatch(createProjectThunk(name, description))
-    return history.push(`/project/${project.id}/overview`)
+    console.log(project)
+    return await history.push(`/project/${project.id}/overview`)
   };
 
   return (
