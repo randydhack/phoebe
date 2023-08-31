@@ -4,10 +4,13 @@ import { Redirect, useHistory } from "react-router-dom";
 
 
 function ErrorPage() {
-    const userSession = useSelector(state => state.session.user)
+    const history = useHistory()
 
-    if (!userSession) return <Redirect to='/login'/>
-    else return <Redirect to='/home'/>
+    const user = useSelector(state => state.session.user)
+
+    if (!user) return <Redirect to='/home'/>
+
+    return history.goBack()
 }
 
 export default ErrorPage;

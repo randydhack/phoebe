@@ -46,13 +46,10 @@ function LoginPage() {
       setErrors({})
       return history.push("/home");
     }
-
   };
 
-  console.log(password, credential);
-
   return (
-    <div className="items-center flex flex-col mx-[32px] min-h-screen">
+    <div className="items-center flex flex-col min-h-screen w-full">
       <div className="flex items-center box-border h-[80px] justify-center pl-[32px] fixed w-full z-[100]">
         <NavLink
           to="/"

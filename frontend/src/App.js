@@ -15,6 +15,8 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [closeSideMenu, setCloseSideMenu] = useState(true);
 
+  const [render, setRender] = useState(null);
+
   const userSession = useSelector((state) => state.session.user);
 
   useEffect(() => {
@@ -57,38 +59,23 @@ function App() {
                   component={() => <Main compType="projects" />}
                 />
                 <Route
+                  exact
                   path="/project/:id/overview"
                   component={() => <Main compType="project page" />}
                 />
                 <Route
+                  exact
                   path="/project/:id/board"
                   component={() => <Main compType="project board" />}
                 />
+                <Route exact path="/" />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/signup" component={SignupPage} />
+                <Route path="/new-project" component={CreateProjectPage} />
+                <Route component={ErrorPage} />
               </Switch>
             </div>
           </div>
-          {isLoaded && (
-            <Switch>
-              <Route exact path="/" />
-              <Route path="/login" component={LoginPage} />
-              <Route path="/signup" component={SignupPage} />
-              <Route path="/new-project" component={CreateProjectPage} />
-              <Route
-                path="/project/:id/overview"
-                component={() => <Main compType="project page" />}
-              />
-              <Route
-                path="/project/:id/board"
-                component={() => <Main compType="project board" />}
-              />
-              <Route path="/home" component={() => <Main compType="home" />} />
-              <Route
-                path="/projects"
-                component={() => <Main compType="projects" />}
-              />
-              <Route component={ErrorPage} />
-            </Switch>
-          )}
         </>
       )}
     </>
