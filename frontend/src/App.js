@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from "./components/Main";
 import LoginPage from "./components/LoginFormPage/LoginPage";
@@ -21,7 +21,6 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  console.log("---- MAIN COMPONENT MOUNTED ------");
   useEffect(() => {
     const data = window.sessionStorage.getItem("SET_SIDE_MENU");
     setCloseSideMenu(JSON.parse(data));
@@ -36,17 +35,19 @@ function App() {
 
   return (
     <>
-      {isLoaded && userSession && (
+      {isLoaded && (
         <>
           <div>
+            {userSession &&
             <section>
               <AppNavigation
                 setCloseSideMenu={setCloseSideMenu}
                 closeSideMenu={closeSideMenu}
               />
             </section>
+            }
             <div className="flex flex-auto">
-              <section>{closeSideMenu && <SideMenu />}</section>
+              {userSession && <section>{closeSideMenu && <SideMenu />}</section>}
               <Switch>
                 <Route
                   path="/home"
@@ -67,16 +68,14 @@ function App() {
               </Switch>
             </div>
           </div>
+          <Switch>
+            <Route exact path="/" />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignupPage} />
+            <Route path="/new-project" component={CreateProjectPage} />
+            <Route path="" component={ErrorPage} />
+          </Switch>
         </>
-      )}
-      {isLoaded && (
-        <Switch>
-          <Route exact path="/" />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/new-project" component={CreateProjectPage} />
-          <Route path="" component={ErrorPage} />
-        </Switch>
       )}
     </>
   );
