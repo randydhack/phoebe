@@ -75,7 +75,6 @@ function App() {
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/new-project" component={CreateProjectPage} />
-
           <Route path="" component={ErrorPage} />
         </Switch>
       )}

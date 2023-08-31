@@ -96,10 +96,10 @@ function ProjectBoard() {
 
   return (
     sections && (
-        <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8]">
+        <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
         {cardDetail && <CardDetails />}
-          <div className="absolute h-full w-full">
-            <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-x-scroll overflow-y-hidden mb-[20px]">
+          <div className="absolute h-full w-full ">
+            <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-x-scroll overflow-y-hidden mb-[20px] scrollbar-none">
               {/* ---------------- SECTIONS MAPPING -------------------- */}
               {sections.map((section, i) => {
                 return (
