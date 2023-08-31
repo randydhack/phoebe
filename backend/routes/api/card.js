@@ -79,7 +79,10 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 router.put('/:id/section/:sectionId', async (req, res, next) => {
   const { id, sectionId } = req.params
 
-  const card = await Card.findByPk(id)
+  const card = await Card.findOne({where: {id: id}, include: {
+    model: User,
+    as: 'User'
+  }});
 
   if (!card) {
     const err = new Error("Card does not exist.");
@@ -89,6 +92,7 @@ router.put('/:id/section/:sectionId', async (req, res, next) => {
 
   const updatedCard = await card.update({sectionId})
 
+  res.status(200).json(updatedCard)
 
 })
 

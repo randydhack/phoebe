@@ -4,29 +4,38 @@ import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 import { getProjectSectionsThunk } from "../../../../store/sections";
-import { updateCardThunk } from "../../../../store/cards";
+import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
 
 function CardDetails() {
+  // Router Dom
   const { id } = useParams();
   const dispatch = useDispatch();
+  // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
-  const [cardTitle, setCardTitle] = useState(cardDetail.title);
-  const [cardDescription, setCardDescription] = useState(
-    cardDetail.description
-  );
-  const [selectSection, setSelectSection] = useState(null);
 
+  // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
+  const currentSection = useSelector(state => state.sections)[cardDetail.sectionId]
 
+  // Use States
+  const [cardTitle, setCardTitle] = useState(cardDetail.title);
+  const [cardDescription, setCardDescription] = useState(
+    cardDetail.description || ''
+    );
+  const [selectSection, setSelectSection] = useState(currentSection.name);
 
+  // Card Update
   const updateCardHandler = async (e) => {
     e.preventDefault();
     await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription));
   };
 
+  // Change Section for Card
   const changeSectionHandler = async (e) => {
     e.preventDefault();
+    await dispatch(moveSectionCardThunk(selectSection, cardDetail.id, id))
+    // setCardDetail(null)
   };
 
   return (
@@ -104,15 +113,17 @@ function CardDetails() {
                   <select
                     name="section-dropdown"
                     id="section-dropdown"
-                    defaultValue={""} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
+                    defaultValue={currentSection.id} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
+                    onBlur={e => changeSectionHandler(e)}
+                    onChange={(e) => setSelectSection(e.target.value)}
                     className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[120px] text-ellipsis overflow-hidden whitespace-nowrap"
                   >
                     {sections.map((section, i) => {
                       return (
                         <option
                           key={`${section}${i}`}
+                          value={section.id}
                           className="text-ellipsis overflow-hidden whitespace-nowrap"
-                          onClick={(e) => setSelectSection(e.target.value)}
                         >
                           {section.name}
                         </option>

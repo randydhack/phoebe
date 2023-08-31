@@ -5,6 +5,8 @@ const GET_PROJECT_SECTION = "sections/GET_PROJECT_SECTION ";
 const CREATE_SECTION = "sections/CREATE_SECTION";
 const DELETE_SECTION = "sections/DELETE_SECTION";
 const CARD_SECTION_UPDATE = 'section/CARD_SECTION_UPDATE'
+const CHANGE_CARD_SECTION = "sections/CHANGE_CARD_SECTION";
+
 // Action Creators
 
 const getProjectSectionsAction = (sections) => ({
@@ -26,6 +28,13 @@ const deleteSectionAction = (id) => ({
   type: DELETE_SECTION,
   payload: id,
 });
+
+export const changeCardSectionAction = (sectionId, card) => ({
+  type: CHANGE_CARD_SECTION,
+  payload: {
+    sectionId, card
+  }
+})
 
 // Thunk action creators
 export const getProjectSectionsThunk = (id) => async (dispatch) => {
@@ -96,9 +105,12 @@ const sectionReducer = (state = {}, action) => {
           break;
         }
       }
-      console.log(cards)
-      console.log(newState)
-      console.log(action.payload)
+      return newState
+    case CHANGE_CARD_SECTION:
+      newState = {...state}
+      const cardArray = newState[action.payload.sectionId].Cards
+      const cardArrayLength = cardArray.length
+      cardArray[cardArrayLength] = action.payload.card
       return newState
     default:
       return state;
