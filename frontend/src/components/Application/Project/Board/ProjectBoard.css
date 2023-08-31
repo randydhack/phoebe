@@ -25,6 +25,10 @@
     -webkit-line-clamp: 5;
 }
 
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 .cardContainer::-webkit-scrollbar {
   display: none;
 }

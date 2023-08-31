@@ -17,12 +17,12 @@ function CreateProjectPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const project = await dispatch(createProjectThunk(name, type, description, null))
+    const project = await dispatch(createProjectThunk(name, description))
     return history.push(`/project/${project.id}/overview`)
   };
 
   return (
-    <div className="bg-white w-screen h-screen">
+    <div className="bg-white w-screen h-screen absolute top-0">
       <div className="bg-[#d9d9d9] h-full w-[650px] ">
         <div className="px-[25px] pt-[20px] flex">
           <IoArrowBackSharp className="text-[18px] cursor-pointer" onClick={e => history.goBack()}/>
@@ -41,7 +41,7 @@ function CreateProjectPage() {
                 <textarea className="outline-[1px] border-none resize-none p-[8px] h-[150px]" placeholder="What is this project about?" value={description} onChange={e => setDescription(e.target.value)}/>
               </div>
 
-              <button type="submit" className="w-full border-[1px] rounded-[5px] p-[10px] bg-[#4573D1]">Continue</button>
+              <button type="submit" className="w-full border-[1px] rounded-[5px] p-[10px] bg-[#4573D1] text-white">Continue</button>
             </form>
           </div>
 
