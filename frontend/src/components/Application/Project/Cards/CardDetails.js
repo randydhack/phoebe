@@ -35,8 +35,7 @@ function CardDetails() {
   const changeSectionHandler = async (e) => {
     e.preventDefault();
     await dispatch(moveSectionCardThunk(selectSection, cardDetail.id, id))
-    // await getProjectSectionsThunk(id)
-    setCardDetail(null)
+    // setCardDetail(null)
   };
 
   return (
