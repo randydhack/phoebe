@@ -1,9 +1,10 @@
 import { csrfFetch } from "./csrf";
-import { addCardToSectionAction, getProjectSectionsThunk, updateCardSectionAction } from "./sections";
+import { changeCardSectionAction, getProjectSectionsThunk, updateCardSectionAction } from "./sections";
 
 // Action Type
 const CREATE_CARDS = "cards/CREATE_CARDS ";
 const UPDATE_CARD = "cards/UPDATE_CARD ";
+const MOVE_CARD = 'cards/MOVE_CARD'
 
 // Action Creators
 
@@ -14,6 +15,11 @@ const createCardAction = (card) => ({
 
 const updateCardAction = (card) => ({
   type: UPDATE_CARD,
+  payload: card
+})
+
+const moveSectionCardAction = (card) => ({
+  type: MOVE_CARD,
   payload: card
 })
 
@@ -66,6 +72,24 @@ export const updateCardThunk = (id, title, description, sectionId) => async disp
   }
 }
 
+export const moveSectionCardThunk = (sectionId, id, projectId) => async dispatch => {
+  const res = await csrfFetch(`/api/cards/${id}/section/${sectionId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      sectionId,
+      id
+    })
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(moveSectionCardAction(data))
+    await dispatch(changeCardSectionAction(sectionId, data))
+    await dispatch(getProjectSectionsThunk(projectId))
+    return data
+  }
+}
+
 // Initial state
 
 // Reducer
@@ -78,6 +102,10 @@ const cardReducer = (state = {}, action) => {
       return newState;
     case UPDATE_CARD:
       newState = {...state};
+      newState[action.payload.id] = action.payload
+      return newState
+    case MOVE_CARD:
+      newState = {...state}
       newState[action.payload.id] = action.payload
       return newState
     default:

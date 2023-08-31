@@ -2,11 +2,12 @@ import { GoCheckCircle } from "react-icons/go";
 import { useContext, useRef, useEffect } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
 import { useDispatch } from "react-redux";
+import CardDetails from "./CardDetails";
 
 function BoardCards({ section }) {
 
   const dispatch = useDispatch()
-  const { setCardDetail, setCardRef } = useContext(InfoContext)
+  const { setCardDetail, setCardRef, setCurrentSection, cardDetail } = useContext(InfoContext)
 
   const insideRef = useRef();
   const outsideRef = useRef(null);
@@ -25,8 +26,7 @@ function BoardCards({ section }) {
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, []);
-
+  }, [cardDetail]);
 
   return (
     <>
