@@ -45,7 +45,7 @@ function CardComments() {
             </div>
             {comments.map((comment, i) => {
               return (
-                <div key={`${comment.id}${i}`}>
+                <div key={`${comment.id}${i}`} className="flex items-center">
                   <div className="flex my-[10px] w-full">
                     <div className="mt-[2px]">
                       <div className="text-[12px] rounded-[50%] bg-yellow-300 h-[32px] w-[32px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black">
@@ -68,6 +68,7 @@ function CardComments() {
                       </div>
                     </div>
                   </div>
+                  <div>V</div>
                 </div>
               );
             })}

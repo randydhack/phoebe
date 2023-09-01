@@ -11,7 +11,7 @@ function CreateCardComments() {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
-    await dispatch(createCommentThunk(cardDetail.id, comment))
+    await dispatch(createCommentThunk(cardDetail.id, comment.trim()))
     bottomEl?.current?.scrollIntoView({ behavior: 'smooth' })
     setComment('')
   }
@@ -41,8 +41,17 @@ function CreateCardComments() {
           placeholder="Add a comment"
           className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
           value={comment}
+          onBlur={e => {
+            if (comment.trim().length < 1) {
+              setComment('')
+              }
+            }
+          }
           onChange={(e) => setComment(e.target.value)}
-          onKeyDown={(e) => handleChange(e)}
+          onKeyDown={(e) => {
+            if (comment.trim().length > 0) {
+              handleChange(e)}}
+            }
         />
     </div>
   );
