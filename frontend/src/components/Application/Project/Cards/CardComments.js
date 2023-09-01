@@ -7,14 +7,13 @@ import moment from "moment";
 function CardComments() {
   const dispatch = useDispatch();
   const { cardDetail, bottomEl } = useContext(InfoContext);
-  const comments= Object.values(useSelector((state) => state.comments));
+  const comments = Object.values(useSelector((state) => state.comments));
 
   useEffect(() => {
     (async () => {
       await dispatch(getCommentByCardIdThunk(cardDetail.id));
     })();
   }, [dispatch]);
-
 
   return (
     comments && (
@@ -47,22 +46,26 @@ function CardComments() {
             {comments.map((comment, i) => {
               return (
                 <div key={`${comment.id}${i}`}>
-                  <div className="flex items-center my-[10px]">
-                    <div className="text-[12px] rounded-[50%] bg-yellow-300 h-[32px] w-[32px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black">
-                      {comment["User.firstName"][0].toUpperCase()}
-                      {comment["User.lastName"][0].toUpperCase()}
+                  <div className="flex my-[10px] w-full">
+                    <div className="mt-[2px]">
+                      <div className="text-[12px] rounded-[50%] bg-yellow-300 h-[32px] w-[32px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black">
+                        {comment["User.firstName"][0].toUpperCase()}
+                        {comment["User.lastName"][0].toUpperCase()}
+                      </div>
                     </div>
                     <div className="ml-[10px]">
                       <div className="font-medium">
                         {comment["User.firstName"]} {comment["User.lastName"]}
                         <span className="text-[#6e6d6f] text-[12px] font-normal">
-                      {" "}
-                      {moment(comment.createdAt).format(
-                        "MMM Do, YYYY"
-                      )} at {moment(comment.createdAt).format("LT")}
-                    </span>
+                          {" "}
+                          {moment(comment.createdAt).format(
+                            "MMM Do, YYYY"
+                          )} at {moment(comment.createdAt).format("LT")}
+                        </span>
                       </div>
-                      <div>{comment.comment}</div>
+                      <div className="w-[500px] whitespace-break-spaces break-words overflow text-clip">
+                        {comment.comment}
+                      </div>
                     </div>
                   </div>
                 </div>
