@@ -6,8 +6,9 @@ import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
 import CardComments from "./CardComments";
 
-function CardDetails() {
+import './Comments.css'
 
+function CardDetails() {
   // Router Dom
   const dispatch = useDispatch();
 
@@ -23,8 +24,9 @@ function CardDetails() {
   const [cardDescription, setCardDescription] = useState(
     cardDetail.description || ""
   );
-  const [selectSection, setSelectSection] = useState(Number(cardDetail.sectionId));
-
+  const [selectSection, setSelectSection] = useState(
+    Number(cardDetail.sectionId)
+  );
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -35,8 +37,14 @@ function CardDetails() {
   // Change Section for Card
   const changeSectionHandler = async (e) => {
     e.preventDefault();
-    const card = await dispatch(moveSectionCardThunk(Number(selectSection), cardDetail.id, cardDetail.projectId));
-    setCardDetail(card)
+    const card = await dispatch(
+      moveSectionCardThunk(
+        Number(selectSection),
+        cardDetail.id,
+        cardDetail.projectId
+      )
+    );
+    setCardDetail(card);
     // setCardDetail(null)
   };
 
@@ -47,27 +55,29 @@ function CardDetails() {
         ref={cardRef}
       >
         <div className="flex flex-col justify-between pb-[20px] h-[calc(100%_-_30px)]">
-          <div className="overflow-hidden overflow-y-scroll h-full">
-            <div className="flex items-center">
-              <input
-                type="text"
-                value={cardTitle}
-                onBlur={(e) => updateCardHandler(e)}
-                onChange={(e) => {
-                  if (e.target.value.length >= 1) {
-                    setCardTitle(e.target.value);
-                  }
-                }}
-                className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
-              />
-              <RxExit
-                className="mr-[30px] text-[24px] cursor-pointer"
-                onClick={(e) => setCardDetail(null)}
-              />
+          <div className="overflow-hidden overflow-y-scroll h-full hide-scroll-bar">
+            <div className="flex flex-col w-[600px] bg-white fixed z-10">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  value={cardTitle}
+                  onBlur={(e) => updateCardHandler(e)}
+                  onChange={(e) => {
+                    if (e.target.value.length >= 1) {
+                      setCardTitle(e.target.value);
+                    }
+                  }}
+                  className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
+                />
+                <RxExit
+                  className="mr-[30px] text-[24px] cursor-pointer"
+                  onClick={(e) => setCardDetail(null)}
+                />
+              </div>
+              <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
             </div>
-            <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
 
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between h-full mt-[68px] hide-scroll-bar">
               <div className="px-[22px] py-[20px]">
                 {/* Assignee / Person who created the card */}
                 <div className="flex items-center mb-[20px]">
@@ -116,7 +126,7 @@ function CardDetails() {
                     name="section-dropdown"
                     id="section-dropdown"
                     defaultValue={selectSection} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
-                    onBlur={e => changeSectionHandler(e)}
+                    onBlur={(e) => changeSectionHandler(e)}
                     onChange={(e) => {
                       setSelectSection(e.target.value);
                     }}
@@ -151,10 +161,10 @@ function CardDetails() {
                   </div>
                 </div>
               </div>
-              <CardComments/>
+              <CardComments />
             </div>
           </div>
-          <CreateCardComments props={cardDetail}/>
+          <CreateCardComments props={cardDetail} />
         </div>
       </div>
     )
