@@ -2,10 +2,10 @@ import { useContext, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
-import { useParams } from "react-router-dom";
-import { getProjectSectionsThunk } from "../../../../store/sections";
 import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
+import { getCommentByCardIdThunk } from "../../../../store/comments";
+import CardComments from "./CardComments";
 
 function CardDetails() {
 
@@ -18,15 +18,21 @@ function CardDetails() {
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
-  const
 
   // Use States
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
   const [cardDescription, setCardDescription] = useState(
     cardDetail.description || ""
   );
-
   const [selectSection, setSelectSection] = useState(Number(cardDetail.sectionId));
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      const cardComments = await dispatch(getCommentByCardIdThunk(cardDetail.id))
+      setComments(cardComments)
+    })()
+  }, [dispatch])
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -153,16 +159,7 @@ function CardDetails() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#F9F8F8] w-full">
-                <div className="px-[22px]">
-                  <div className=" text-[#6e6d6f] font-medium pt-[20px] text-[14px]">
-                    Comments
-                  </div>
-                  <div className="py-[20px]">
-                    {}
-                  </div>
-                </div>
-              </div>
+              <CardComments comments={comments}/>
             </div>
           </div>
           <CreateCardComments props={cardDetail}/>
