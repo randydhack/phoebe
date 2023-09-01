@@ -3,24 +3,22 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
-const { Card, Comment } = require("../../db/models");
+const { Card, Comment, User } = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 // NOTES: GET ALL COMMENTS BY SECTION ID IS LOCATED IN CARD ROUTE
 
 
-// GET ALL CARDS BY ID
+// GET ALL COMMENTS BY CARD ID
 router.get("/:id", requireAuth, async (req, res, next) => {
-  const comment = await Comment.findByPk(req.params.id);
+  const comment = await Comment.findAll({where: {cardId: req.params.id}, include: { model: User, as: 'User'}});
 
-  //  If comment does not exist, throw error
-  if (!comment) {
-    const err = new Error("Comment does not exist.");
-    err.status = 404;
-    return next(err);
+  //  If comment does not exist send value
+  if (comment) {
+    res.status(200).json()
+  }else {
+    res.status(200).json(comment)
   }
-
-  res.status(200).json(comment)
 });
 
 

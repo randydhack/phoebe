@@ -1,8 +1,6 @@
 import { GoCheckCircle } from "react-icons/go";
 import { useContext, useRef, useEffect } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
-import { useDispatch } from "react-redux";
-import CardDetails from "./CardDetails";
 
 function BoardCards({ section }) {
 

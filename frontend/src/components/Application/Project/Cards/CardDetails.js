@@ -5,16 +5,20 @@ import { RxExit } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 import { getProjectSectionsThunk } from "../../../../store/sections";
 import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
+import CreateCardComments from "./CreateCardComments";
 
 function CardDetails() {
+
   // Router Dom
   const dispatch = useDispatch();
+
   // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
 
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
+  const
 
   // Use States
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
@@ -38,8 +42,6 @@ function CardDetails() {
     // setCardDetail(null)
   };
 
-  console.log(Number(selectSection))
-  console.log(cardDetail)
   return (
     cardDetail && (
       <div
@@ -156,30 +158,14 @@ function CardDetails() {
                   <div className=" text-[#6e6d6f] font-medium pt-[20px] text-[14px]">
                     Comments
                   </div>
-                  <div className="py-[20px]">dsajdklsajdklsadjklsadsadasd</div>
+                  <div className="py-[20px]">
+                    {}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="border-[#ECEAE9] border-t-[1px] w-full flex py-[10px] px-[20px] bg-[#F9F8F8] shadow-[0px_-1px_3px_rgba(0,0,0,0.10)]">
-            <div className="mr-[20px]">
-              {cardDetail.User.profileImage ? (
-                <img
-                  src={cardDetail.User.profileImage}
-                  className="rounded-[50%] h-[30px] w-[30px] border-[1px] border-[#c3c3c3]"
-                />
-              ) : (
-                <div className="text-[12px] rounded-[50%] bg-yellow-300 h-[30px] w-[30px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black">
-                  {cardDetail.User.firstName[0].toUpperCase()}
-                  {cardDetail.User.lastName[0].toUpperCase()}
-                </div>
-              )}
-            </div>
-            <textarea
-              placeholder="Add a comment"
-              className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
-            />
-          </div>
+          <CreateCardComments props={cardDetail}/>
         </div>
       </div>
     )
