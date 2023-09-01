@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/session";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useState } from "react";
+import './LoginPage.css'
 
 function LoginPage() {
   const history = useHistory();
@@ -49,11 +50,11 @@ function LoginPage() {
   };
 
   return (
-    <div className="items-center flex flex-col min-h-screen w-full">
-      <div className="flex items-center box-border h-[80px] justify-center pl-[32px] fixed w-full z-[100]">
+    <div className="items-center flex flex-col min-h-screen w-full background-image">
+      <div className="flex items-center box-border h-[80px] pl-[100px] fixed w-full justify-start">
         <NavLink
           to="/"
-          className="font-medium text-[24px] w-full max-w-[1280px]"
+          className="font-medium text-[24px]"
         >
           phoebe
         </NavLink>
@@ -66,16 +67,16 @@ function LoginPage() {
           </span>
           <div className="flex flex-col w-full">
             <div
-              className="border-solid border-[#cfcbcb] border-[1px] cursor-pointer text-[16px] h-[48px] px-[16px] leading-[48px] w-full flex items-center justify-center rounded-[5px] mb-[20px]"
+              className="border-solid bg-[#d6d6d6] border-[1px] border-[#cfcbcb] cursor-pointer text-[16px] h-[48px] px-[16px] leading-[48px] w-full flex items-center justify-center rounded-[5px] mb-[20px]"
               onClick={e=> demoHandleSubmit(e)}
             >
               Continue with Demo
             </div>
 
             <span className="flex text-center items-center w-full mb-[20px]">
-              <span className="border-t-[1px] border-solid border-[#edeae9] flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
+              <span className="border-t-[1px] border-solid border-white flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
               <span className="px-[10px]">or</span>
-              <span className="border-t-[1px] border-solid border-[#edeae9] flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
+              <span className="border-t-[1px] border-solid border-white flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
             </span>
 
             <form onSubmit={handleSubmit} className="w-full">

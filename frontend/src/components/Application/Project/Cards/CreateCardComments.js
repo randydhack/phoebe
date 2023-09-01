@@ -12,6 +12,7 @@ function CreateCardComments() {
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
     await dispatch(createCommentThunk(cardDetail.id, comment))
+    setComment('')
   }
 
   const handleChange = (e) => {
