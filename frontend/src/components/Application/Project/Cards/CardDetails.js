@@ -45,7 +45,6 @@ function CardDetails() {
       )
     );
     setCardDetail(card);
-    // setCardDetail(null)
   };
 
   return (
