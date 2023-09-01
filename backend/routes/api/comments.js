@@ -12,7 +12,8 @@ const { Card, Comment, User } = require("../../db/models");
 router.get("/:id", requireAuth, async (req, res, next) => {
   const comment = await Comment.findAll({
     where: { cardId: req.params.id },
-    include: { model: User, as: "User" },
+    include: { model: User, as: "User"},
+    raw: true
   });
 
   //  If comment does not exist send value
@@ -38,7 +39,14 @@ router.post("/", requireAuth, async (req, res, next) => {
     cardId,
     userId: req.user.id,
   });
-  res.status(200).json(newComment);
+
+  const goodComment = await Comment.findOne({
+    where: { cardId: newComment.cardId },
+    include: { model: User, as: "User"},
+    raw: true
+  })
+
+  res.status(200).json(goodComment);
 });
 
 // ------------------------------------ PUT ENDPOINTS ---------------------------------------------

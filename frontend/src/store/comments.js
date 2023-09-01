@@ -40,7 +40,7 @@ export const createCommentThunk = (cardId, comment) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     await dispatch(createCommentAction(data));
-    await dispatch(getCommentByCardIdThunk(cardId))
+    await dispatch(getCommentByCardIdThunk(data.cardId))
     return data;
   }
 };

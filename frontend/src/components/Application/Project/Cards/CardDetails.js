@@ -4,7 +4,6 @@ import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
 import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
-import { getCommentByCardIdThunk } from "../../../../store/comments";
 import CardComments from "./CardComments";
 
 function CardDetails() {
@@ -25,14 +24,7 @@ function CardDetails() {
     cardDetail.description || ""
   );
   const [selectSection, setSelectSection] = useState(Number(cardDetail.sectionId));
-  const [comments, setComments] = useState([])
 
-  useEffect(() => {
-    (async () => {
-      const cardComments = await dispatch(getCommentByCardIdThunk(cardDetail.id))
-      setComments(cardComments)
-    })()
-  }, [dispatch])
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -159,7 +151,7 @@ function CardDetails() {
                   </div>
                 </div>
               </div>
-              <CardComments comments={comments}/>
+              <CardComments/>
             </div>
           </div>
           <CreateCardComments props={cardDetail}/>

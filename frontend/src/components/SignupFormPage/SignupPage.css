@@ -1,4 +1,5 @@
 .background-image {
     background-image: url('../../images/abstract-background.jpeg');
+    background-size: cover
 
 }
