@@ -77,9 +77,9 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 
 
 router.put('/:id/section/:sectionId', async (req, res, next) => {
-  const { id, sectionId } = req.params
+  const { id, sectionId, projectId } = req.body
 
-  const card = await Card.findOne({where: {id: id}, include: {
+  const card = await Card.findOne({where: {id: id, projectId: projectId}, include: {
     model: User,
     as: 'User'
   }});
@@ -90,7 +90,7 @@ router.put('/:id/section/:sectionId', async (req, res, next) => {
     return next(err);
   }
 
-  const updatedCard = await card.update({sectionId})
+  const updatedCard = await card.update({sectionId: Number(sectionId)})
 
   res.status(200).json(updatedCard)
 

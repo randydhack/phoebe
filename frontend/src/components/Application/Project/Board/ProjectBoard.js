@@ -122,7 +122,7 @@ function ProjectBoard() {
                               });
                               //   scrollToCreateCard();
                             }}
-                            forwardRef={insideRef}
+                            forwardref={insideRef}
                           />
                           <SectionDropdown sectionId={section.id} />
                         </div>

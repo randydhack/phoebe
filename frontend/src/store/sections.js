@@ -8,7 +8,6 @@ const CARD_SECTION_UPDATE = 'section/CARD_SECTION_UPDATE'
 const CHANGE_CARD_SECTION = "sections/CHANGE_CARD_SECTION";
 
 // Action Creators
-
 const getProjectSectionsAction = (sections) => ({
   type: GET_PROJECT_SECTION,
   payload: sections,
@@ -109,7 +108,7 @@ const sectionReducer = (state = {}, action) => {
     case CHANGE_CARD_SECTION:
       newState = {...state}
       const cardArray = newState[action.payload.sectionId].Cards
-      const cardArrayLength = cardArray.length
+      const cardArrayLength = cardArray.length || 0
       cardArray[cardArrayLength] = action.payload.card
       return newState
     default:

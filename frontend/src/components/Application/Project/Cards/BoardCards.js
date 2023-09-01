@@ -6,12 +6,14 @@ import CardDetails from "./CardDetails";
 
 function BoardCards({ section }) {
 
-  const dispatch = useDispatch()
+  // Context
   const { setCardDetail, setCardRef, setCurrentSection, cardDetail } = useContext(InfoContext)
 
+  // useRefs
   const insideRef = useRef();
   const outsideRef = useRef(null);
 
+  // Function for handling off click
   const handleClickOutside = async (event) => {
     if (insideRef.current && insideRef.current.contains(event.target)) {
       return;
@@ -21,6 +23,8 @@ function BoardCards({ section }) {
     }
   };
 
+
+  // Use effect for handling off click
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
     return () => {

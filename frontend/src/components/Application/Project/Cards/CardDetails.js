@@ -8,7 +8,6 @@ import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
 
 function CardDetails() {
   // Router Dom
-  const { id } = useParams();
   const dispatch = useDispatch();
   // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
@@ -16,14 +15,14 @@ function CardDetails() {
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
-  const currentSection = useSelector(state => state.sections)[cardDetail.sectionId]
 
   // Use States
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
   const [cardDescription, setCardDescription] = useState(
-    cardDetail.description || ''
-    );
-  const [selectSection, setSelectSection] = useState(currentSection.name);
+    cardDetail.description || ""
+  );
+
+  const [selectSection, setSelectSection] = useState(Number(cardDetail.sectionId));
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -34,10 +33,13 @@ function CardDetails() {
   // Change Section for Card
   const changeSectionHandler = async (e) => {
     e.preventDefault();
-    await dispatch(moveSectionCardThunk(selectSection, cardDetail.id, id))
+    const card = await dispatch(moveSectionCardThunk(Number(selectSection), cardDetail.id, cardDetail.projectId));
+    setCardDetail(card)
     // setCardDetail(null)
   };
 
+  console.log(Number(selectSection))
+  console.log(cardDetail)
   return (
     cardDetail && (
       <div
@@ -50,7 +52,7 @@ function CardDetails() {
               <input
                 type="text"
                 value={cardTitle}
-                onBlur={e => updateCardHandler(e)}
+                onBlur={(e) => updateCardHandler(e)}
                 onChange={(e) => {
                   if (e.target.value.length >= 1) {
                     setCardTitle(e.target.value);
@@ -106,16 +108,18 @@ function CardDetails() {
                 <div className="flex mb-[20px]">
                   <label
                     className="w-[120px] text-[#6e6d6f] text-[12px]"
-                    for="section-dropdown"
+                    htmlFor="section-dropdown"
                   >
                     Sections
                   </label>
                   <select
                     name="section-dropdown"
                     id="section-dropdown"
-                    defaultValue={currentSection.id} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
+                    defaultValue={selectSection} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
                     onBlur={e => changeSectionHandler(e)}
-                    onChange={(e) => setSelectSection(e.target.value)}
+                    onChange={(e) => {
+                      setSelectSection(e.target.value);
+                    }}
                     className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[120px] text-ellipsis overflow-hidden whitespace-nowrap"
                   >
                     {sections.map((section, i) => {
@@ -138,7 +142,7 @@ function CardDetails() {
                     <textarea
                       placeholder="What is this task about?"
                       value={cardDescription}
-                      onBlur={e => updateCardHandler(e)}
+                      onBlur={(e) => updateCardHandler(e)}
                       onChange={(e) => {
                         setCardDescription(e.target.value);
                       }}
