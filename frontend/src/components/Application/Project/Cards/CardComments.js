@@ -6,8 +6,7 @@ import moment from "moment";
 
 function CardComments() {
   const dispatch = useDispatch();
-  const bottomEl = useRef(null)
-  const { cardDetail } = useContext(InfoContext);
+  const { cardDetail, bottomEl } = useContext(InfoContext);
   const comments= Object.values(useSelector((state) => state.comments));
 
   useEffect(() => {
@@ -16,7 +15,7 @@ function CardComments() {
     })();
   }, [dispatch]);
 
-//   console.log(commentArray, comments)
+
   return (
     comments && (
       <div className="bg-[#F9F8F8] w-full">
@@ -69,7 +68,7 @@ function CardComments() {
                 </div>
               );
             })}
-            {/* <div ref={bottomEl}></div> */}
+            <div ref={bottomEl}></div>
           </div>
         </div>
       </div>

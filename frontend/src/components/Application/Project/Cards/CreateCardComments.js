@@ -5,13 +5,14 @@ import { createCommentThunk } from "../../../../store/comments";
 
 function CreateCardComments() {
   const dispatch = useDispatch()
-  const { cardDetail } = useContext(InfoContext);
+  const { cardDetail, bottomEl } = useContext(InfoContext);
 
   const [comment, setComment ] = useState("");
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
     await dispatch(createCommentThunk(cardDetail.id, comment))
+    bottomEl?.current?.scrollIntoView({ behavior: 'smooth' })
     setComment('')
   }
 
