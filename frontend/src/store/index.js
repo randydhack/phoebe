@@ -6,13 +6,15 @@ import projectReducer from './projects';
 import memberReducer from './members'
 import sectionReducer from "./sections";
 import cardReducer from './cards'
+import commentReducer from "./comments";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   projects: projectReducer,
   members: memberReducer,
   sections: sectionReducer,
-  cards: cardReducer
+  cards: cardReducer,
+  comments: commentReducer
 
 });
 

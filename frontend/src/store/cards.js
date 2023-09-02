@@ -73,11 +73,13 @@ export const updateCardThunk = (id, title, description, sectionId) => async disp
 }
 
 export const moveSectionCardThunk = (sectionId, id, projectId) => async dispatch => {
+  console.log(projectId)
   const res = await csrfFetch(`/api/cards/${id}/section/${sectionId}`, {
     method: 'PUT',
     body: JSON.stringify({
       sectionId,
-      id
+      id,
+      projectId
     })
   })
 

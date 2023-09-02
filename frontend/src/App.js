@@ -9,13 +9,12 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import SignupPage from "./components/SignupFormPage/SignupPage";
 import AppNavigation from "./components/Application/Navigation/AppNavigation";
 import SideMenu from "./components/Application/SideMenu/SideMenu";
+import Modal from './components/utils/Modal'
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [closeSideMenu, setCloseSideMenu] = useState(true);
-
-  const [render, setRender] = useState(null);
 
   const userSession = useSelector((state) => state.session.user);
 
@@ -36,6 +35,7 @@ function App() {
     <>
       {isLoaded && (
         <>
+        <Modal />
           <div>
             {userSession && (
               <section>

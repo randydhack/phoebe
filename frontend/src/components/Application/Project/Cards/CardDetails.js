@@ -2,28 +2,31 @@ import { useContext, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
-import { useParams } from "react-router-dom";
-import { getProjectSectionsThunk } from "../../../../store/sections";
 import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
+import CreateCardComments from "./CreateCardComments";
+import CardComments from "./CardComments";
+
+import './Comments.css'
 
 function CardDetails() {
   // Router Dom
-  const { id } = useParams();
   const dispatch = useDispatch();
+
   // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
 
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
   const sections = Object.values(useSelector((state) => state.sections));
-  const currentSection = useSelector(state => state.sections)[cardDetail.sectionId]
 
   // Use States
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
   const [cardDescription, setCardDescription] = useState(
-    cardDetail.description || ''
-    );
-  const [selectSection, setSelectSection] = useState(currentSection.name);
+    cardDetail.description || ""
+  );
+  const [selectSection, setSelectSection] = useState(
+    Number(cardDetail.sectionId)
+  );
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -34,8 +37,14 @@ function CardDetails() {
   // Change Section for Card
   const changeSectionHandler = async (e) => {
     e.preventDefault();
-    await dispatch(moveSectionCardThunk(selectSection, cardDetail.id, id))
-    // setCardDetail(null)
+    const card = await dispatch(
+      moveSectionCardThunk(
+        Number(selectSection),
+        cardDetail.id,
+        cardDetail.projectId
+      )
+    );
+    setCardDetail(card);
   };
 
   return (
@@ -45,27 +54,29 @@ function CardDetails() {
         ref={cardRef}
       >
         <div className="flex flex-col justify-between pb-[20px] h-[calc(100%_-_30px)]">
-          <div className="overflow-hidden overflow-y-scroll h-full">
-            <div className="flex items-center">
-              <input
-                type="text"
-                value={cardTitle}
-                onBlur={e => updateCardHandler(e)}
-                onChange={(e) => {
-                  if (e.target.value.length >= 1) {
-                    setCardTitle(e.target.value);
-                  }
-                }}
-                className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
-              />
-              <RxExit
-                className="mr-[30px] text-[24px] cursor-pointer"
-                onClick={(e) => setCardDetail(null)}
-              />
+          <div className="overflow-hidden overflow-y-scroll h-full hide-scroll-bar">
+            <div className="flex flex-col w-[600px] bg-white fixed z-10">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  value={cardTitle}
+                  onBlur={(e) => updateCardHandler(e)}
+                  onChange={(e) => {
+                    if (e.target.value.length >= 1) {
+                      setCardTitle(e.target.value);
+                    }
+                  }}
+                  className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
+                />
+                <RxExit
+                  className="mr-[30px] text-[24px] cursor-pointer"
+                  onClick={(e) => setCardDetail(null)}
+                />
+              </div>
+              <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
             </div>
-            <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
 
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between h-full mt-[68px] hide-scroll-bar">
               <div className="px-[22px] py-[20px]">
                 {/* Assignee / Person who created the card */}
                 <div className="flex items-center mb-[20px]">
@@ -106,16 +117,18 @@ function CardDetails() {
                 <div className="flex mb-[20px]">
                   <label
                     className="w-[120px] text-[#6e6d6f] text-[12px]"
-                    for="section-dropdown"
+                    htmlFor="section-dropdown"
                   >
                     Sections
                   </label>
                   <select
                     name="section-dropdown"
                     id="section-dropdown"
-                    defaultValue={currentSection.id} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
-                    onBlur={e => changeSectionHandler(e)}
-                    onChange={(e) => setSelectSection(e.target.value)}
+                    defaultValue={selectSection} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
+                    onBlur={(e) => changeSectionHandler(e)}
+                    onChange={(e) => {
+                      setSelectSection(e.target.value);
+                    }}
                     className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[120px] text-ellipsis overflow-hidden whitespace-nowrap"
                   >
                     {sections.map((section, i) => {
@@ -138,7 +151,7 @@ function CardDetails() {
                     <textarea
                       placeholder="What is this task about?"
                       value={cardDescription}
-                      onBlur={e => updateCardHandler(e)}
+                      onBlur={(e) => updateCardHandler(e)}
                       onChange={(e) => {
                         setCardDescription(e.target.value);
                       }}
@@ -147,35 +160,10 @@ function CardDetails() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#F9F8F8] w-full">
-                <div className="px-[22px]">
-                  <div className=" text-[#6e6d6f] font-medium pt-[20px] text-[14px]">
-                    Comments
-                  </div>
-                  <div className="py-[20px]">dsajdklsajdklsadjklsadsadasd</div>
-                </div>
-              </div>
+              <CardComments />
             </div>
           </div>
-          <div className="border-[#ECEAE9] border-t-[1px] w-full flex py-[10px] px-[20px] bg-[#F9F8F8] shadow-[0px_-1px_3px_rgba(0,0,0,0.10)]">
-            <div className="mr-[20px]">
-              {cardDetail.User.profileImage ? (
-                <img
-                  src={cardDetail.User.profileImage}
-                  className="rounded-[50%] h-[30px] w-[30px] border-[1px] border-[#c3c3c3]"
-                />
-              ) : (
-                <div className="text-[12px] rounded-[50%] bg-yellow-300 h-[30px] w-[30px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black">
-                  {cardDetail.User.firstName[0].toUpperCase()}
-                  {cardDetail.User.lastName[0].toUpperCase()}
-                </div>
-              )}
-            </div>
-            <textarea
-              placeholder="Add a comment"
-              className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
-            />
-          </div>
+          <CreateCardComments props={cardDetail} />
         </div>
       </div>
     )

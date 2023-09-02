@@ -1,0 +1,11 @@
+.comment-options {
+    display: none;
+}
+
+.hover-comment:hover .comment-options {
+    display: block;
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+    display: none;
+}
