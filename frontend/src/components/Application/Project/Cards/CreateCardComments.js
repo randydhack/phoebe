@@ -23,7 +23,7 @@ function CreateCardComments() {
   }
 
   return (
-    <div className="border-[#ECEAE9] border-t-[1px] w-full flex py-[10px] px-[20px] bg-[#F9F8F8] shadow-[0px_-1px_3px_rgba(0,0,0,0.10)]">
+    <div className="border-[#ECEAE9] border-t-[1px] w-full flex py-[10px] px-[20px] bg-[#F9F8F8] shadow-[0px_-1px_3px_rgba(0,0,0,0.10)] relative">
       <div className="mr-[20px]">
         {cardDetail.User.profileImage ? (
           <img

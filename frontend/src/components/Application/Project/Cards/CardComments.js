@@ -12,11 +12,32 @@ function CardComments() {
   const { cardDetail, bottomEl } = useContext(InfoContext);
   const comments = Object.values(useSelector((state) => state.comments));
 
+  const commentRef = useRef();
+  const outsideRef = useRef(null);
+
+  const [commentDropdown, setCommentDropdown] = useState({commentId: null, active: false});
+
   useEffect(() => {
     (async () => {
       await dispatch(getCommentByCardIdThunk(cardDetail.id));
     })();
   }, [dispatch]);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [commentDropdown]);
+
+  const handleClickOutside = async (event) => {
+    if (commentRef.current && commentRef.current.contains(event.target)) {
+      return;
+    }
+    if (outsideRef.current && !outsideRef.current.contains(event.target)) {
+      setCommentDropdown({commentId: null, active: false});
+    }
+  };
 
   return (
     comments && (
@@ -71,8 +92,26 @@ function CardComments() {
                             at {moment(comment.createdAt).format("LT")}
                           </span>
                         </div>
-                        <div className="comment-options cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[3px]">
+                        <div
+                          className={`${commentDropdown.active && commentDropdown.commentId === comment.id ? 'block' : 'comment-options'} cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[px] relative`}
+                          forwardref={commentRef}
+                          onClick={(e) => setCommentDropdown({commentId: comment.id, active: true})}
+                        >
                           <BsThreeDots />
+                          {commentDropdown.active && commentDropdown.commentId === comment.id ? (
+                            <div
+                              className="absolute right-0 top-[25px] bg-white border-[#ECEAE9] border-solid border-[1px] w-[184px] rounded-[3px] z-[200] font-normal"
+                              onClick={(e) => e.stopPropagation()}
+                              ref={outsideRef}
+                            >
+                              <div className="w-full flex mt-[4px] px-[15px] py-[8px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]">
+                                <div className="text-black">Edit comment</div>
+                              </div>
+                              <div className="w-full flex mb-[4px] px-[15px] py-[8px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]">
+                                <div className="text-[#c92f54]">Delete comment</div>
+                              </div>
+                            </div>
+                          ) : null }
                         </div>
                       </div>
                       <div className="w-[500px] whitespace-break-spaces break-words overflow text-clip">
