@@ -55,7 +55,7 @@ router.post("/", requireAuth, async (req, res, next) => {
 router.put("/:id", requireAuth, async (req, res, next) => {
   const { comment } = req.body;
   const getComment = await Comment.findOne({
-    where: { id: req.params.id, userId: req.user.id },
+    where: { id: req.params.id, userId: req.user.id }, include: {model: User, as: 'User'}
   });
 
   if (!getComment) {
@@ -64,8 +64,12 @@ router.put("/:id", requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-  const updatedComment = await getComment.update({ comment });
-  res.status(200).json(updatedComment);
+  await getComment.update({comment});
+
+  const result = await Comment.findOne({
+    where: { id: req.params.id, userId: req.user.id }, include: {model: User, as: 'User'}, raw: true
+  });
+  res.status(200).json(result);
 });
 
 // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------

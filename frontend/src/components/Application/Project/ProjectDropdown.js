@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
 import { useState, useEffect, useRef, useContext } from "react";
-import { deleteProjectThunk } from "../../../store/projects";
+import { deleteProjectThunk, getSingleProjectThunk } from "../../../store/projects";
 import { useParams, useHistory } from "react-router-dom";
 import { InfoContext } from "../../../context/InfoContext";
 
@@ -29,6 +29,7 @@ function ProjectDropdown({project }) {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [openDropdown]);
+
 
   const handleDeleteProject = async () => {
     await dispatch(deleteProjectThunk(id));

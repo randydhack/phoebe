@@ -48,15 +48,15 @@ export const userProjectsThunk = () => async (dispatch) => {
 };
 
 export const getSingleProjectThunk = (id) => async (dispatch) => {
-  const res = await csrfFetch(`/api/projects/${id}`);
+  const res = await fetch(`/api/projects/${id}`, {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+  });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getSingleProjectAction(data));
+    await dispatch(getSingleProjectAction(data));
     return data;
-  } else {
-    const error = await res.json()
-    return error
   }
 };
 

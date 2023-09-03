@@ -47,14 +47,14 @@ function CreateSection() {
           <div className="pr-[8px] text-[16px] overflow-hidden">Add Section</div>
         </div>
       ) : (
-        <div id="sectionForm" className="mt-[5px]">
+        <div id="sectionForm" className="mt-[5px] w-full">
           <input
             ref={outsideSectionRef}
             value={sectionName}
             onClick={(e) =>
                 e.stopPropagation()}
             onChange={e =>  setSectionName(e.target.value)}
-            className="p-[10px] rounded-[5px] h-[35px] font-semibold text-[16px]"
+            className="p-[10px] rounded-[5px] h-[35px] font-semibold text-[16px] w-full"
             placeholder="New Section"
           />
         </div>

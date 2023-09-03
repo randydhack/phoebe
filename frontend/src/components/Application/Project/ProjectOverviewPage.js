@@ -24,9 +24,13 @@ function ProjectOverviewPage({ compType }) {
   useEffect(() => {
     (async () => {
         const data = await dispatch(getSingleProjectThunk(id));
+        if (!data) {
+          return history.push('/home')
+        }
         setProject(data);
         setProjectName(data.name);
         setDescription(data.description);
+
     })();
   }, [id]);
 
