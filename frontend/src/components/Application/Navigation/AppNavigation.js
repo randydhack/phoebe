@@ -1,10 +1,11 @@
 import { RiMenuLine } from "react-icons/ri";
-import { NavLink, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { NavLink, useHistory, Redirect} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileIcon from "../Profile/ProfileIcon";
 
 function AppNavigation(props) {
   const { setCloseSideMenu, closeSideMenu } = props;
+  const user = useSelector(state=>state.session.user)
 
   return (
     <section className="bg-[#2E2E30] h-[50px] flex items-center justify-between border-solid border-[#424244] border-b-[1px]">

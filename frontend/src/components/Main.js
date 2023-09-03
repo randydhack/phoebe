@@ -13,7 +13,6 @@ function Main(props) {
   const userSession = useSelector((state) => state.session.user);
 
   if (!userSession) return <Redirect to="/login" />;
-
   return (
     <>
       <div className="w-full">
