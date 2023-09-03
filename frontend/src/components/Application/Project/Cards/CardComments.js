@@ -89,10 +89,7 @@ function CardComments() {
                     {cardDetail.User.firstName} {cardDetail.User.lastName}{" "}
                     <span className="text-[#6e6d6f]">created this task.</span>
                     <span className="text-[#6e6d6f] text-[12px] font-normal">
-                      {" "}
-                      {moment(cardDetail.createdAt).format(
-                        "MMM Do, YYYY"
-                      )} at {moment(cardDetail.createdAt).format("LT")}
+                      {" "} {moment(cardDetail.createdAt).format("MMM Do, YYYY")} at {moment(cardDetail.createdAt).format("LT")}
                     </span>
                   </div>
                 </div>
@@ -116,28 +113,15 @@ function CardComments() {
                         <div>
                           {comment["User.firstName"]} {comment["User.lastName"]}
                           <span className="text-[#6e6d6f] text-[12px] font-normal">
-                            {" "}
-                            {moment(comment.createdAt).format(
-                              "MMM Do, YYYY"
-                            )}{" "}
+                            {" "} {moment(comment.createdAt).format("MMM Do, YYYY")}{" "}
                             at {moment(comment.createdAt).format("LT")}
                           </span>
                         </div>
                         {user.id === comment.userId && editCommentUnshow && (
                           <div
-                            className={`${
-                              commentDropdown.active &&
-                              commentDropdown.commentId === comment.id
-                                ? "block"
-                                : "comment-options"
-                            } cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[px] relative`}
+                            className={`${commentDropdown.active && commentDropdown.commentId === comment.id ? "block" : "comment-options" } cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[px] relative`}
                             forwardref={commentRef}
-                            onClick={(e) =>
-                              setCommentDropdown({
-                                commentId: comment.id,
-                                active: true,
-                              })
-                            }
+                            onClick={(e) => setCommentDropdown({  commentId: comment.id,  active: true})}
                           >
                             <BsThreeDots />
                             {commentDropdown.active &&
@@ -150,16 +134,8 @@ function CardComments() {
                                 <div
                                   className="w-full flex mt-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]"
                                   onClick={(e) => {
-                                    setEditComment({
-                                      commentId: comment.id,
-                                      active: true,
-                                      comment: comment.comment,
-                                    });
-
-                                    setCommentDropdown({
-                                      commentId: null,
-                                      active: null,
-                                    });
+                                    setEditComment({commentId: comment.id,active: true,comment: comment.comment,});
+                                    setCommentDropdown({commentId: null,active: null,});
                                     setEditCommentUnshow(false);
                                   }}
                                 >
@@ -167,9 +143,7 @@ function CardComments() {
                                 </div>
                                 <div
                                   className="w-full flex mb-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]"
-                                  onClick={(e) =>
-                                    handleDeleteComment(e, comment.id)
-                                  }
+                                  onClick={(e) => handleDeleteComment(e, comment.id)}
                                 >
                                   <div className="text-[#c92f54]">
                                     Delete comment
@@ -185,30 +159,21 @@ function CardComments() {
                         editComment.commentId === comment.id ? (
                           <>
                             <textarea
-                              className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5] ml-0"
+                              className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5] ml-0"
                               value={editComment.comment}
-                              onChange={(e) =>
-                                setEditComment({
-                                  commentId: comment.id,
-                                  active: true,
-                                  comment: e.target.value,
-                                })
-                              }
+                              onChange={(e) => setEditComment({commentId: comment.id, active: true, comment: e.target.value })}
                             />
-                            <div>
+                            <div className="flex mt-[5px] items-center justify-end">
                               <div
-                                onClick={(e) => {
-                                  setEditComment({
-                                    commentId: null,
-                                    active: false,
-                                    comment: null,
-                                  });
-                                  setEditCommentUnshow(true);
-                                }}
+                                onClick={(e) => {setEditComment({  commentId: null,  active: false,  comment: null,});
+                                setEditCommentUnshow(true);
+                                    }
+                                }
+                                className="mr-[10px] cursor-pointer bg-white text-black px-[8px] py-[3px] rounded-[3px] border-[#c3c1c0] border-[1px] "
                               >
                                 Cancel
                               </div>
-                              <div onClick={(e) => handleUpdateComment(e)}>
+                              <div onClick={(e) => handleUpdateComment(e)} className="bg-[#4573D0] text-white px-[5px] py-[3px] rounded-[3px] cursor-pointer border-[#4573d2] border-[1px]">
                                 Save Changes
                               </div>
                             </div>

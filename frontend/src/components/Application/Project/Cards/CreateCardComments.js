@@ -39,7 +39,7 @@ function CreateCardComments() {
       </div>
         <textarea
           placeholder="Add a comment"
-          className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
+          className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
           value={comment}
           onBlur={e => {
             if (comment.trim().length < 1) {
