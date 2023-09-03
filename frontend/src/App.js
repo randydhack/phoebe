@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, history, useHistory } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from "./components/Main";
 import LoginPage from "./components/LoginFormPage/LoginPage";
@@ -10,13 +10,16 @@ import SignupPage from "./components/SignupFormPage/SignupPage";
 import AppNavigation from "./components/Application/Navigation/AppNavigation";
 import SideMenu from "./components/Application/SideMenu/SideMenu";
 import Modal from './components/utils/Modal'
+import Landing from "./components/HomePage/Landing";
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const [isLoaded, setIsLoaded] = useState(false);
   const [closeSideMenu, setCloseSideMenu] = useState(true);
 
   const userSession = useSelector((state) => state.session.user);
+
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -68,7 +71,7 @@ function App() {
                   path="/project/:id/board"
                   component={() => <Main compType="project board" />}
                 />
-                <Route exact path="/" />
+                <Route exact path="/" component={Landing}/>
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/new-project" component={CreateProjectPage} />
