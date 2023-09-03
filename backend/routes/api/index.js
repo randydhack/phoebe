@@ -6,6 +6,7 @@ const projectsRouter = require('./projects.js')
 const sectionRouter = require('./sections.js')
 const cardsRouter = require('./card.js')
 const commentsRouter = require('./comments.js')
+const memberProjects = require('./members.js')
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -24,6 +25,8 @@ router.use('/sections',sectionRouter)
 router.use('/cards', cardsRouter)
 
 router.use('/comments', commentsRouter)
+
+router.use('/members', memberProjects)
 
 
 router.post('/test', function(req, res) {

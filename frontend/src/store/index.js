@@ -7,6 +7,7 @@ import memberReducer from './members'
 import sectionReducer from "./sections";
 import cardReducer from './cards'
 import commentReducer from "./comments";
+import memberProjectReducer from './memberProjects'
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -14,8 +15,8 @@ const rootReducer = combineReducers({
   members: memberReducer,
   sections: sectionReducer,
   cards: cardReducer,
-  comments: commentReducer
-
+  comments: commentReducer,
+  memberProjects: memberProjectReducer
 });
 
 let enhancer;
