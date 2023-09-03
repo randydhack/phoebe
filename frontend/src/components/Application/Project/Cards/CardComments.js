@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
 import { useDispatch, useSelector } from "react-redux";
-import { getCommentByCardIdThunk } from "../../../../store/comments";
+import { deleteCommentThunk, getCommentByCardIdThunk } from "../../../../store/comments";
 import { BsThreeDots } from "react-icons/bs";
 import moment from "moment";
 
@@ -22,7 +22,7 @@ function CardComments() {
     (async () => {
       await dispatch(getCommentByCardIdThunk(cardDetail.id));
     })();
-  }, [dispatch]);
+  }, [dispatch, cardDetail]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -39,6 +39,13 @@ function CardComments() {
       setCommentDropdown({commentId: null, active: false});
     }
   };
+
+  const handleDeleteComment = async (e, comment) => {
+    e.preventDefault()
+    await dispatch(deleteCommentThunk(comment))
+    await dispatch(getCommentByCardIdThunk(cardDetail.id))
+    setCommentDropdown({commentId: null, active: false})
+  }
 
   return (
     comments && (
@@ -109,7 +116,7 @@ function CardComments() {
                               <div className="w-full flex mt-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]">
                                 <div className="text-black">Edit comment</div>
                               </div>
-                              <div className="w-full flex mb-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]">
+                              <div className="w-full flex mb-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]" onClick={e => handleDeleteComment(e, comment.id)}>
                                 <div className="text-[#c92f54]">Delete comment</div>
                               </div>
                             </div>
