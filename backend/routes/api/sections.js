@@ -32,7 +32,7 @@ router.post("/project/:id", requireAuth, async (req, res, next) => {
   const { name } = req.body;
   //  Finds a Project where the owner belongs to and if the project exist
   const project = await Project.findOne({
-    where: { id: req.params.id, ownerId: req.user.id },
+    where: { id: req.params.id },
   });
 
   // If project does not exist, he is either not owner or does not have a project

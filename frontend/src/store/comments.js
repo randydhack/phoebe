@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const CREATE_COMMENTS = "comments/CREATE_COMMENTS";
 const GET_COMMENTS = "comments/GET_COMMENTS";
 const DELETE_COMMENT = 'comments/DELETE_COMMENT'
+const UPDATE_COMMENT = 'comments/UPDATE_COMMENT'
 // Action Creators
 
 export const createCommentAction = (comment) => ({
@@ -21,6 +22,10 @@ export const deleteCommentAction = (comment) => ({
   payload: comment
 })
 
+export const updateCommentAction = (comment) => ({
+  type: UPDATE_COMMENT,
+  payload: comment
+})
 // Thunk action creators
 
 export const getCommentByCardIdThunk = (id) => async (dispatch) => {
@@ -60,8 +65,22 @@ export const deleteCommentThunk = (id) => async dispatch => {
     await dispatch(deleteCommentAction(data))
     return data
   }
+}
 
+export const updateCommentThunk = (id, comment) => async (dispatch) => {
+  const res = await csrfFetch(`/api/comments/${id}`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      comment
+    })
+  })
 
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(updateCommentAction(data))
+    return data
+  }
 }
 
 // Initial state
@@ -81,6 +100,12 @@ const commentReducer = (state = {}, action) => {
     case DELETE_COMMENT:
       newState = {...state}
       delete newState[action.payload.id]
+      return newState
+    case UPDATE_COMMENT:
+      newState = {...state}
+      console.log(newState, 'NEW STATE')
+      console.log(action.payload, 'PAYLOAD')
+      newState[action.payload.id] = action.payload
       return newState
     default:
       return state;

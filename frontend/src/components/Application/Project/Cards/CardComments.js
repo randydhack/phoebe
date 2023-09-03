@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCommentThunk, getCommentByCardIdThunk } from "../../../../store/comments";
+import {
+  deleteCommentThunk,
+  getCommentByCardIdThunk,
+  updateCommentThunk,
+} from "../../../../store/comments";
 import { BsThreeDots } from "react-icons/bs";
 import moment from "moment";
 
@@ -11,12 +15,21 @@ function CardComments() {
   const dispatch = useDispatch();
   const { cardDetail, bottomEl } = useContext(InfoContext);
   const comments = Object.values(useSelector((state) => state.comments));
-  const user = useSelector(state => state.session.user)
+  const user = useSelector((state) => state.session.user);
 
   const commentRef = useRef();
   const outsideRef = useRef(null);
 
-  const [commentDropdown, setCommentDropdown] = useState({commentId: null, active: false});
+  const [commentDropdown, setCommentDropdown] = useState({
+    commentId: null,
+    active: false,
+  });
+  const [editComment, setEditComment] = useState({
+    commentId: null,
+    active: false,
+    comment: null,
+  });
+  const [editCommentUnshow, setEditCommentUnshow] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -36,16 +49,26 @@ function CardComments() {
       return;
     }
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
-      setCommentDropdown({commentId: null, active: false});
+      setCommentDropdown({ commentId: null, active: false });
     }
   };
 
   const handleDeleteComment = async (e, comment) => {
-    e.preventDefault()
-    await dispatch(deleteCommentThunk(comment))
-    await dispatch(getCommentByCardIdThunk(cardDetail.id))
-    setCommentDropdown({commentId: null, active: false})
-  }
+    e.preventDefault();
+    await dispatch(deleteCommentThunk(comment));
+    await dispatch(getCommentByCardIdThunk(cardDetail.id));
+    setCommentDropdown({ commentId: null, active: false });
+  };
+
+  const handleUpdateComment = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      updateCommentThunk(editComment.commentId, editComment.comment.trim())
+    );
+    await dispatch(getCommentByCardIdThunk(cardDetail.id));
+    setEditComment({commentId: null,active: false,comment: null});
+    setEditCommentUnshow(true);
+  };
 
   return (
     comments && (
@@ -100,33 +123,99 @@ function CardComments() {
                             at {moment(comment.createdAt).format("LT")}
                           </span>
                         </div>
-                        { user.id === comment.userId &&
-                        <div
-                          className={`${commentDropdown.active && commentDropdown.commentId === comment.id ? 'block' : 'comment-options'} cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[px] relative`}
-                          forwardref={commentRef}
-                          onClick={(e) => setCommentDropdown({commentId: comment.id, active: true})}
-                        >
-                          <BsThreeDots />
-                          {commentDropdown.active && commentDropdown.commentId === comment.id ? (
-                            <div
-                              className="absolute right-[25px] top-[0px] bg-white border-[#ECEAE9] border-solid border-[1px] w-[184px] rounded-[3px] z-[200] font-normal text-[12px]"
-                              onClick={(e) => e.stopPropagation()}
-                              ref={outsideRef}
-                            >
-                              <div className="w-full flex mt-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]">
-                                <div className="text-black">Edit comment</div>
-                              </div>
-                              <div className="w-full flex mb-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]" onClick={e => handleDeleteComment(e, comment.id)}>
-                                <div className="text-[#c92f54]">Delete comment</div>
-                              </div>
-                            </div>
-                          ) : null }
-                        </div>
-                        }
+                        {user.id === comment.userId && editCommentUnshow && (
+                          <div
+                            className={`${
+                              commentDropdown.active &&
+                              commentDropdown.commentId === comment.id
+                                ? "block"
+                                : "comment-options"
+                            } cursor-pointer hover:bg-[#ECEAE9] p-[3px] rounded-[px] relative`}
+                            forwardref={commentRef}
+                            onClick={(e) =>
+                              setCommentDropdown({
+                                commentId: comment.id,
+                                active: true,
+                              })
+                            }
+                          >
+                            <BsThreeDots />
+                            {commentDropdown.active &&
+                            commentDropdown.commentId === comment.id ? (
+                              <div
+                                className="absolute right-[25px] top-[0px] bg-white border-[#ECEAE9] border-solid border-[1px] w-[184px] rounded-[3px] z-[200] font-normal text-[12px]"
+                                onClick={(e) => e.stopPropagation()}
+                                ref={outsideRef}
+                              >
+                                <div
+                                  className="w-full flex mt-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]"
+                                  onClick={(e) => {
+                                    setEditComment({
+                                      commentId: comment.id,
+                                      active: true,
+                                      comment: comment.comment,
+                                    });
 
+                                    setCommentDropdown({
+                                      commentId: null,
+                                      active: null,
+                                    });
+                                    setEditCommentUnshow(false);
+                                  }}
+                                >
+                                  <div className="text-black">Edit comment</div>
+                                </div>
+                                <div
+                                  className="w-full flex mb-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#A2A0A2]"
+                                  onClick={(e) =>
+                                    handleDeleteComment(e, comment.id)
+                                  }
+                                >
+                                  <div className="text-[#c92f54]">
+                                    Delete comment
+                                  </div>
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
+                        )}
                       </div>
                       <div className="w-[500px] whitespace-break-spaces break-words overflow text-clip">
-                        {comment.comment}
+                        {editComment.active &&
+                        editComment.commentId === comment.id ? (
+                          <>
+                            <textarea
+                              className="resize-none h-[150px] w-full border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5] ml-0"
+                              value={editComment.comment}
+                              onChange={(e) =>
+                                setEditComment({
+                                  commentId: comment.id,
+                                  active: true,
+                                  comment: e.target.value,
+                                })
+                              }
+                            />
+                            <div>
+                              <div
+                                onClick={(e) => {
+                                  setEditComment({
+                                    commentId: null,
+                                    active: false,
+                                    comment: null,
+                                  });
+                                  setEditCommentUnshow(true);
+                                }}
+                              >
+                                Cancel
+                              </div>
+                              <div onClick={(e) => handleUpdateComment(e)}>
+                                Save Changes
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          comment.comment
+                        )}
                       </div>
                     </div>
                   </div>
