@@ -10,16 +10,34 @@ const { Project, Section, Member, Card, User } = require("../../db/models");
 // **** GET ALL PROJECT FOR A SINGLE USER ****
 router.get("/", requireAuth, async (req, res) => {
   // Finds all the projects user owns or belongs to
-  const userProjects = await Project.findAll({
-    where: { ownerId: req.user.id },
-    include: [
-      {
-        model: Section,
-      },
-    ],
-  });
-  //  return json
-  res.status(200).json(userProjects);
+  // const userProjects = await Project.findAll({
+  //   where: { ownerId: req.user.id },
+  //   include: [
+  //     {
+  //       model: Section,
+  //     },
+  //   ],
+  // });
+  // res.status(200).json(userProjects);
+  const memberProjects = await Member.findAll({
+    where: {userId: req.user.id},
+    include: {
+      model: Project,
+      as: 'Project',
+      include: {
+        model: Section
+      }
+    }
+  })
+
+  let result = []
+
+  memberProjects.forEach(el => {
+    el = el.toJSON().Project
+    result.push(el)
+  })
+
+  res.status(200).json(result)
 });
 
 // **** GET PROJECT BY ID, only if they are a member of the Project ****

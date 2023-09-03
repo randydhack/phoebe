@@ -2,7 +2,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-function HomeProjectBox({projects}) {
+function HomeProjectBox({projects }) {
+
 
   return (
     projects && (
@@ -33,6 +34,7 @@ function HomeProjectBox({projects}) {
                 </NavLink>
               );
             })}
+
           </div>
         </div>
       </div>

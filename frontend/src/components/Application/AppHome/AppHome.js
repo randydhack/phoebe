@@ -11,7 +11,9 @@ function AppHome() {
   const projects = Object.values(useSelector((state) => state.projects));
 
   useEffect(() => {
-    dispatch(userProjectsThunk());
+    (async () => {
+      await dispatch(userProjectsThunk());
+    })()
   }, []);
 
   return (
