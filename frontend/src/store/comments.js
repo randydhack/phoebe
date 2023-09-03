@@ -45,6 +45,12 @@ export const createCommentThunk = (cardId, comment) => async (dispatch) => {
   }
 };
 
+export const deleteComment = (id) => async dispatch => {
+  const res = await csrfFetch(`/api/comments/${id}`, {
+    method: 'DELETE'
+  })
+}
+
 // Initial state
 
 // Reducer
