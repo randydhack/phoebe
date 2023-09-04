@@ -24,10 +24,9 @@ router.get(`/projects`, requireAuth, async (req, res, next) => {
 
 // // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
-router.use('/project/:id', async (req, res, next) => {
-  const { id } = req.body
+router.delete('/project/:id', async (req, res, next) => {
 
-  const member = Member.findOne({where: {userId: req.user.id, projectId: id}})
+  const member = await Member.findOne({where: {userId: req.user.id, projectId: Number(req.params.id)}})
 
   if (!member) {
     const err = new Error("Member does not exist.");

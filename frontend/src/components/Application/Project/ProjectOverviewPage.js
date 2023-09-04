@@ -19,9 +19,8 @@ function ProjectOverviewPage({ compType }) {
   const user = useSelector(state => state.session.user)
 
   const project1 = useSelector((state) => state.projects)[id];
-  const [projectName, setProjectName] = useState(project?.name);
-  const [description, setDescription] = useState(project?.description);
-  const [projects, setProjects] = useState(null)
+  const [projectName, setProjectName] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -32,7 +31,6 @@ function ProjectOverviewPage({ compType }) {
         setProject(data);
         setProjectName(data.name);
         setDescription(data.description);
-        setProjects(data)
     })();
   }, [id]);
 

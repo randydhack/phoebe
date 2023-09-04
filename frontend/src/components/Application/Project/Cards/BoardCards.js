@@ -1,15 +1,18 @@
 import { GoCheckCircle } from "react-icons/go";
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef, useEffect, useState } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
 
 function BoardCards({ section }) {
 
   // Context
-  const { setCardDetail, setCardRef, setCurrentSection, cardDetail } = useContext(InfoContext)
+  const { setCardDetail, setCardRef, cardDetail } = useContext(InfoContext)
 
   // useRefs
   const insideRef = useRef();
   const outsideRef = useRef(null);
+
+  // States
+  const [toggle, setToggle] = useState(true)
 
   // Function for handling off click
   const handleClickOutside = async (event) => {
@@ -18,8 +21,16 @@ function BoardCards({ section }) {
     }
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
       setCardDetail(null)
+      setToggle(null)
     }
   };
+
+  const handleClickOutside2 = () => {
+    setToggle(!toggle)
+    if (toggle) {
+      setCardDetail(null)
+    }
+  }
 
 
   // Use effect for handling off click
@@ -37,7 +48,7 @@ function BoardCards({ section }) {
           <div
             key={i}
             className="w-[280px] bg-white rounded-[8px] my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]"
-            onClick={e => {setCardDetail(card); setCardRef(outsideRef)}}
+            onClick={e => {setCardDetail(card); setCardRef(outsideRef); handleClickOutside2()}}
             ref={insideRef}
           >
             <span className="break-normal max-w-[270px] break-words flex min-w-0">

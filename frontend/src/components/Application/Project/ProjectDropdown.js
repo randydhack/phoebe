@@ -9,6 +9,7 @@ import {
 } from "../../../store/projects";
 import { useParams, useHistory } from "react-router-dom";
 import { InfoContext } from "../../../context/InfoContext";
+import { leaveProjectThunk } from "../../../store/members";
 
 function ProjectDropdown({ project }) {
   const dispatch = useDispatch();
@@ -39,8 +40,13 @@ function ProjectDropdown({ project }) {
     return history.push("/home");
   };
 
+  const handleLeaveProject = async () => {
+    await dispatch(leaveProjectThunk(id))
+    return history.push('/home')
+  }
+
   return (
-    <div className="cursor-pointer text-white ml-[20px] hover:bg-[#e3e3e35a] px-[5px] py-[3px] rounded-[5px]">
+    <div className="cursor-pointer text-white ml-[20px] hover:bg-[#ECEAE9] px-[5px] py-[2px] rounded-[5px]">
       <div className="flex items-center">
         <BsThreeDots
           className="flex items-center text-black"
@@ -53,13 +59,13 @@ function ProjectDropdown({ project }) {
 
         {!openDropdown ? null : (
           <div
-            className="absolute top-[102px] right-[35px] bg-white border-[#EEECEB] border-solid border-[1px] w-[248px] rounded-[3px]"
+            className="absolute top-[102px] right-[32px] bg-white border-[#EEECEB] border-solid border-[1px] w-[220px] rounded-[3px]"
             onClick={(e) => e.stopPropagation()}
             ref={dropdownRef}
           >
             {user.id === project.ownerId ? (
               <div
-                className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-red-600"
+                className="w-full flex my-[4px] px-[10px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#c92f54]"
                 onClick={(e) => handleDeleteProject()}
               >
                 <PiTrashThin className="mr-[10px] text-[18px]" />
@@ -68,7 +74,7 @@ function ProjectDropdown({ project }) {
             ) : (
               <div
                 className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#F5F3F3] items-center text-red-600"
-                onClick={(e) => handleDeleteProject()}
+                onClick={(e) => handleLeaveProject()}
               >
                 <LiaRunningSolid className="mr-[10px] text-[18px]"/>
                 <div className="text-[14px] font-normal">Leave Project</div>
