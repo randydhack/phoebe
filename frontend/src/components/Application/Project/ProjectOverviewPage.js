@@ -16,10 +16,12 @@ function ProjectOverviewPage({ compType }) {
 
   const { id } = useParams();
   const { setProject, project } = useContext(InfoContext);
+  const user = useSelector(state => state.session.user)
 
   const project1 = useSelector((state) => state.projects)[id];
   const [projectName, setProjectName] = useState(project?.name);
   const [description, setDescription] = useState(project?.description);
+  const [projects, setProjects] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -30,7 +32,7 @@ function ProjectOverviewPage({ compType }) {
         setProject(data);
         setProjectName(data.name);
         setDescription(data.description);
-
+        setProjects(data)
     })();
   }, [id]);
 
@@ -42,7 +44,7 @@ function ProjectOverviewPage({ compType }) {
   //   bg-[#1f1e21]
 
   return (
-    project1 && (
+    project && (
       <>
         {/* Overview Info and Navigation */}
         <div className="bg-[white] w-full h-[100px] px-[20px] border-b-[1px] border-[#ECEAE9]">
@@ -52,18 +54,22 @@ function ProjectOverviewPage({ compType }) {
               className="mr-[20px] w-[50px] h-[50px] rounded-[10px]"
             />
             <div className="text-black font-semibold text-[20px] flex items-center w-full">
+              {user.id === project.ownerId ?
               <input
-                type="text"
-                value={projectName}
-                onBlur={e => handleSubmit(e)}
-                onChange={(e) => {
-                  if (e.target.value.length >= 1) {
-                    setProjectName(e.target.value);
-                  }
-                }}
-                minLength={1}
-                className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
-              />
+                  type="text"
+                  value={projectName}
+                  onBlur={e => handleSubmit(e)}
+                  onChange={(e) => {
+                    if (e.target.value.length >= 1) {
+                      setProjectName(e.target.value);
+                    }
+                  }}
+                  minLength={1}
+                  className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
+                /> :
+                <div className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap">{projectName}</div>
+
+            }
               <ProjectDropdown project={project} />
             </div>
           </div>

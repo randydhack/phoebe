@@ -24,4 +24,21 @@ router.get(`/projects`, requireAuth, async (req, res, next) => {
 
 // // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
+router.use('/project/:id', async (req, res, next) => {
+  const { id } = req.body
+
+  const member = Member.findOne({where: {userId: req.user.id, projectId: id}})
+
+  if (!member) {
+    const err = new Error("Member does not exist.");
+    err.status = 404;
+    return next(err);
+  }
+
+  await member.destroy()
+
+  res.status(200).json({message: 'Successfully Deleted', statusCode: 200})
+})
+
+
 module.exports = router;

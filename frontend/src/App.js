@@ -14,7 +14,6 @@ import Landing from "./components/HomePage/Landing";
 
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory()
   const [isLoaded, setIsLoaded] = useState(false);
   const [closeSideMenu, setCloseSideMenu] = useState(true);
 

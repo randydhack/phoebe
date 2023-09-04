@@ -224,7 +224,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     });
   } else {
     const err = new Error("User does not have permission");
-    err.status = 404;
+    err.status = 401;
     return next(err);
   }
 });
