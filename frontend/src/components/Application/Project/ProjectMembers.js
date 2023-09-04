@@ -8,7 +8,7 @@ function ProjectMembers({ project }) {
   const {setProject} = useContext(InfoContext)
 
   return (
-    <div className="mt-[30px] ml-[10px]">
+    <div className="mt-[30px] ml-[10px] mb-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>
       <div className="grid grid-cols-4 w-[100%] box-content h-[120px] items-center">
         <div

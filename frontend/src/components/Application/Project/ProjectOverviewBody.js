@@ -11,19 +11,22 @@ function ProjectOverviewBody({ props }) {
 
   const [activeDescription, setActiveDescription] = useState(false);
 
-
   useEffect(() => {
     (async () => {
       const element = document.querySelector(".project-description");
-    const container = document.querySelector(".project-description-container");
-    const elementHeight = (element.style.height = `${element.scrollHeight}px`);
+      const container = document.querySelector(
+        ".project-description-container"
+      );
+      if (element) {
+        const elementHeight =
+          (element.style.height = `${element.scrollHeight}px`);
 
-
-      element.style.height = "auto";
-      element.style.height = `${element.scrollHeight}px`;
-    container.style.height = elementHeight;
-    })()
-  })
+        element.style.height = "auto";
+        element.style.height = `${element.scrollHeight}px`;
+        container.style.height = elementHeight;
+      }
+    })();
+  });
 
   const changeDecriptionHeight = () => {
     const element = document.querySelector(".project-description");
@@ -39,7 +42,7 @@ function ProjectOverviewBody({ props }) {
 
   return (
     project && (
-      <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_200px)]">
+      <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_151px)]">
         {/* Project Description */}
         <div className="w-full px-[25px] mt-[50px] overflow-y-scroll">
           <div className="flex flex-col">
@@ -64,7 +67,7 @@ function ProjectOverviewBody({ props }) {
                 />
               </div>
             ) : (
-              <div className="border-solid border-[1px] border-transparent hover:border-black rounded-[5px] box-border flex-auto overflow-ellipsis break-words">
+              <div className="border-solid border-[1px] border-transparent rounded-[5px] box-border flex-auto overflow-ellipsis break-words">
                 <div
                   className=" h-full p-[10px] rounded-[5px] resize-none
                   text-[14px] bg-inherit"
