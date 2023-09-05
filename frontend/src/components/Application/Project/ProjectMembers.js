@@ -1,11 +1,19 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../context/Modal";
 import { InfoContext } from "../../../context/InfoContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProjectMembersThunk } from "../../../store/members";
 
 function ProjectMembers({ project }) {
+  const dispatch = useDispatch()
   const { addMemberModal } = useContext(ModalContext);
   const {setProject} = useContext(InfoContext)
+  const members = Object.values(useSelector(state => state.members))
+
+  useEffect(() => {
+    dispatch(getAllProjectMembersThunk(project.id))
+  }, [project])
 
   return (
     <div className="mt-[30px] ml-[10px] mb-[10px]">
@@ -25,7 +33,7 @@ function ProjectMembers({ project }) {
             <p className="ml-[10px]">Add Member</p>
           </div>
         </div>
-        {project.Members.map((member, i) => {
+        {members.map((member, i) => {
           return (
             <div
               key={i}

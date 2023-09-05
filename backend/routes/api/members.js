@@ -4,6 +4,7 @@ const router = express.Router();
 const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
 const { Member, Project, User } = require("../../db/models");
+const { validateInvite,  } = require('../../utils/validation');
 
 // // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 
@@ -18,13 +19,17 @@ router.get(`/projects`, requireAuth, async (req, res, next) => {
   res.status(200).json(memberProjects);
 });
 
+router.get('/project/:id', requireAuth, async (req,res, next) => {
+  const members = await Member.findAll({where: {projectId: Number(req.params.id)}, include: {model: User, as: 'User'}})
+
+  res.status(200).json(members)
+})
+
 // // ------------------------------------ POST ENDPOINTS ---------------------------------------------
 
-router.post('/project/:id', requireAuth, async (req, res, next) => {
-  console.log('dsadsadhskdjkasdljksadkjlasdjksaldsad')
+router.post('/project/:id', validateInvite, requireAuth, async (req, res, next) => {
   const { email } = req.body
   const { id } = req.params
-  console.log(email)
   const user = await User.findOne({where: {email: email}})
 
   if (!user) {
@@ -33,7 +38,14 @@ router.post('/project/:id', requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-  console.log(user)
+  const project = await Project.findByPk(Number(id))
+
+  if (project.ownerId !== req.user.id) {
+    const err = new Error("User does not have permission to invite");
+    err.status = 401;
+    return next(err);
+  }
+
   const member = await Member.findOne({where: {userId: user.id, projectId: Number(id)}})
 
   if (member) {
@@ -43,9 +55,9 @@ router.post('/project/:id', requireAuth, async (req, res, next) => {
   }
 
   const newMember = await Member.create({userId: user.id, projectId: Number(id)})
-  // const result = await Member.findOne({where: {id: newMember.id}, include: { model}})
+  const result = await Member.findOne({where: {id: newMember.id}, include: { model: User, as: 'User'}})
 
-  res.status(200).json(newMember)
+  res.status(200).json(result)
 })
 
 // // ------------------------------------ PUT ENDPOINTS ---------------------------------------------

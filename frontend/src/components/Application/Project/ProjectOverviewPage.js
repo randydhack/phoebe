@@ -35,8 +35,6 @@ function ProjectOverviewPage({ compType }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(description, project.description)
-    console.log(projectName, project.name)
     if (description !== project.description || projectName !== project.name) {
       await dispatch(updateProjectThunk(projectName, description, project.id));
     }
