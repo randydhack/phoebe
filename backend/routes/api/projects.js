@@ -130,20 +130,6 @@ router.get("/:id/members", async (req, res, next) => {
 router.post("/", requireAuth, async (req, res, next) => {
   // Body request from form
   const { name, description,} = req.body;
-  // Finds existing project by name and id to prevent same Project name
-  const existingProject = await Project.findOne({
-    where: { name: name, ownerId: req.user.id },
-  });
-
-  // If the project name exist by user, throw error
-  if (
-    existingProject &&
-    name.toLowerCase() === existingProject["name"].toLowerCase()
-  ) {
-    const err = new Error("Project name already exist.");
-    err.status = 401;
-    return next(err);
-  }
 
   // Creates a new project, name and ownerId is required
   const project = await Project.create({

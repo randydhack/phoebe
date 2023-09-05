@@ -39,13 +39,13 @@ function ProjectSideMenu() {
             <div className="flex-[1]">
               <div className="cursor-pointer flex items-center justify-between">
                 <div
-                  className="m-[5px] flex items-center w-full"
+                  className="m-[5px] flex items-center w-full project-dropdown"
                   onClick={(e) => setProjectDown(!projectDropdown)}
                 >
                   {projectDropdown ? (
-                    <BiSolidDownArrow className="text-white text-[10px]" />
+                    <BiSolidDownArrow className="text-white text-[10px] arrow-dropdown" />
                   ) : (
-                    <BiSolidRightArrow className="text-white text-[10px]" />
+                    <BiSolidRightArrow className="text-white text-[10px] arrow-dropdown" />
                   )}
                   <div className="mx-[8px] text-white text-[14px] font-medium">
                     Projects
