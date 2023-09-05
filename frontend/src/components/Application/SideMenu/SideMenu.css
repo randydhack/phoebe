@@ -1,3 +1,11 @@
 .hide-scroll-bar::-webkit-scrollbar {
     display: none;
 }
+
+.arrow-dropdown {
+    opacity: 0;
+}
+
+.project-dropdown:hover .arrow-dropdown {
+    opacity: 100%;
+}
