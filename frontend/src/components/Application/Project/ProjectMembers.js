@@ -10,6 +10,7 @@ function ProjectMembers({ project }) {
   const { addMemberModal } = useContext(ModalContext);
   const {setProject} = useContext(InfoContext)
   const members = Object.values(useSelector(state => state.members))
+  const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     dispatch(getAllProjectMembersThunk(project.id))
@@ -19,6 +20,7 @@ function ProjectMembers({ project }) {
     <div className="mt-[30px] ml-[10px] mb-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>
       <div className="grid grid-cols-4 w-[100%] box-content h-[120px] items-center">
+        {user.id === project.ownerId &&
         <div
           className="hover:bg-[#e3e3e35a] p-[10px] rounded-[10px] cursor-pointer"
           onClick={(e) => {
@@ -33,6 +35,7 @@ function ProjectMembers({ project }) {
             <p className="ml-[10px]">Add Member</p>
           </div>
         </div>
+        }
         {members.map((member, i) => {
           return (
             <div
