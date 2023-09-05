@@ -99,7 +99,7 @@ router.put('/:id/section/:sectionId', async (req, res, next) => {
 // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
 router.delete("/:id", requireAuth, async (req, res, next) => {
-  const card = await Card.findByPk(req.params.id);
+  const card = await Card.findByPk(Number(req.params.id));
 
   if (!card) {
     const err = new Error("Card does not exist.");
@@ -108,10 +108,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   }
 
   await card.destroy();
-  res.status(200).json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  res.status(200).json(card);
 });
 
 module.exports = router;

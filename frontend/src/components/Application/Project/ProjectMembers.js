@@ -1,16 +1,26 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ModalContext } from "../../../context/Modal";
 import { InfoContext } from "../../../context/InfoContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProjectMembersThunk } from "../../../store/members";
 
 function ProjectMembers({ project }) {
+  const dispatch = useDispatch()
   const { addMemberModal } = useContext(ModalContext);
   const {setProject} = useContext(InfoContext)
+  const members = Object.values(useSelector(state => state.members))
+  const user = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    dispatch(getAllProjectMembersThunk(project.id))
+  }, [project])
 
   return (
-    <div className="mt-[30px] ml-[10px]">
+    <div className="mt-[30px] ml-[10px] mb-[10px]">
       <div className="font-medium text-[18px]">Project Roles</div>
       <div className="grid grid-cols-4 w-[100%] box-content h-[120px] items-center">
+        {user.id === project.ownerId &&
         <div
           className="hover:bg-[#e3e3e35a] p-[10px] rounded-[10px] cursor-pointer"
           onClick={(e) => {
@@ -25,7 +35,8 @@ function ProjectMembers({ project }) {
             <p className="ml-[10px]">Add Member</p>
           </div>
         </div>
-        {project.Members.map((member, i) => {
+        }
+        {members.map((member, i) => {
           return (
             <div
               key={i}

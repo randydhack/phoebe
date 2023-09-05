@@ -1,16 +1,22 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { InfoContext } from "../../../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
-import { moveSectionCardThunk, updateCardThunk } from "../../../../store/cards";
+import { BsThreeDots } from "react-icons/bs";
+import { PiTrashThin } from "react-icons/pi";
+import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
 import CardComments from "./CardComments";
 
-import './Comments.css'
+import "./Comments.css";
 
 function CardDetails() {
   // Router Dom
   const dispatch = useDispatch();
+
+  // Use Ref
+  const cardDetailRef = useRef()
+  const outsideCardDetailRef = useRef(null)
 
   // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
@@ -27,6 +33,7 @@ function CardDetails() {
   const [selectSection, setSelectSection] = useState(
     Number(cardDetail.sectionId)
   );
+  const [cardDetailDropdown, setCardDetailDropdown] = useState(false);
 
   // Card Update
   const updateCardHandler = async (e) => {
@@ -46,6 +53,28 @@ function CardDetails() {
     );
     setCardDetail(card);
   };
+
+  const handleClickOutside = async (event) => {
+    if (cardDetailRef.current && cardDetailRef.current.contains(event.target)) {
+      return;
+    }
+    if (outsideCardDetailRef.current && !outsideCardDetailRef.current.contains(event.target)) {
+      setCardDetailDropdown(false)
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+
+  const handleDeleteTask = async (e) => {
+    e.preventDefault()
+    await dispatch(deleteCardThunk(cardDetail.id))
+    setCardDetail(null)
+  }
 
   return (
     cardDetail && (
@@ -68,10 +97,27 @@ function CardDetails() {
                   }}
                   className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
                 />
-                <RxExit
-                  className="mr-[30px] text-[24px] cursor-pointer"
-                  onClick={(e) => setCardDetail(null)}
-                />
+                <div className="flex items-center">
+                  <div
+                    className="hover:bg-[#ECEAE9] mr-[10px] px-[5px] py-[4px] rounded-[3px] cursor-pointer relative"
+                    onClick={(e) => setCardDetailDropdown(!cardDetailDropdown)}
+                    forwardref={cardDetailRef}
+                  >
+                    <BsThreeDots />
+                    {cardDetailDropdown && (
+                      <div className="absolute bg-white border-[#ECEAE9] border-[1px] w-[184px] rounded-[3px] z-[200] font-normal text-[12px] right-0 top-[25px]"
+                      ref={outsideCardDetailRef}>
+                        <div className="w-full flex my-[4px] px-[15px] py-[5px] hover:bg-[#ECEAE9] items-center text-[#c92f54]" onClick={e => handleDeleteTask(e)}>
+                          <PiTrashThin className="mr-[10px] text-[16px]"/> <span>Delete Task</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <RxExit
+                    className="mr-[30px] text-[20px] cursor-pointer"
+                    onClick={(e) => setCardDetail(null)}
+                  />
+                </div>
               </div>
               <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
             </div>

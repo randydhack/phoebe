@@ -6,6 +6,7 @@ const CREATE_SECTION = "sections/CREATE_SECTION";
 const DELETE_SECTION = "sections/DELETE_SECTION";
 const CARD_SECTION_UPDATE = 'section/CARD_SECTION_UPDATE'
 const CHANGE_CARD_SECTION = "sections/CHANGE_CARD_SECTION";
+const DELETE_CARD_SECTION = 'section/DELETE_CARD_SECTION';
 
 // Action Creators
 const getProjectSectionsAction = (sections) => ({
@@ -30,6 +31,13 @@ const deleteSectionAction = (id) => ({
 
 export const changeCardSectionAction = (sectionId, card) => ({
   type: CHANGE_CARD_SECTION,
+  payload: {
+    sectionId, card
+  }
+})
+
+export const deleteCardSectionAction = (sectionId, card) => ({
+  type: DELETE_CARD_SECTION,
   payload: {
     sectionId, card
   }
@@ -81,6 +89,7 @@ export const deleteSectionThunk = (id) => async (dispatch) => {
 // Reducer
 const sectionReducer = (state = {}, action) => {
   let newState;
+  let cardArray;
   switch (action.type) {
     case GET_PROJECT_SECTION:
       newState = {};
@@ -107,9 +116,21 @@ const sectionReducer = (state = {}, action) => {
       return newState
     case CHANGE_CARD_SECTION:
       newState = {...state}
-      const cardArray = newState[action.payload.sectionId].Cards
+      cardArray = newState[action.payload.sectionId].Cards
       const cardArrayLength = cardArray.length || 0
       cardArray[cardArrayLength] = action.payload.card
+      return newState
+
+    case DELETE_CARD_SECTION:
+      newState = {...state}
+      cardArray = newState[action.payload.sectionId].Cards
+      for (let i = 0; i < cardArray.length; i++) {
+        const el = cardArray[i]
+        if (el.id === action.payload.card.id) {
+          delete cardArray[i]
+          break;
+        }
+      }
       return newState
     default:
       return state;
