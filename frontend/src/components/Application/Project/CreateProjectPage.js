@@ -20,13 +20,15 @@ function CreateProjectPage() {
     e.preventDefault();
     setErrors({})
 
-    const project = await dispatch(createProjectThunk(name, description)).catch(async (res) => {
-      const data = await res.json();
-    })
-    if (project) {
-      return history.push(`/project/${project.id}/overview`);
-    } else {
-      setErrors({msg: 'Project name already exist.'})
+    if (name) {
+      const project = await dispatch(createProjectThunk(name, description)).catch(async (res) => {
+        const data = await res.json();
+      })
+      if (project) {
+        return history.push(`/project/${project.id}/overview`);
+      } else {
+        setErrors({msg: 'Project name already exist.'})
+      }
     }
   };
 
@@ -73,6 +75,7 @@ function CreateProjectPage() {
                   placeholder="What is this project about?"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  maxLength={750}
                 />
               </div>
 
