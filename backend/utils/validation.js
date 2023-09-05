@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 const { check, query } = require("express-validator");
-const { User, Member } = require("../db/models");
+const { User, Member, Project } = require("../db/models");
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {

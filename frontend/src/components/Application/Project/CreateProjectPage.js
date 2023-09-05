@@ -21,20 +21,16 @@ function CreateProjectPage() {
     setErrors({})
 
     if (name) {
-      const project = await dispatch(createProjectThunk(name, description)).catch(async (res) => {
-        const data = await res.json();
-      })
+      const project = await dispatch(createProjectThunk(name, description))
       if (project) {
         return history.push(`/project/${project.id}/overview`);
-      } else {
-        setErrors({msg: 'Project name already exist.'})
       }
     }
   };
 
   return (
     <div className="bg-white w-screen h-screen absolute top-0">
-      <div className="bg-[#d9d9d9] h-full w-[650px] ">
+      <div className="bg-[#d9d9d9] h-full w-[750px] ">
         <div className="px-[25px] pt-[20px] flex">
           <IoArrowBackSharp
             className="text-[18px] cursor-pointer"
