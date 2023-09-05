@@ -18,7 +18,6 @@ function ProjectOverviewPage({ compType }) {
   const { setProject, project } = useContext(InfoContext);
   const user = useSelector(state => state.session.user)
 
-  const project1 = useSelector((state) => state.projects)[id];
   const [projectName, setProjectName] = useState('');
   const [description, setDescription] = useState('');
 
@@ -36,7 +35,11 @@ function ProjectOverviewPage({ compType }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(updateProjectThunk(projectName, description, project.id));
+    console.log(description, project.description)
+    console.log(projectName, project.name)
+    if (description !== project.description || projectName !== project.name) {
+      await dispatch(updateProjectThunk(projectName, description, project.id));
+    }
   };
 
   //   bg-[#1f1e21]

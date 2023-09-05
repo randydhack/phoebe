@@ -40,7 +40,7 @@ function ProjectOverviewBody({ props }) {
               <>
                 {allowEdit ? (
                   <textarea
-                    className={`w-[100%] h-fit p-[10px] rounded-[5px] border-transparent hover:border-black border-[1px] border-solid resize-none text-[14px] ${`project-description`}`}
+                    className={`w-[100%] h-fit p-[10px] rounded-[5px] border-blue-700 border-[2px] border-solid resize-none text-[14px] ${`project-description`}`}
                     placeholder="What is this project about?"
                     value={description}
                     onBlur={(e) => {
@@ -56,7 +56,8 @@ function ProjectOverviewBody({ props }) {
                   />
                 ) : (
                   <div className="border-solid border-[1px] border-transparent hover:border-black rounded-[5px] box-border flex-auto overflow-ellipsis break-words cursor-text"
-                  onMouseHover={e => setAllowEdit(true)}>
+                  onClick={e => setAllowEdit(true)} onBlur={e => setAllowEdit(false)}>
+
                     <div
                       className=" h-full p-[10px] rounded-[5px] resize-none
                   text-[14px] bg-inherit"

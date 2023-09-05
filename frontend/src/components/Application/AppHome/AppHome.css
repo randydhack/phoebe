@@ -5,3 +5,8 @@
 .hide-scroll-bar::-webkit-scrollbar {
     display: none;
 }
+
+.background-home {
+    background-image: url('../../../images/app-background.jpeg');
+    background-size: cover
+}
