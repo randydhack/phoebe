@@ -129,7 +129,7 @@ router.get("/:id/members", async (req, res, next) => {
 // ***** CREATES A NEW PROJECT *****
 router.post("/", requireAuth, async (req, res, next) => {
   // Body request from form
-  const { name, category, description, projectImage } = req.body;
+  const { name, description,} = req.body;
   // Finds existing project by name and id to prevent same Project name
   const existingProject = await Project.findOne({
     where: { name: name, ownerId: req.user.id },
@@ -149,15 +149,13 @@ router.post("/", requireAuth, async (req, res, next) => {
   const project = await Project.create({
     name,
     ownerId: req.user.id,
-    category,
     description,
-    projectImage,
   });
 
   // Sets the user as a member of the Project as well
   await Member.create({ projectId: project.id, userId: req.user.id });
   // Create a default To do Section
-  await Section.create({ name: "To dos", projectId: project.id });
+  await Section.create({ name: "To do", projectId: project.id });
 
   // return json
   res.status(201).json(project);

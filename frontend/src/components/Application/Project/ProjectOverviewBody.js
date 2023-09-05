@@ -57,13 +57,12 @@ function ProjectOverviewBody({ props }) {
                 ) : (
                   <div className="border-solid border-[1px] border-transparent hover:border-black rounded-[5px] box-border flex-auto overflow-ellipsis break-words cursor-text"
                   onClick={e => setAllowEdit(true)} onBlur={e => setAllowEdit(false)}>
-
                     <div
                       className=" h-full p-[10px] rounded-[5px] resize-none
                   text-[14px] bg-inherit"
                       style={{ overflowWrap: "anywhere" }}
                     >
-                      {description}
+                      {description ? description : <div className="text-[#9BA3AF]">What is this project about?</div>}
                     </div>
                   </div>
                 )}
@@ -75,7 +74,7 @@ function ProjectOverviewBody({ props }) {
                   text-[14px] bg-inherit"
                   style={{ overflowWrap: "anywhere" }}
                 >
-                  {description}
+                  {description ? description : <div className="text-[#9BA3AF]">What is this project about?</div>}
                 </div>
               </div>
             )}
