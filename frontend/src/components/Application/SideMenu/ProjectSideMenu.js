@@ -32,6 +32,9 @@ function ProjectSideMenu() {
     );
   }, [projectDropdown]);
 
+  console.log(randomColor())
+
+
   return (
     projects && (
       <div className="flex-auto overflow-hidden relative mt-[10px]">
