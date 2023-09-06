@@ -92,7 +92,7 @@ const sectionReducer = (state = {}, action) => {
   let cardArray;
   switch (action.type) {
     case GET_PROJECT_SECTION:
-      newState = {};
+      newState = {...state};
       action.payload.forEach((section) => (newState[section.id] = section));
       return newState;
     case CREATE_SECTION:

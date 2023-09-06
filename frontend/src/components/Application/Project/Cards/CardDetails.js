@@ -7,7 +7,6 @@ import { PiTrashThin } from "react-icons/pi";
 import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
 import CardComments from "./CardComments";
-
 import "./Comments.css";
 
 function CardDetails() {
@@ -154,10 +153,10 @@ function CardDetails() {
                       {project.projectImage ? (
                         <img src={project.profileImage} />
                       ) : (
-                        <div className="text-[12px] rounded-[3px] bg-yellow-300 h-[12px] w-[12px] flex items-center justify-center border-[1px] border-[#c3c3c3] text-black"></div>
+                        <div className="text-[12px] rounded-[3px] h-[12px] w-[12px] flex items-center justify-center text-black" style={{backgroundColor: `${project.backgroundColor}`}}></div>
                       )}
                     </div>
-                    <div className="ml-[17px]">{project.name}</div>
+                    <div className="ml-[17px] truncate w-[300px]">{project.name}</div>
                   </div>
                 </div>
 
