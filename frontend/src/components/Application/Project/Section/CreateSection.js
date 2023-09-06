@@ -36,7 +36,7 @@ function CreateSection() {
   }, [sectionName]);
 
   return (
-    <div>
+    <div className="mr-[20px]">
     <div className="w-[300px]">
       {!sectionForm ? (
         <div
