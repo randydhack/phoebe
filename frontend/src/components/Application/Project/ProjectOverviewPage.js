@@ -81,20 +81,22 @@ function ProjectOverviewPage({ compType }) {
             <NavLink
               to={`/project/${id}/overview`}
               className={`flex items-center border-b-2 px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer ${
-                compType === "overview" && "border-[#6D6E6F]"
+                compType === "overview" ? "border-[#6D6E6F] bg-[#e3e3e35a]" : 'border-transparent'
               }`}
             >
               <BsClipboardData className="text-[14px] text-black" />
-              <span className="text-[14px] ml-[5px] text-black font-medium">
+              <span className={`text-[14px] ml-[5px] text-black ${compType === "overview" && 'font-semibold'}`}>
                 Overview
               </span>
             </NavLink>
             <NavLink
               to={`/project/${id}/board`}
-              className="ml-[20px] flex items-center px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer hover:border-b-2 border-[#6D6E6F]"
+              className={`ml-[10px] flex items-center border-b-2 px-[5px] pt-[2px] hover:bg-[#e3e3e35a] rounded-t-[5px] cursor-pointer ${
+                compType === "board" ? "border-[#6D6E6F] bg-[#e3e3e35a]" : 'border-transparent'
+              }`}
             >
               <LiaProjectDiagramSolid className="text-[14px] text-black" />
-              <span className="text-[14px] ml-[5px] text-black">
+              <span className={`text-[14px] ml-[5px] text-black ${compType === "board" && 'font-semibold'}`}>
                 Project Board
               </span>
             </NavLink>
