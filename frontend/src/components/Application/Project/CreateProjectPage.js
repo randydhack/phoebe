@@ -54,6 +54,7 @@ function CreateProjectPage() {
                   }`}
                   value={name}
                   onChange={(e) => {setName(e.target.value); setErrors({})}}
+                  max={255}
                 />
                 {!name && (
                   <div className="text-red-600 text-[12px] mt-[3px]">

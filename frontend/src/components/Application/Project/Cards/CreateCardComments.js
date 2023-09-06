@@ -52,6 +52,7 @@ function CreateCardComments() {
             if (comment.trim().length > 0) {
               handleChange(e)}}
             }
+            maxLength={500}
         />
     </div>
   );

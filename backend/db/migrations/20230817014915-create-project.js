@@ -15,16 +15,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      category: {
-        type: Sequelize.STRING,
-        allowNull: true
       },
       description: {
         type: Sequelize.STRING(750),

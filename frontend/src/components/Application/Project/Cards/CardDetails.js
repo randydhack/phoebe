@@ -95,6 +95,7 @@ function CardDetails() {
                       setCardTitle(e.target.value);
                     }
                   }}
+                  maxLength={255}
                   className="w-full my-[10px] text-[24px] py-[5px] px-[10px] mx-[10px] border-[1px] border-transparent hover:border-[#c3c1c0] rounded-[5px] ease-in duration-100 text-ellipsis whitespace-nowrap overflow-hidden"
                 />
                 <div className="flex items-center">
@@ -201,6 +202,7 @@ function CardDetails() {
                       onChange={(e) => {
                         setCardDescription(e.target.value);
                       }}
+                      maxLength={500}
                       className="resize-none w-full h-[150px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                     />
                   </div>

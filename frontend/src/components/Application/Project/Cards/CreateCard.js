@@ -32,6 +32,7 @@ function CreateCard(props) {
               resize();
             }}
             placeholder="Write a task name"
+            maxLength={255}
           />
         </div>
         <div className="mt-[10px] flex justify-between cursor-default">
