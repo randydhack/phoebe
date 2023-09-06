@@ -26,7 +26,7 @@ function ProjectOverviewPage({ compType }) {
     (async () => {
         const data = await dispatch(getSingleProjectThunk(id));
         if (!data) {
-          return history.push('/home')
+          return history.goBack()
         }
         setProject(data);
         setProjectName(data.name);

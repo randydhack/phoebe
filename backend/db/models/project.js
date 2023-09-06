@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(750),
         allowNull: true
       },
       projectImage: {
