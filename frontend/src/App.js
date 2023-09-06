@@ -10,7 +10,7 @@ import SignupPage from "./components/SignupFormPage/SignupPage";
 import AppNavigation from "./components/Application/Navigation/AppNavigation";
 import SideMenu from "./components/Application/SideMenu/SideMenu";
 import Modal from "./components/utils/Modal";
-import Landing from "./components/HomePage/Landing";
+import Landing from "./components/Landing/Landing";
 import { motion } from "framer-motion";
 
 function App() {
