@@ -32,10 +32,3 @@
 .cardContainer::-webkit-scrollbar {
   display: none;
 }
-
-.gradient-bg {
-  background: linear-gradient(180deg, #f5f3f3, rgba(245, 243, 243, 0) 100%);
-  border-radius: 8px;
-  height: 100%;
-  margin-top: 10px;
-}

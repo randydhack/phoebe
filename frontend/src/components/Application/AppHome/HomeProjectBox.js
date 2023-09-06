@@ -1,8 +1,10 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import randomColor from 'randomcolor'
 
 function HomeProjectBox({projects }) {
+
 
 
   return (
@@ -27,8 +29,7 @@ function HomeProjectBox({projects }) {
                   className="mt-[10px] flex items-center p-[10px] cursor-pointer hover:bg-[#e3e3e35a] rounded-[10px]"
                   to={`/project/${project.id}/overview`}
                 >
-                  <div className="flex items-center justify-center rounded-[10px] border-dotted border-2 border-black w-[40px] h-[40px]">
-                    <AiOutlinePlus className="w-[25px] h-[25px] text-black" />
+                  <div className="flex items-center justify-center rounded-[10px] w-[40px] h-[40px]" style={{backgroundColor: `${randomColor()}`}}>
                   </div>
                   <div className="ml-[10px] text-black w-[150px] text-ellipsis whitespace-nowrap overflow-hidden">{project.name}</div>
                 </NavLink>
