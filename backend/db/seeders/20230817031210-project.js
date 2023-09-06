@@ -14,7 +14,6 @@ module.exports = {
         {
           name: "Phoebe",
           ownerId: 1,
-          category: "Software Application",
           description: "App Academy Capstone Project",
           projectImage: null,
           backgroundColor: '#22678e'
@@ -22,7 +21,6 @@ module.exports = {
         {
           name: "Project Fake",
           ownerId: 2,
-          category: "Software Application",
           description: "Fake App Academy Project",
           projectImage: null,
           backgroundColor: '#3838c4'

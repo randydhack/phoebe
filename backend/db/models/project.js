@@ -37,19 +37,15 @@ module.exports = (sequelize, DataTypes) => {
   Project.init(
     {
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       ownerId: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      category: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(750),
         allowNull: true
       },
       projectImage: {

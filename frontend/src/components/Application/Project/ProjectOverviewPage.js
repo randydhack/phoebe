@@ -26,7 +26,7 @@ function ProjectOverviewPage({ compType }) {
     (async () => {
         const data = await dispatch(getSingleProjectThunk(id));
         if (!data) {
-          return history.push('/home')
+          return history.goBack()
         }
         setProject(data);
         setProjectName(data.name);
@@ -68,6 +68,7 @@ function ProjectOverviewPage({ compType }) {
                   }}
                   minLength={1}
                   className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
+                  maxLength={255}
                 /> :
                 <div className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap">{projectName}</div>
 
