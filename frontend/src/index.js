@@ -13,6 +13,8 @@ import * as memberActions from "./store/members";
 import * as sectionActions from './store/sections';
 import * as commentActions from './store/comments';
 import * as memberProjectActions from './store/memberProjects'
+import * as userCardActions from './store/userCards'
+
 
 import { ModalProvider } from "./context/Modal";
 import { InfoProvider } from "./context/InfoContext";
@@ -30,6 +32,7 @@ if (process.env.NODE_ENV !== "production") {
   window.sectionActions = sectionActions;
   window.commentActions = commentActions;
   window.memberProjectActions = memberProjectActions
+  window.userCardActions = userCardActions
 }
 
 function Root() {

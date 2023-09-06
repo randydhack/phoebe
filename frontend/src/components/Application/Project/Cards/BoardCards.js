@@ -1,6 +1,7 @@
 import { GoCheckCircle } from "react-icons/go";
 import { useContext, useRef, useEffect, useState } from "react";
 import { InfoContext } from "../../../../context/InfoContext";
+import '../Section/Section.css'
 
 function BoardCards({ section }) {
 

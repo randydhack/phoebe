@@ -134,7 +134,6 @@ const cardReducer = (state = {}, action) => {
       return newState
     case DELETE_CARD:
       newState = {...state}
-      console.log('dadsadasd')
       delete newState[action.payload.id]
       return newState
     default:

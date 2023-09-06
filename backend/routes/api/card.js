@@ -7,7 +7,7 @@ const { Section, Card, Comment, User} = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 
-// NOTES: GET ALL CARDS ISLOCATED IN PROJECT ROUTE
+// NOTES: GET ALL CARDS BY PROJECT ID IS LOCATED IN PROJECT ROUTE
 
 router.get('/:id', requireAuth, async (req, res, next) => {
   const card = await Card.findOne({where: {id: req.params.id}, include: {model: User, as: 'User'}})
@@ -32,6 +32,14 @@ router.get('/:id/comments', requireAuth, async (req, res, next) => {
 
     res.status(200).json(comment)
 })
+
+router.get('/', requireAuth, async (req, res, next) => {
+  const userCards = await Card.findAll({where: {userId: req.user.id}})
+
+  res.status(200).json(userCards)
+})
+
+
 // ------------------------------------ POST ENDPOINTS ---------------------------------------------
 
 router.post("/", requireAuth, async (req, res, next) => {

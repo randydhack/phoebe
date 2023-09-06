@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createSectionThunk } from "../../../../store/sections";
+import './Section.css'
 
 
 function CreateSection() {

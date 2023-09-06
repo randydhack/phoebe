@@ -5,14 +5,17 @@ import "./AppHome.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { userProjectsThunk } from "../../../store/projects";
+import { getAllUserCardsThunk } from "../../../store/userCards";
 
 function AppHome() {
   const dispatch = useDispatch();
   const projects = Object.values(useSelector((state) => state.projects));
+  const userCards = Object.values(useSelector(state => state.userCards))
 
   useEffect(() => {
     (async () => {
       await dispatch(userProjectsThunk());
+      await dispatch(getAllUserCardsThunk())
     })()
   }, []);
 
@@ -31,9 +34,9 @@ function AppHome() {
               Welcome Home, Randy
             </h2>
             <p className="text-black">You have some work to do!</p>
-            <div className="flex bg-white px-[30px] py-[15px] rounded-[20px] mt-[15px] text-black">
-              <p className="">{projects.length} Project</p>
-              <p className="ml-[20px]">100 task incompleted</p>
+            <div className="flex bg-white px-[30px] py-[15px] rounded-[20px] mt-[15px] text-black items-center">
+              <p className="flex items-center"><span className="font-bold text-[18px] mr-[5px]">{projects.length}</span> Project</p>
+              <p className="ml-[20px] flex items-center"><span className="border-l-[1px] pl-[20px] font-bold text-[18px] mr-[5px]">{userCards.length}</span> task incomplete</p>
             </div>
           </div>
 

@@ -11,6 +11,7 @@ import AppNavigation from "./components/Application/Navigation/AppNavigation";
 import SideMenu from "./components/Application/SideMenu/SideMenu";
 import Modal from "./components/utils/Modal";
 import Landing from "./components/HomePage/Landing";
+import { motion } from "framer-motion";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,22 @@ function App() {
     window.localStorage.setItem("SET_SIDE_MENU", JSON.stringify(closeSideMenu));
   }, [closeSideMenu]);
 
+  console.log(closeSideMenu)
+  const sideMenuAnimation = !closeSideMenu
+    ? {
+        width: '0px',
+      }
+    : '';
+
+    const sideMenuTransition = {
+      type: 'stiff',
+      stiffness: 100,
+      ease: 'linear',
+      width: {
+        duration: 0.1
+      }
+    }
+
   return (
     <>
       {isLoaded && (
@@ -49,9 +66,9 @@ function App() {
               )}
               <div className="flex">
                 {userSession && (
-                  <section className="flex-[0_0_auto] relative justify-end w-[240px] flex">
-                    {closeSideMenu && <SideMenu />}
-                  </section>
+                  <motion.section className="flex-[0_0_auto] relative justify-end flex" animate={sideMenuAnimation} transition={sideMenuTransition}>
+                    <SideMenu closeSideMenu={closeSideMenu}/>
+                  </motion.section>
                 )}
                 <Switch>
                   <Route

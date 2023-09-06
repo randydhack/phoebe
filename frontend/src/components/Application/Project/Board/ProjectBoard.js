@@ -120,7 +120,6 @@ function ProjectBoard() {
                                 id: section.id,
                                 status: !addCard.status,
                               });
-                              //   scrollToCreateCard();
                             }}
                             forwardref={insideRef}
                           />
@@ -129,7 +128,9 @@ function ProjectBoard() {
                       </div>
                       <div className="overflow-scroll cardContainer">
                         <div className="overflow-scroll items-center flex flex-col justify-center">
+
                           {/* ---------------------------- CREATE CARD ---------------------------- */}
+
                           {addCard.status && section.id === addCard.id ? (
                             <CreateCard
                               resize={resize}
@@ -145,6 +146,7 @@ function ProjectBoard() {
                           <BoardCards section={section} />
 
                           {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
+
                           {createTaskBottom.status &&
                           createTaskBottom.bottom &&
                           section.id === createTaskBottom.id ? (

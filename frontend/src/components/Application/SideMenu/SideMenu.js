@@ -3,9 +3,12 @@ import { BiHomeAlt2 } from "react-icons/bi";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import ProjectSideMenu from "./ProjectSideMenu";
 
-function SideMenu() {
+function SideMenu({ closeSideMenu }) {
+
   return (
-    <div className="flex-[0_0_240px] flex">
+    <div
+      className="flex w-[240px]"
+    >
       <div className="flex-[1] bg-[#2E2E30] border-solid border-l-[1px] border-r-[1px] border-[#424244] flex flex-col">
         <div className="list-none p-[15px]">
           <li className="list-none px-[8px] py-[5px] bg-[#454547] rounded-[10px] mb-[2px]">
