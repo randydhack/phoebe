@@ -7,7 +7,6 @@ import { PiTrashThin } from "react-icons/pi";
 import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../../../store/cards";
 import CreateCardComments from "./CreateCardComments";
 import CardComments from "./CardComments";
-
 import "./Comments.css";
 
 function CardDetails() {
