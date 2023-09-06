@@ -3,6 +3,7 @@ import { useState } from "react";
 import { createProjectThunk } from "../../../store/projects";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
+import randomColor from 'randomcolor'
 
 function CreateProjectPage() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function CreateProjectPage() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
+
   const [errors, setErrors] = useState({})
   if (!userSession) return <Redirect to="/login" />;
 
@@ -21,7 +23,7 @@ function CreateProjectPage() {
     setErrors({})
 
     if (name) {
-      const project = await dispatch(createProjectThunk(name, description))
+      const project = await dispatch(createProjectThunk(name, description, randomColor()))
       if (project) {
         return history.push(`/project/${project.id}/overview`);
       }

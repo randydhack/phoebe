@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { userProjectsThunk } from "../../../store/projects";
 import randomColor from 'randomcolor'
 import './SideMenu.css'
+import { LiaProjectDiagramSolid } from 'react-icons/lia'
 
 function ProjectSideMenu() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function ProjectSideMenu() {
       JSON.stringify(projectDropdown)
     );
   }, [projectDropdown]);
+
+  console.log(randomColor())
+
 
   return (
     projects && (
@@ -69,7 +73,7 @@ function ProjectSideMenu() {
                           to={`/project/${project.id}/overview`}
                           className="flex items-center mx-[12px] hover:bg-[#454547af] rounded-[8px] px-[10px] py-[3px] cursor-pointer hover:ease-out duration-100"
                         >
-                          <div className="h-[16px] w-[16px] rounded-[5px] mr-[10px]" style={{backgroundColor: `${randomColor()}`}}></div>
+                          <div className={`h-[16px] w-[16px] rounded-[5px] mr-[10px]`} style={{backgroundColor: `${project.backgroundColor}`}}></div>
                           <div className="text-white text-[14px] text-ellipsis overflow-hidden whitespace-nowrap w-[140px]">
                             {project.name}
                           </div>

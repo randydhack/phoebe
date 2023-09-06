@@ -129,13 +129,14 @@ router.get("/:id/members", async (req, res, next) => {
 // ***** CREATES A NEW PROJECT *****
 router.post("/", requireAuth, async (req, res, next) => {
   // Body request from form
-  const { name, description,} = req.body;
+  const { name, description, backgroundColor } = req.body;
 
   // Creates a new project, name and ownerId is required
   const project = await Project.create({
     name,
     ownerId: req.user.id,
     description,
+    backgroundColor
   });
 
   // Sets the user as a member of the Project as well
