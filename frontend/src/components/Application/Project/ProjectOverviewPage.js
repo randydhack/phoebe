@@ -10,6 +10,7 @@ import ProjectDropdown from "./ProjectDropdown";
 import ProjectBoard from "./Board/ProjectBoard";
 import { updateProjectThunk } from "../../../store/projects";
 
+
 function ProjectOverviewPage({ compType }) {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -48,10 +49,12 @@ function ProjectOverviewPage({ compType }) {
         {/* Overview Info and Navigation */}
         <div className="bg-[white] w-full h-[100px] px-[20px] border-b-[1px] border-[#ECEAE9]">
           <div className="flex p-[12px] items-center w-full">
-            <img
+            {project.projectImage ? <img
               src="https://i.imgur.com/aNTNv.jpeg"
               className="mr-[20px] w-[50px] h-[50px] rounded-[10px]"
-            />
+            /> :
+            <div className="mr-[20px] w-[50px] h-[50px] rounded-[10px] flex items-center justify-center" style={{backgroundColor: `${project.backgroundColor}`}}><LiaProjectDiagramSolid className="text-white text-[32px]"/></div>}
+
             <div className="text-black font-semibold text-[20px] flex items-center w-full">
               {user.id === project.ownerId ?
               <input
