@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { InfoContext } from "../../../../context/InfoContext";
+import { InfoContext } from "../../context/InfoContext";
 import { RxExit } from "react-icons/rx";
 import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
-import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../../../store/cards";
-import CreateCardComments from "./CreateCardComments";
-import CardComments from "./CardComments";
-import "./Comments.css";
+import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../store/cards";
+import CreateCardComments from "../Application/Project/Cards/CreateCardComments";
+import CardComments from "../Application/Project/Cards/CardComments";
+import "../Application/Project/Cards/Comments.css";
 
 function CardDetails() {
   // Router Dom
@@ -77,14 +77,15 @@ function CardDetails() {
 
   return (
     cardDetail && (
+
       <div
-        className="bg-white border-l-[1px] z-30 absolute right-0 top-0 w-[600px] h-full"
+        className="bg-white border-l-[1px] w-full rounded-[10px]"
         ref={cardRef}
       >
-        <div className="flex flex-col justify-between pb-[20px] h-[calc(100%_-_30px)]">
-          <div className="overflow-hidden overflow-y-scroll h-full hide-scroll-bar">
-            <div className="flex flex-col w-[600px] bg-white fixed z-10">
-              <div className="flex items-center">
+        <div className="flex rounded-[10px]">
+          <div className="overflow-hidden overflow-y-scroll h-full hide-scroll-bar rounded-l-[10px] w-[400px]">
+            <div className="flex flex-col w-full bg-white relative z-10">
+              <div className="flex items-center justify-end">
                 <input
                   type="text"
                   value={cardTitle}
@@ -113,19 +114,15 @@ function CardDetails() {
                       </div>
                     )}
                   </div>
-                  <RxExit
-                    className="mr-[30px] text-[20px] cursor-pointer"
-                    onClick={(e) => setCardDetail(null)}
-                  />
                 </div>
               </div>
               <div className="h-[1px] w-full bg-[#ECEAE9]"></div>
             </div>
 
-            <div className="flex flex-col justify-between h-full mt-[68px] hide-scroll-bar">
-              <div className="px-[22px] py-[20px]">
+            <div className="flex flex-col justify-between h-[calc(100%_-_70px)] hide-scroll-bar">
+              <div className=" py-[20px]">
                 {/* Assignee / Person who created the card */}
-                <div className="flex items-center mb-[20px]">
+                <div className="flex items-center mb-[20px] px-[22px]">
                   <div className="w-[120px] text-[#6e6d6f] text-[12px]">
                     Assignee
                   </div>
@@ -144,7 +141,7 @@ function CardDetails() {
                   </div>
                 </div>
 
-                <div className="flex mb-[20px]">
+                <div className="flex mb-[20px] pl-[22px]">
                   <div className="w-[120px] text-[#6e6d6f] text-[12px]">
                     Project
                   </div>
@@ -156,11 +153,11 @@ function CardDetails() {
                         <div className="text-[12px] rounded-[3px] h-[12px] w-[12px] flex items-center justify-center text-black" style={{backgroundColor: `${project.backgroundColor}`}}></div>
                       )}
                     </div>
-                    <div className="ml-[17px] truncate w-[300px]">{project.name}</div>
+                    <div className="ml-[17px] truncate">{project.name}</div>
                   </div>
                 </div>
 
-                <div className="flex mb-[20px]">
+                <div className="flex mb-[20px] pl-[22px]">
                   <label
                     className="w-[120px] text-[#6e6d6f] text-[12px]"
                     htmlFor="section-dropdown"
@@ -191,7 +188,7 @@ function CardDetails() {
                   </select>
                 </div>
 
-                <div className="relative">
+                <div className="relative pl-[22px]">
                   <div className="text-[#6e6d6f] text-[12px]">Description</div>
                   <div>
                     <textarea
@@ -202,15 +199,14 @@ function CardDetails() {
                         setCardDescription(e.target.value);
                       }}
                       maxLength={500}
-                      className="resize-none w-full h-[150px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
+                      className="resize-none w-full h-[200px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                     />
                   </div>
                 </div>
               </div>
-              <CardComments />
             </div>
           </div>
-          <CreateCardComments props={cardDetail} />
+              <CardComments />
         </div>
       </div>
     )
