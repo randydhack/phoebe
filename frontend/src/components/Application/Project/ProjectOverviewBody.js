@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleProjectThunk } from "../../../store/projects";
 import { useHistory, useParams } from "react-router-dom";
 
+import './Project.css'
+
 function ProjectOverviewBody({ props }) {
   const { project, setDescription, description, handleSubmit } = props;
   const user = useSelector((state) => state.session.user);
@@ -31,7 +33,7 @@ function ProjectOverviewBody({ props }) {
     project && (
       <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_151px)]">
         {/* Project Description */}
-        <div className="w-full px-[25px] mt-[50px] overflow-y-scroll">
+        <div className="w-full px-[25px] mt-[50px] overflow-y-scroll overview-scroll-hidden">
           <div className="flex flex-col">
             <label className="font-medium text-[18px] ml-[12px] mb-[10px]">
               Project Description
