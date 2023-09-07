@@ -1,17 +1,21 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { InfoContext } from "../../context/InfoContext";
-import { RxExit } from "react-icons/rx";
+import { useParams } from 'react-router-dom'
 import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
 import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../store/cards";
 import CreateCardComments from "../Application/Project/Cards/CreateCardComments";
 import CardComments from "../Application/Project/Cards/CardComments";
 import "../Application/Project/Cards/Comments.css";
+import { getSingleProjectThunk } from "../../store/projects";
+
 
 function CardDetails() {
   // Router Dom
+  const { id} = useParams()
   const dispatch = useDispatch();
+
 
   // Use Ref
   const cardDetailRef = useRef()
@@ -120,7 +124,7 @@ function CardDetails() {
             </div>
 
             <div className="flex flex-col justify-between h-[calc(100%_-_70px)] hide-scroll-bar">
-              <div className=" py-[20px]">
+              <div className=" pt-[20px]">
                 {/* Assignee / Person who created the card */}
                 <div className="flex items-center mb-[20px] px-[22px]">
                   <div className="w-[120px] text-[#6e6d6f] text-[12px]">
@@ -190,7 +194,7 @@ function CardDetails() {
 
                 <div className="relative pl-[22px]">
                   <div className="text-[#6e6d6f] text-[12px]">Description</div>
-                  <div>
+
                     <textarea
                       placeholder="What is this task about?"
                       value={cardDescription}
@@ -199,9 +203,9 @@ function CardDetails() {
                         setCardDescription(e.target.value);
                       }}
                       maxLength={500}
-                      className="resize-none w-full h-[200px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
+                      className="resize-none w-full h-[220px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                     />
-                  </div>
+
                 </div>
               </div>
             </div>
