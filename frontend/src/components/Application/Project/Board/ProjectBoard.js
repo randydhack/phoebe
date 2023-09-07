@@ -43,10 +43,12 @@ function ProjectBoard() {
   useEffect(() => {
 
     (async () => {
-       const data = dispatch(getProjectSectionsThunk(id));
+       const data = await dispatch(getProjectSectionsThunk(id));
        if (!data) {
         return history.push('/home')
        }
+
+       await dispatch(getProjectSectionsThunk(id))
     })()
 
   }, [id]);
@@ -95,10 +97,7 @@ function ProjectBoard() {
     };
   }, [addCard, title, createTaskBottom]);
 
-  useEffect(() => {
-
-  })
-
+  console.log(sections)
 
   return (
     sections && (
