@@ -92,7 +92,7 @@ function App() {
                   <Route exact path="/" component={Landing} />
                   <Route path="/login" component={LoginPage} />
                   <Route path="/signup" component={SignupPage} />
-                  <Route path="/new-project" component={CreateProjectPage} />
+                  <Route path="/new/blank/project" component={CreateProjectPage} />
                   <Route component={ErrorPage} />
                 </Switch>
               </div>

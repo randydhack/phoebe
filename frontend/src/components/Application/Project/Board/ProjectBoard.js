@@ -5,7 +5,6 @@ import { useParams, useHistory } from "react-router-dom";
 
 // Components
 import CreateSection from "../Section/CreateSection";
-import CardDetails from "../../../ModalPages/CardDetails";
 import SectionDropdown from "../Section/SectionDropdown";
 import BoardCards from "../Cards/BoardCards";
 import CreateCard from "../Cards/CreateCard";
@@ -27,7 +26,6 @@ function ProjectBoard() {
   const { id } = useParams();
   const sections = Object.values(useSelector((state) => state.sections));
   const user = useSelector((state) => state.session.user);
-  const { cardDetail } = useContext(InfoContext);
 
   const insideRef = useRef();
   const outsideRef = useRef(null);
@@ -96,8 +94,6 @@ function ProjectBoard() {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [addCard, title, createTaskBottom]);
-
-  console.log(sections)
 
   return (
     sections && (

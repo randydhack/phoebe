@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createProjectThunk } from "../../../store/projects";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
-import randomColor from 'randomcolor'
+import { BsPlus, BsThreeDots } from "react-icons/bs";
+import { GoCheckCircle } from "react-icons/go";
+import randomColor from "randomcolor";
+import CreateProjectDisplay from "./CreateProjectDisplay";
 
 function CreateProjectPage() {
   const dispatch = useDispatch();
@@ -15,15 +18,18 @@ function CreateProjectPage() {
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
+
   if (!userSession) return <Redirect to="/login" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({})
+    setErrors({});
 
     if (name) {
-      const project = await dispatch(createProjectThunk(name, description, randomColor()))
+      const project = await dispatch(
+        createProjectThunk(name, description, randomColor())
+      );
       if (project) {
         return history.push(`/project/${project.id}/overview`);
       }
@@ -31,8 +37,8 @@ function CreateProjectPage() {
   };
 
   return (
-    <div className="bg-blue-800 w-screen h-screen absolute top-0">
-      <div className="bg-[#d9d9d9] h-full w-[750px] ">
+    <div className="bg-[#101A5F] w-screen h-screen absolute top-0">
+      <div className="bg-white h-full w-[700px]">
         <div className="px-[25px] pt-[20px] flex">
           <IoArrowBackSharp
             className="text-[18px] cursor-pointer"
@@ -41,7 +47,7 @@ function CreateProjectPage() {
         </div>
         <div className="pl-[20px] pt-[20px] absolute flex w-full h-[600px]">
           <div className=" ml-[35px]">
-            <h1 className="text-[30px] font-medium">New project</h1>
+            <h1 className="text-[30px] font-light">New project</h1>
             <form onSubmit={handleSubmit} className="mt-[25px] w-[400px]">
               <div className="flex flex-col mb-[40px]">
                 <label className="font-semibold text-[12px] mb-[5px]">
@@ -50,10 +56,13 @@ function CreateProjectPage() {
                 <input
                   type="text"
                   className={`outline-[1px] p-[8px] ${
-                    !name && "border-b-[1px] border-b-red-600"
-                  }`}
+                    !name && "border-b-[1px] border-b-red-600 bg-[#F9F8F8]"
+                  } bg-[#F9F8F8]`}
                   value={name}
-                  onChange={(e) => {setName(e.target.value); setErrors({})}}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setErrors({});
+                  }}
                   max={255}
                 />
                 {!name && (
@@ -61,16 +70,18 @@ function CreateProjectPage() {
                     Project name is required
                   </div>
                 )}
-                {errors.msg && <div className="text-red-600 text-[12px] mt-[3px]">
-                {errors.msg}
-              </div>}
+                {errors.msg && (
+                  <div className="text-red-600 text-[12px] mt-[3px]">
+                    {errors.msg}
+                  </div>
+                )}
               </div>
               <div className="flex flex-col mb-[40px]">
                 <label className="font-semibold text-[12px] mb-[5px]">
                   Description of the project
                 </label>
                 <textarea
-                  className="outline-[1px] border-none resize-none p-[8px] h-[150px]"
+                  className="outline-[1px] border-none resize-none p-[8px] h-[150px] bg-[#F9F8F8]"
                   placeholder="What is this project about?"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -80,14 +91,14 @@ function CreateProjectPage() {
 
               <button
                 type="submit"
-                className="w-full border-[1px] rounded-[5px] p-[10px] bg-[#4573D1] text-white"
+                className={`w-full border-[1px] rounded-[5px] p-[10px] ${name.length ? 'bg-[#4573D1] text-white cursor-pointer' : 'bg-transparent text-[#BBB8B9] border-[#BBB8B9] cursor-default'}`}
+                disabled={!name.length}
               >
                 Continue
               </button>
             </form>
           </div>
-
-          <div className="bg-red-300 w-[1000px] h-full ml-[60px] rounded-[10px]"></div>
+        <CreateProjectDisplay name={name}/>
         </div>
       </div>
     </div>

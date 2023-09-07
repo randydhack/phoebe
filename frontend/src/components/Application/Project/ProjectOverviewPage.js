@@ -17,6 +17,7 @@ function ProjectOverviewPage({ compType }) {
 
   const { id } = useParams();
   const { setProject, project } = useContext(InfoContext);
+
   const user = useSelector(state => state.session.user)
 
   const [projectName, setProjectName] = useState('');
@@ -28,7 +29,7 @@ function ProjectOverviewPage({ compType }) {
         if (!data) {
           return history.goBack()
         }
-        setProject(data);
+          setProject(data);
         setProjectName(data.name);
         setDescription(data.description);
     })();
