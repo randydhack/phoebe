@@ -91,7 +91,8 @@ function CreateProjectPage() {
 
               <button
                 type="submit"
-                className="w-full border-[1px] rounded-[5px] p-[10px] bg-[#4573D1] text-white"
+                className={`w-full border-[1px] rounded-[5px] p-[10px] ${name.length ? 'bg-[#4573D1] text-white cursor-pointer' : 'bg-transparent text-[#BBB8B9] border-[#BBB8B9] cursor-default'}`}
+                disabled={!name.length}
               >
                 Continue
               </button>
