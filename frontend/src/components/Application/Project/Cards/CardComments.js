@@ -79,10 +79,10 @@ function CardComments() {
       <div className="bg-[#F9F8F8] rounded-r-[10px]">
         <div className=" h-[300px] overflow-auto ">
           <div className="px-[22px]">
-            <div className=" text-[#6e6d6f] font-medium pt-[20px] text-[14px] flex justify-between">
+            <div className=" text-[#6e6d6f] font-medium pt-[20px] text-[14px] flex justify-between relative">
               <div>Comments</div>
               <IoCloseOutline
-                className="text-[20px] cursor-pointer"
+                className="text-[20px] cursor-pointer absolute right-0"
                 onClick={(e) => setType(null)}
               />
             </div>
