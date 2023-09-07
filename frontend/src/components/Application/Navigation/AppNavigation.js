@@ -23,7 +23,7 @@ function AppNavigation(props) {
           />
         )}
         <NavLink
-          to="/new-project"
+          to="/new/blank/project"
           className="ml-[20px] rounded-[50px] border-solid border-[#6a696a] text-white border-[1px] bg-[#2E2E30] flex items-center px-[10px] py-[7px] font-medium cursor-pointer"
         >
           <div className="rounded-[50%] h-[20px] w-[20px] bg-[#F06A6A] mr-[10px] flex items-center justify-center">

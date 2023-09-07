@@ -8,6 +8,7 @@ import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../sto
 import CreateCardComments from "../Application/Project/Cards/CreateCardComments";
 import CardComments from "../Application/Project/Cards/CardComments";
 import "../Application/Project/Cards/Comments.css";
+import { ModalContext } from "../../context/Modal";
 
 
 function CardDetails() {
@@ -22,6 +23,7 @@ function CardDetails() {
 
   // Use Context
   const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
+  const { setType } = useContext(ModalContext)
 
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
@@ -75,6 +77,7 @@ function CardDetails() {
   const handleDeleteTask = async (e) => {
     e.preventDefault()
     await dispatch(deleteCardThunk(cardDetail.id))
+    setType(null)
     setCardDetail(null)
   }
 

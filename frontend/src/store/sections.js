@@ -126,7 +126,7 @@ const sectionReducer = (state = {}, action) => {
       cardArray = newState[action.payload.sectionId].Cards
       for (let i = 0; i < cardArray.length; i++) {
         const el = cardArray[i]
-        if (el.id === action.payload.card.id) {
+        if (el && el.id == action.payload.card.id) {
           delete cardArray[i]
           break;
         }
