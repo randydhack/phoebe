@@ -105,7 +105,7 @@ function ProjectBoard() {
         <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
         {cardDetail && <CardDetails />}
           <div className="absolute h-full w-full overflow-auto ">
-            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-auto">
+            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll scrollbar-none">
               {/* ---------------- SECTIONS MAPPING -------------------- */}
               {sections.map((section, i) => {
                 return (
@@ -113,7 +113,7 @@ function ProjectBoard() {
                     key={i}
                     className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
                   >
-                    <div className="h-full !overflow-scroll flex flex-col w-full ">
+                    <div className="h-full overflow-y-scroll overflow-x-hidden flex flex-col w-full scrollbar-none">
                       <div className="flex items-center justify-between p-[10px] w-full">
                         <p className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden">
                           {section.name}
