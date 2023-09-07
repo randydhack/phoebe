@@ -8,7 +8,6 @@ import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../sto
 import CreateCardComments from "../Application/Project/Cards/CreateCardComments";
 import CardComments from "../Application/Project/Cards/CardComments";
 import "../Application/Project/Cards/Comments.css";
-import { getSingleProjectThunk } from "../../store/projects";
 
 
 function CardDetails() {
