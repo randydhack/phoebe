@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 // Components
 import CreateSection from "../Section/CreateSection";
-import CardDetails from "../Cards/CardDetails";
+import CardDetails from "../../../ModalPages/CardDetails";
 import SectionDropdown from "../Section/SectionDropdown";
 import BoardCards from "../Cards/BoardCards";
 import CreateCard from "../Cards/CreateCard";
@@ -103,15 +103,14 @@ function ProjectBoard() {
   return (
     sections && (
         <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
-        {cardDetail && <CardDetails />}
           <div className="absolute h-full w-full overflow-auto ">
-            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll scrollbar-none">
+            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
               {/* ---------------- SECTIONS MAPPING -------------------- */}
               {sections.map((section, i) => {
                 return (
                   <div
                     key={i}
-                    className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
+                    className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px] scrollbar-none"
                   >
                     <div className="h-full overflow-y-scroll overflow-x-hidden flex flex-col w-full scrollbar-none">
                       <div className="flex items-center justify-between p-[10px] w-full">
