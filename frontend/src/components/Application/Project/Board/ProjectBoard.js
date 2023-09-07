@@ -104,7 +104,7 @@ function ProjectBoard() {
     sections && (
         <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
           <div className="absolute h-full w-full overflow-auto ">
-            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll scrollbar-none">
+            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
               {/* ---------------- SECTIONS MAPPING -------------------- */}
               {sections.map((section, i) => {
                 return (
@@ -131,8 +131,8 @@ function ProjectBoard() {
                           <SectionDropdown sectionId={section.id} />
                         </div>
                       </div>
-                      <div className="overflow-scroll cardContainer">
-                        <div className="overflow-scroll items-center flex flex-col justify-center">
+                      <div className="overflow-scroll cardContainer scrollbar-none">
+                        <div className="overflow-scroll items-center flex flex-col justify-center scrollbar-none">
 
                           {/* ---------------------------- CREATE CARD ---------------------------- */}
 
