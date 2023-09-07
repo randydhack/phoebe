@@ -20,6 +20,7 @@ import "./ProjectBoard.css";
 import { BsPlus } from "react-icons/bs";
 import { GoCheckCircle } from "react-icons/go";
 
+
 function ProjectBoard() {
   const dispatch = useDispatch();
   const history = useHistory()
@@ -94,20 +95,25 @@ function ProjectBoard() {
     };
   }, [addCard, title, createTaskBottom]);
 
+  useEffect(() => {
+
+  })
+
+
   return (
     sections && (
-        <div className="pt-[20px] pb-[20px] pr-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
+        <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
         {cardDetail && <CardDetails />}
-          <div className="absolute h-full w-full ">
-            <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-x-scroll overflow-y-hidden mb-[20px] scrollbar-none">
+          <div className="absolute h-full w-full overflow-auto ">
+            <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-auto">
               {/* ---------------- SECTIONS MAPPING -------------------- */}
               {sections.map((section, i) => {
                 return (
                   <div
                     key={i}
-                    className="w-[300px] mx-[10px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
+                    className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
                   >
-                    <div className="h-full overflow-scroll flex flex-col w-full">
+                    <div className="h-full !overflow-scroll flex flex-col w-full ">
                       <div className="flex items-center justify-between p-[10px] w-full">
                         <p className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden">
                           {section.name}
