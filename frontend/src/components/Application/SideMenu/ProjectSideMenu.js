@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { userProjectsThunk } from "../../../store/projects";
 import randomColor from 'randomcolor'
 import './SideMenu.css'
-import { LiaProjectDiagramSolid } from 'react-icons/lia'
 
 function ProjectSideMenu() {
   const dispatch = useDispatch();
@@ -65,9 +64,10 @@ function ProjectSideMenu() {
               </div>
 
                 <div className="pb-[5px]">
-                  {projects.map((project, i) => {
+                {projectDropdown &&
+                  projects.map((project, i) => {
                     return (
-                      projectDropdown && (
+                      (
                         <NavLink
                           key={i}
                           to={`/project/${project.id}/overview`}
