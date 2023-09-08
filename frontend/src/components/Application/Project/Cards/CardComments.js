@@ -112,7 +112,7 @@ function CardComments() {
                 return (
                   <div
                     key={`${comment.id}${i}`}
-                    className="flex items-center hover-comment"
+                    className="flex items-center hover-comment "
                   >
                     <div className="flex my-[10px]">
                       <div className="mt-[2px]">
