@@ -3,7 +3,7 @@ import { GoCheckCircle } from "react-icons/go";
 
 function CreateProjectDisplay({ name }) {
   return (
-    <div className="bg-white w-[1010px] h-full ml-[60px] rounded-[10px] border-[#F5F3F3] border shadow-[0_0_0_1px_#edeae9,_0_5px_20px_0_rgba(109,_110,_111,_0.08)]">
+    <div className="bg-white w-[1010px] h-full ml-[60px] rounded-[10px] border-[#F5F3F3] border shadow-[0_0_0_1px_#edeae9,_0_5px_20px_0_rgba(109,_110,_111,_0.08)] cursor-default">
       <div className="w-full border-b border-[#F5F3F3]">
         <div className="p-[20px] pb-0">
           <div className="flex">
