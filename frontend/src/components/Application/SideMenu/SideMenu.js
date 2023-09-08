@@ -21,12 +21,12 @@ function SideMenu() {
               <span className="text-[14px] font-normal">Home</span>
             </NavLink>
           </li>
-          <li className="list-none p-[8px] hover:bg-[#454547af] rounded-[10px] hover:ease-out duration-100">
+          {/* <li className="list-none p-[8px] hover:bg-[#454547af] rounded-[10px] hover:ease-out duration-100">
             <div onClick={e => alert(e)} className="text-white flex items-center cursor-pointer">
               <AiOutlineCheckCircle className="w-[20px] h-[20px] text-[#A2A0A2] mr-[10px]" />{" "}
               <span className="text-[14px] font-normal">My Tasks</span>
             </div>
-          </li>
+          </li> */}
         </div>
         <div className="h-[1px] w-full bg-[#454547]"></div>
         <ProjectSideMenu />

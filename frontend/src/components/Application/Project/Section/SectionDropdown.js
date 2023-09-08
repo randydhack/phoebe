@@ -5,8 +5,15 @@ import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
 import { deleteSectionThunk } from "../../../../store/sections";
 
-function SectionDropdown({sectionId}) {
-    const dispatch = useDispatch()
+function SectionDropdown({
+  sectionId,
+  setAllowEditSectionName,
+  allowEditSectionName,
+  section,
+  setChangeSectionName,
+  focusRef
+}) {
+  const dispatch = useDispatch();
 
   const [openDropdown, setToggleDropdown] = useState(false);
   const navRef = useRef();
@@ -19,8 +26,8 @@ function SectionDropdown({sectionId}) {
   };
 
   const closeDropdown = () => {
-    setToggleDropdown(!openDropdown)
-  }
+    setToggleDropdown(!openDropdown);
+  };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -30,9 +37,15 @@ function SectionDropdown({sectionId}) {
   }, [openDropdown]);
 
   const handleDeleteSection = async (e) => {
-    e.preventDefault()
-    await dispatch(deleteSectionThunk(sectionId))
+    e.preventDefault();
+    await dispatch(deleteSectionThunk(sectionId));
   };
+
+  const focusInputField = () => {
+    setTimeout(() => {
+      document.getElementById('section-name').focus()
+    }, 50);
+  }
 
   return (
     <>
@@ -45,13 +58,31 @@ function SectionDropdown({sectionId}) {
       />
 
       {openDropdown && (
-        <div className="absolute w-[180px] top-[38px] left-[110px] bg-white border-[1px] border-[#ECEAE9] rounded-[5px]"
-        ref={dropdownRef}>
-          <div className="mt-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer flex items-center px-[15px] w-full">
-
+        <div
+          className="absolute w-[180px] top-[38px] left-[110px] bg-white border-[1px] border-[#ECEAE9] rounded-[5px]"
+          ref={dropdownRef}
+        >
+          <div
+            className="mt-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer flex items-center px-[15px] w-full"
+            onClick={(e) => {
+              setAllowEditSectionName({
+                sectionId: sectionId,
+                allowEdit: !allowEditSectionName.allowEdit,
+              });
+              focusInputField()
+              setChangeSectionName(section.name)
+              closeDropdown()
+            }}
+          >
             <div>Rename Section</div>
           </div>
-          <div className="mb-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer text-red-600 flex items-center px-[15px] w-full" onClick={e => {handleDeleteSection(e); closeDropdown()}}>
+          <div
+            className="mb-[4px] py-[10px] hover:bg-[#ECEAE9] cursor-pointer text-red-600 flex items-center px-[15px] w-full"
+            onClick={(e) => {
+              handleDeleteSection(e);
+              closeDropdown();
+            }}
+          >
             <PiTrashThin className="mr-[10px] text-[18px]" />
             <div>Delete Section</div>
           </div>

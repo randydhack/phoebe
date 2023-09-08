@@ -24,6 +24,7 @@ function CreateCard(props) {
             <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
           </span>
           <textarea
+          id="create-card"
             className="textarea whitespace-pre-wrap break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
             value={title}
             onChange={(e) => {

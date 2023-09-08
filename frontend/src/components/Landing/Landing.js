@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Redirect, NavLink } from "react-router-dom";
+import { LuBird } from 'react-icons/lu'
 
 function Landing() {
   const userSession = useSelector((state) => state.session.user);
@@ -10,8 +11,9 @@ function Landing() {
     <div className="flex flex-col min-h-screen w-full bg-[#EDEBEA]">
       <div className="mx-[100px] flex flex-col">
         <div className="flex items-center box-border h-[80px] justify-between">
-          <NavLink to="/" className="font-medium text-[24px]">
-            phoebe
+          <NavLink to="/" className="font-medium text-[24px] flex items-center justify-center">
+            <LuBird className="mr-[10px]"/>
+            Phoebe
           </NavLink>
           <div className="flex text-[16px] items-center">
             <NavLink to='/login' className="mr-[20px] text-[#727272] font-normal hover:text-black duration-200 ease-in">Login</NavLink>

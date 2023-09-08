@@ -205,7 +205,7 @@ function CardDetails() {
                         setCardDescription(e.target.value);
                       }}
                       maxLength={500}
-                      className="resize-none w-full h-[220px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
+                      className="resize-none w-full h-[210px] hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[8px] mt-[8px] outline-none mx-[-10px] p-[10px] leading-[1.5]"
                     />
 
                 </div>
