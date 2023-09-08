@@ -42,6 +42,13 @@ function ProjectOverviewPage({ compType }) {
     }
   };
 
+  const enterToUpdate = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e)
+      document.getElementById('project-name').blur()
+    }
+  }
+
   //   bg-[#1f1e21]
 
   return (
@@ -59,6 +66,7 @@ function ProjectOverviewPage({ compType }) {
             <div className="text-black font-semibold text-[20px] flex items-center w-full">
               {user.id === project.ownerId ?
               <input
+              id="project-name"
                   type="text"
                   value={projectName}
                   onBlur={e => handleSubmit(e)}
@@ -67,6 +75,7 @@ function ProjectOverviewPage({ compType }) {
                       setProjectName(e.target.value);
                     }
                   }}
+                  onKeyDown={e => enterToUpdate(e)}
                   minLength={1}
                   className="p-[2px] w-full overflow-hidden text-ellipsis whitespace-nowrap"
                   maxLength={255}

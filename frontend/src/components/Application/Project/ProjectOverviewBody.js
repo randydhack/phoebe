@@ -29,6 +29,19 @@ function ProjectOverviewBody({ props }) {
     })();
   }, [id]);
 
+  const focusDescription = () => {
+    setTimeout(() => {
+      document.getElementById('project-description').focus()
+    }, 100);
+  }
+
+  const enterDescription = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e)
+      document.getElementById('project-description').blur()
+    }
+  }
+
   return (
     project && (
       <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_151px)]">
@@ -42,6 +55,7 @@ function ProjectOverviewBody({ props }) {
               <>
                 {allowEdit ? (
                   <textarea
+                  id="project-description"
                     className={`w-[100%] h-fit p-[10px] rounded-[5px] border-blue-700 border-[2px] border-solid resize-none text-[14px] ${`project-description`}`}
                     placeholder="What is this project about?"
                     value={description}
@@ -53,12 +67,13 @@ function ProjectOverviewBody({ props }) {
                       setDescription(e.target.value);
                       changeDecriptionHeight();
                     }}
+                    onKeyDown={e => enterDescription(e)}
                     rows={6}
                     maxLength={750}
                   />
                 ) : (
                   <div className="border-solid border-[1px] border-transparent hover:border-black rounded-[5px] box-border flex-auto overflow-ellipsis break-words cursor-text"
-                  onClick={e => setAllowEdit(true)} onBlur={e => setAllowEdit(false)}>
+                  onClick={e => {setAllowEdit(true); focusDescription()}} onBlur={e => setAllowEdit(false)}>
                     <div
                       className=" h-full p-[10px] rounded-[5px] resize-none
                   text-[14px] bg-inherit"
