@@ -2,6 +2,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import { signup } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { LuBird } from "react-icons/lu";
 import './SignupPage.css'
 
 function SignupPage() {
@@ -42,9 +43,10 @@ function SignupPage() {
       <div className="flex items-center box-border h-[80px] justify-start pl-[100px] fixed w-full">
         <NavLink
           to="/"
-          className="font-medium text-[24px] w-full max-w-[1280px]"
+          className="font-medium text-[24px] w-full max-w-[1280px] flex items-center"
         >
-          phoebe
+          <LuBird className="mr-[10px]"/>
+            Phoebe
         </NavLink>
       </div>
       <div className="flex items-center flex-col my-auto mx-0 max-w-[480px] min-h-[420px] w-full">

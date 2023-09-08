@@ -3,6 +3,7 @@ import { login } from "../../store/session";
 import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { useState } from "react";
 import './LoginPage.css'
+import { LuBird } from "react-icons/lu";
 
 function LoginPage() {
   const history = useHistory();
@@ -54,9 +55,10 @@ function LoginPage() {
       <div className="flex items-center box-border h-[80px] pl-[100px] fixed w-full justify-start">
         <NavLink
           to="/"
-          className="font-medium text-[24px]"
+          className="font-medium text-[24px] flex items-center"
         >
-          phoebe
+          <LuBird className="mr-[10px]"/>
+            Phoebe
         </NavLink>
       </div>
       <div className="flex items-center flex-col my-auto mx-0 max-w-[480px] min-h-[420px] w-full">

@@ -82,7 +82,7 @@ function ProfileIcon() {
               ref={dropdownRef}
               {...profileAnimation}
             >
-              <motion.div className="w-full flex my-[4px] px-[15px] py-[10px] hover:bg-[#454547af] text-[#A2A0A2] hover:text-white" {...profileTextAnimation}>
+              <motion.div className="w-full flex my-[4px] px-[15px] py-[10px] cursor-default text-[#A2A0A2] " {...profileTextAnimation}>
                 <BsPersonWorkspace className="mr-[10px] mt-[4px]" />
                 <div>
                   <div className="text-white">My workspace</div>
@@ -94,16 +94,16 @@ function ProfileIcon() {
 
               <div className="bg-[#454547] h-[1px] w-full my-[5px]"></div>
 
-              <motion.div {...profileTextAnimation} className="w-full flex mt-[4px] px-[15px] py-[10px] hover:bg-[#454547af] items-center hover:text-white text-[#A2A0A2]">
+              {/* <motion.div {...profileTextAnimation} className="w-full flex mt-[4px] px-[15px] py-[10px] hover:bg-[#454547af] items-center hover:text-white text-[#A2A0A2]">
                 <HiOutlineUserCircle className="mr-[10px] text-[18px]" />
                 <div className="text-white">Profile</div>
               </motion.div>
               <motion.div {...profileTextAnimation} className="w-full flex mb-[4px] px-[15px] py-[10px] hover:bg-[#454547af] items-center hover:text-white text-[#A2A0A2]">
                 <IoSettingsOutline className="mr-[10px] text-[18px]" />
                 <div className="text-white">Settings</div>
-              </motion.div>
+              </motion.div> */}
 
-              <div className="bg-[#454547] h-[1px] w-full my-[5px]"></div>
+              {/* <div className="bg-[#454547] h-[1px] w-full my-[5px]"></div> */}
 
               <motion.div
               {...profileTextAnimation}

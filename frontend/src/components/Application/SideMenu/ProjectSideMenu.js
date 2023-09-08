@@ -58,7 +58,7 @@ function ProjectSideMenu() {
                 </div>
                 <NavLink
                   className="text-white hover:bg-[#454547af] mr-[10px] p-[3px] rounded-[3px]"
-                  to={"/new-project"}
+                  to={"/new/blank/project"}
                 >
                   <HiPlus />
                 </NavLink>
