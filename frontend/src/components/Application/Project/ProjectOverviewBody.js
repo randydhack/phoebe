@@ -44,7 +44,7 @@ function ProjectOverviewBody({ props }) {
 
   return (
     project && (
-      <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_151px)]">
+      <div className="flex text-black justify-between overflow-y-scroll h-[calc(100%_-_151px)] bg-white">
         {/* Project Description */}
         <div className="w-full px-[25px] mt-[50px] overflow-y-scroll overview-scroll-hidden">
           <div className="flex flex-col">

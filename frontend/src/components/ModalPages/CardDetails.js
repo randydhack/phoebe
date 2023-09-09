@@ -159,7 +159,7 @@ function CardDetails() {
                         <div className="text-[12px] rounded-[3px] h-[12px] w-[12px] flex items-center justify-center text-black" style={{backgroundColor: `${project.backgroundColor}`}}></div>
                       )}
                     </div>
-                    <div className="ml-[17px] truncate">{project.name}</div>
+                    <div className="ml-[17px] truncate w-[180px]">{project.name}</div>
                   </div>
                 </div>
 

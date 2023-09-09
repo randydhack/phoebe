@@ -1,0 +1,4 @@
+.grid-body {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 30px;
+}
