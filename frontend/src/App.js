@@ -33,7 +33,7 @@ function App() {
     window.localStorage.setItem("SET_SIDE_MENU", JSON.stringify(closeSideMenu));
   }, [closeSideMenu]);
 
-  console.log(closeSideMenu)
+
   const sideMenuAnimation = !closeSideMenu
     ? {
         width: '0px',
@@ -54,8 +54,8 @@ function App() {
       {isLoaded && (
         <>
           <Modal />
-          <div className="absolute z-[-1] w-full h-full">
-            <div className="bottom-0 top-0 right-0 left-0 flex flex-col overflow-hidden absolute">
+          <div className={`absolute z-[-1] w-full h-full`}>
+            <div className={`bottom-0 top-0 right-0 left-0 flex flex-col absolute overflow-hidden`}>
               {userSession && (
                 <section>
                   <AppNavigation

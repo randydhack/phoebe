@@ -38,7 +38,8 @@ function ProjectOverviewPage({ compType }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (description !== project.description || projectName !== project.name) {
-      await dispatch(updateProjectThunk(projectName, description, project.id));
+      const data = await dispatch(updateProjectThunk(projectName, description, project.id));
+      setProject(data)
     }
   };
 

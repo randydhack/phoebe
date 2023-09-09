@@ -15,7 +15,6 @@ function CreateProjectPage() {
   const userSession = useSelector((state) => state.session.user);
 
   const [name, setName] = useState("");
-  const [type, setType] = useState("");
   const [description, setDescription] = useState("");
 
   const [errors, setErrors] = useState({});
@@ -28,7 +27,7 @@ function CreateProjectPage() {
 
     if (name) {
       const project = await dispatch(
-        createProjectThunk(name, description, randomColor())
+        createProjectThunk(name.trim(), description, randomColor())
       );
       if (project) {
         return history.push(`/project/${project.id}/overview`);
@@ -63,7 +62,7 @@ function CreateProjectPage() {
                     setName(e.target.value);
                     setErrors({});
                   }}
-                  max={255}
+                  maxLength={255}
                 />
                 {!name && (
                   <div className="text-red-600 text-[12px] mt-[3px]">
@@ -92,7 +91,7 @@ function CreateProjectPage() {
               <button
                 type="submit"
                 className={`w-full border-[1px] rounded-[5px] p-[10px] ${name.length ? 'bg-[#4573D1] text-white cursor-pointer' : 'bg-transparent text-[#BBB8B9] border-[#BBB8B9] cursor-default'}`}
-                disabled={!name.length}
+                disabled={!name.trim().length}
               >
                 Continue
               </button>

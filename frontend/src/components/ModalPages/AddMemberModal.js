@@ -34,7 +34,7 @@ function AddMemberModal() {
     <div className="w-[500px] h-[350px] bg-white rounded-[10px]">
       {/* HEADER OF THE FORM BY PROJECT NAME */}
       <div className="p-[20px] flex items-center justify-between">
-        <div className="font-medium text-[24px]">{project.name}</div>
+        <div className="font-medium text-[24px] truncate w-[400px]">{project.name}</div>
         <IoMdClose className="mr-[10px] w-[20px] h-[20px] text-[#6d6e6f] cursor-pointer" onClick={e => setType(null)}/>
       </div>
       <div className="bg-[#ECEAE9] w-full h-[1px]"></div>
