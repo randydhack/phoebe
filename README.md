@@ -2,6 +2,9 @@
 
 [Phoebe](https://phoebe.onrender.com/) is a solo project created by Randy Hac, crafted as part of AppAcademy's project. Modeled after Asana, Phoebe offers users a platform to manage productivity that allows users to create projects, add team members, and organize the processes of tasks.
 
+![](<img width="1413" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/dd12870e-b515-4dfd-91a5-990485b69bef">)
+
+
 ## Technologies Used
 Phoebe was built using the following technologies:
 
