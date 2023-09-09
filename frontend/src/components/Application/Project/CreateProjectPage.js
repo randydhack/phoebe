@@ -59,12 +59,12 @@ function CreateProjectPage() {
                   } bg-[#F9F8F8]`}
                   value={name}
                   onChange={(e) => {
-                    setName(e.target.value);
+                    setName(e.target.value.trim());
                     setErrors({});
                   }}
                   maxLength={255}
                 />
-                {!name && (
+                {!name.length && (
                   <div className="text-red-600 text-[12px] mt-[3px]">
                     Project name is required
                   </div>

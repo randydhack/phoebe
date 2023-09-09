@@ -50,18 +50,23 @@ function Landing() {
                 </div>
               </div>
             </div>
-              <div className="w-full flex items-center justify-center relative pb-[350px]">
-                <img
-                  src={boardExample}
-                  className="w-[1000px] rounded-xl absolute top-[50px] overflow-hidden"
-                />
+            <div className="w-full flex items-center justify-center relative pb-[350px]">
+              <img
+                src={boardExample}
+                className="w-[1000px] max-w-[1000px] rounded-xl absolute top-[50px] overflow-hidden"
+              />
+            </div>
+          </div>
+          <div className="bg-white w-full z-1 relative h-full">
+            <div className="h-screen flex px-[100px] flex-auto">
+              <div>
+                <div>CARD 1</div>
+                <div>CARD 2</div>
+                <div>CARD3</div>
               </div>
+              <div>DESCRIPOTION</div>
+            </div>
           </div>
-        <div className="bg-white w-full z-1 relative h-full bg-fixed">
-          <div className="h-full">
-
-          </div>
-        </div>
         </div>
       </div>
     </div>
