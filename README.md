@@ -91,9 +91,11 @@ For subsequent sessions, ensure you have two terminal windows:
 Enjoy Phoebe!
 
 ## Phoebe Showcase!
-![LogRegFor](https://github.com/abramfelix1/Accord/assets/62622410/dca799ac-7997-4f01-89d2-62c3af04d7cc)
-![Welcome](https://github.com/abramfelix1/Accord/assets/62622410/2ba38185-2aa5-4861-bb6e-78903f10338d)
-![ChatDash](https://github.com/abramfelix1/Accord/assets/62622410/c4c60d58-a30d-463a-a0e2-fc295f9c0ad1)
+Login                      |  Sign Up
+:-------------------------:|:-------------------------:
+![](<img width="1332" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6c6bccf8-5a84-46aa-8bcb-05125a873cae">
+)  |  ![](<img width="1270" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6056b527-5a56-49d8-a0b2-4e4a7dfa1168">
+)
 
 
 ## [Wiki Documents](https://github.com/abramfelix1/Accord/wiki)
