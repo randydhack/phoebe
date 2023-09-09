@@ -70,9 +70,9 @@ function Landing() {
           <div className="px-[100px] pt-[40px] flex flex-col w-full" id='landing-body'>
             <div className="flex items-center flex-col w-full justify-center">
               <div className="w-full items-center flex justify-center flex-col h-[200px] ">
-                <div className="flex flex-col text-center justify-evenly h-full w-[600px]">
+                <div className="flex flex-col text-center justify-evenly h-full w-[700px]">
                   <h1 className="text-[52px] w-full text-center leading-[50px] font-light tracking-wider h-full flex justify-center items-center">
-                    Productivity platform for task management
+                    Work management platform for task organization
                   </h1>
                   <p className="text-center text-[18px] tracking-wide w-full font-light">
                     Want more efficiency in your organization? Phoebe is easy
