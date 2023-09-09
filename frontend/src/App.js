@@ -34,6 +34,7 @@ function App() {
   }, [closeSideMenu]);
 
 
+
   const sideMenuAnimation = !closeSideMenu
     ? {
         width: '0px',
