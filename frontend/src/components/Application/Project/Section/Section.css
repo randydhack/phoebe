@@ -1,0 +1,6 @@
+.gradient-bg {
+    background: linear-gradient(180deg, #f0f0f0, rgba(245, 243, 243, 0.043));
+    border-radius: 8px;
+    height: 100vh;
+    margin-top: 7px;
+}

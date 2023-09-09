@@ -5,14 +5,16 @@ import { useParams, useHistory } from "react-router-dom";
 
 // Components
 import CreateSection from "../Section/CreateSection";
-import CardDetails from "../Cards/CardDetails";
 import SectionDropdown from "../Section/SectionDropdown";
 import BoardCards from "../Cards/BoardCards";
 import CreateCard from "../Cards/CreateCard";
 
 // Thunks / Context
 import { createCardThunk } from "../../../../store/cards";
-import { getProjectSectionsThunk } from "../../../../store/sections";
+import {
+  getProjectSectionsThunk,
+  updateSectionThunk,
+} from "../../../../store/sections";
 import { InfoContext } from "../../../../context/InfoContext";
 
 // CSS / Icons
@@ -22,11 +24,10 @@ import { GoCheckCircle } from "react-icons/go";
 
 function ProjectBoard() {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const { id } = useParams();
   const sections = Object.values(useSelector((state) => state.sections));
   const user = useSelector((state) => state.session.user);
-  const { cardDetail } = useContext(InfoContext);
 
   const insideRef = useRef();
   const outsideRef = useRef(null);
@@ -39,15 +40,21 @@ function ProjectBoard() {
     bottom: false,
   });
 
+  const [changeSectionName, setChangeSectionName] = useState("");
+  const [allowEditSectionName, setAllowEditSectionName] = useState({
+    sectionId: null,
+    allowEdit: false,
+  });
+
   useEffect(() => {
-
     (async () => {
-       const data = dispatch(getProjectSectionsThunk(id));
-       if (!data) {
-        return history.push('/home')
-       }
-    })()
+      const data = await dispatch(getProjectSectionsThunk(id));
+      if (!data) {
+        return history.push("/home");
+      }
 
+      await dispatch(getProjectSectionsThunk(id));
+    })();
   }, [id]);
 
   // Dealing with Textarea Height
@@ -66,6 +73,24 @@ function ProjectBoard() {
     });
   };
 
+  // UPDATE SECTION
+  const handleUpdateSectionName = async (e) => {
+    e.preventDefault();
+    await dispatch(updateSectionThunk(allowEditSectionName.sectionId, changeSectionName.trim()));
+    setAllowEditSectionName({
+      sectionId: null,
+      allowEdit: false,
+    });
+  };
+
+  const enterToSubmitSection = (e) => {
+    if (e.key === "Enter") {
+      handleUpdateSectionName(e)
+      document.getElementById('section-name').blur()
+    }
+  }
+
+  // HANDLE SUBMIT FOR CREATE CARD
   const handleClickOutside = async (event) => {
     if (insideRef.current && insideRef.current.contains(event.target)) {
       return;
@@ -96,117 +121,137 @@ function ProjectBoard() {
 
   return (
     sections && (
-        <div className="pt-[20px] pb-[20px] px-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
-        {cardDetail && <CardDetails />}
-          <div className="absolute h-full w-full ">
-            <div className="flex h-[calc(100%_-_80px)] z-0 flex-auto overflow-x-scroll overflow-y-hidden mb-[20px] scrollbar-none">
-              {/* ---------------- SECTIONS MAPPING -------------------- */}
-              {sections.map((section, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="w-[300px] mx-[10px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px]"
-                  >
-                    <div className="h-full overflow-scroll flex flex-col w-full">
-                      <div className="flex items-center justify-between p-[10px] w-full">
-                        <p className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden">
+      <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
+        <div className="absolute h-full w-full overflow-auto ">
+          <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
+            {/* ---------------- SECTIONS MAPPING -------------------- */}
+            {sections.map((section, i) => {
+              return (
+                <div
+                  key={i}
+                  className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px] scrollbar-none"
+                >
+                  <div className="h-full overflow-y-scroll overflow-x-hidden flex flex-col w-full scrollbar-none">
+                    <div className="flex items-center justify-between p-[10px] w-full">
+                      {allowEditSectionName.allowEdit &&
+                      allowEditSectionName.sectionId === section.id ? (
+                        <input
+                        id={`section-name`}
+                          className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden px-[5px] rounded-sm"
+                          placeholder={section.name}
+                          onChange={(e) => {if (e.target.value.length > 0) setChangeSectionName(e.target.value)}}
+                          value={changeSectionName}
+                          onBlur={(e) => handleUpdateSectionName(e)}
+                          onKeyDown={e => enterToSubmitSection(e)}
+                        />
+                      ) : (
+                        <p className="font-medium text-[16px] text-ellipsis whitespace-nowrap overflow-hidden px-[5px]">
                           {section.name}
                         </p>
-                        <div className="flex items-center">
-                          <BsPlus
-                            className="mr-[10px] cursor-pointer text-[25px] hover:bg-[#ECEAE9] rounded-[5px]"
-                            onClick={(e) => {
-                              setAddCard({
-                                id: section.id,
-                                status: !addCard.status,
-                              });
-                              //   scrollToCreateCard();
-                            }}
-                            forwardRef={insideRef}
-                          />
-                          <SectionDropdown sectionId={section.id} />
-                        </div>
+                      )}
+                      <div className="flex items-center">
+                        <BsPlus
+                          className="mr-[10px] cursor-pointer text-[25px] hover:bg-[#ECEAE9] rounded-[5px]"
+                          onClick={(e) => {
+                            setAddCard({
+                              id: section.id,
+                              status: !addCard.status,
+                            });
+                          }}
+                          forwardref={insideRef}
+                        />
+                        <SectionDropdown
+                          sectionId={section.id}
+                          setAllowEditSectionName={setAllowEditSectionName}
+                          allowEditSectionName={allowEditSectionName}
+                          section={section}
+                          setChangeSectionName={setChangeSectionName}
+
+                        />
                       </div>
-                      <div className="overflow-scroll cardContainer">
-                        <div className="overflow-scroll items-center flex flex-col justify-center">
-                          {/* ---------------------------- CREATE CARD ---------------------------- */}
-                          {addCard.status && section.id === addCard.id ? (
-                            <CreateCard
-                              resize={resize}
-                              i={i}
-                              section={section}
-                              setAddCard={setAddCard}
-                              title={title}
-                              setTitle={setTitle}
-                              outsideRef={outsideRef}
-                            />
-                          ) : null}
-                          {/* ---------------------------- CARDS MAPPING ---------------------------- */}
-                          <BoardCards section={section} />
+                    </div>
+                    <div className="overflow-scroll cardContainer scrollbar-none">
+                      <div className="overflow-scroll items-center flex flex-col justify-center scrollbar-none">
+                        {/* ---------------------------- CREATE CARD ---------------------------- */}
 
-                          {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
-                          {createTaskBottom.status &&
-                          createTaskBottom.bottom &&
-                          section.id === createTaskBottom.id ? (
-                            <form
-                              className="w-[280px] h-auto bg-white rounded-[8px] my-[5px] border-solid border-[1px] shadow-sm border-gray-400 hover:ease-out duration-200 p-[10px]"
-                              onClick={(e) => e.stopPropagation()}
-                              ref={outsideRef}
-                            >
-                              <div className="flex">
-                                <span>
-                                  <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
-                                </span>
-                                <textarea
-                                  className="textarea whitespace-pre-wrap break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
-                                  value={title}
-                                  onChange={(e) => {
-                                    //Whatever you put here will act just like an onChange event
-                                    setTitle(e.target.value);
-                                    resize();
-                                  }}
-                                  placeholder="Write a task name"
-                                />
-                              </div>
-                              <div className="mt-[10px] flex justify-between cursor-default">
-                                {user.profileImage ? (
-                                  <div className="rounded-[50%] h-[25px] w-[25px] border-[1px] border-[#c3c3c3]">
-                                    {user.profileImage}
-                                  </div>
-                                ) : (
-                                  <div className="text-[10px] rounded-[50%] bg-yellow-300 h-[25px] w-[25px] flex items-center justify-center border-[1px] border-[#c3c3c3]">
-                                    {user.firstName[0].toUpperCase()}
-                                    {user.lastName[0].toUpperCase()}
-                                  </div>
-                                )}
-                              </div>
-                            </form>
-                          ) : null}
+                        {addCard.status && section.id === addCard.id ? (
+                          <CreateCard
+                            resize={resize}
+                            i={i}
+                            section={section}
+                            setAddCard={setAddCard}
+                            title={title}
+                            setTitle={setTitle}
+                            outsideRef={outsideRef}
+                          />
+                        ) : null}
+                        {/* ---------------------------- CARDS MAPPING ---------------------------- */}
+                        <BoardCards section={section} />
 
-                          <div
-                            className="mb-[5px] w-[95%] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
-                            ref={insideRef}
-                            onClick={(e) => {
-                              setCreateTaskBottom({
-                                id: section.id,
-                                status: !addCard.status,
-                                bottom: !addCard.bottom,
-                              });
-                            }}
+                        {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
+
+                        {createTaskBottom.status &&
+                        createTaskBottom.bottom &&
+                        section.id === createTaskBottom.id ? (
+                          <form
+                            className="w-[280px] h-auto bg-white rounded-[8px] my-[5px] border-solid border-[1px] shadow-sm border-gray-400 hover:ease-out duration-200 p-[10px]"
+                            onClick={(e) => e.stopPropagation()}
+                            ref={outsideRef}
                           >
-                            <BsPlus className="text-[25px]" />
-                            <div>Add Task</div>
-                          </div>
+                            <div className="flex">
+                              <span>
+                                <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
+                              </span>
+                              <textarea
+                                className="textarea whitespace-pre-wrap break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
+                                value={title}
+                                onChange={(e) => {
+                                  //Whatever you put here will act just like an onChange event
+                                  setTitle(e.target.value);
+                                  resize();
+                                }}
+                                placeholder="Write a task name"
+                              />
+                            </div>
+                            <div className="mt-[10px] flex justify-between cursor-default">
+                              {user.profileImage ? (
+                                <div className="rounded-[50%] h-[25px] w-[25px] border-[1px] border-[#c3c3c3]">
+                                  {user.profileImage}
+                                </div>
+                              ) : (
+                                <div className="text-[10px] rounded-[50%] bg-yellow-300 h-[25px] w-[25px] flex items-center justify-center border-[1px] border-[#c3c3c3]">
+                                  {user.firstName[0].toUpperCase()}
+                                  {user.lastName[0].toUpperCase()}
+                                </div>
+                              )}
+                            </div>
+                          </form>
+                        ) : null}
+
+                        <div
+                          className="mb-[5px] w-[95%] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
+                          ref={insideRef}
+                          onClick={(e) => {
+                            setCreateTaskBottom({
+                              id: section.id,
+                              status: !addCard.status,
+                              bottom: !addCard.bottom,
+                            });
+                          }}
+                        >
+                          <BsPlus className="text-[25px]" />
+                          <div>Add Task</div>
                         </div>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-              <CreateSection />
-            </div>
+                </div>
+              );
+            })}
+            <CreateSection />
           </div>
         </div>
+      </div>
     )
   );
 }

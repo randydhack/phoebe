@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
-const { Project, Section} = require("../../db/models");
+const { Project, Section, Card, User} = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 // NOTES: GET ALL SECTIONS BY ID IS LOCATED IN THE PROJECT ROUTE
@@ -32,7 +32,7 @@ router.post("/project/:id", requireAuth, async (req, res, next) => {
   const { name } = req.body;
   //  Finds a Project where the owner belongs to and if the project exist
   const project = await Project.findOne({
-    where: { id: req.params.id, ownerId: req.user.id },
+    where: { id: req.params.id },
   });
 
   // If project does not exist, he is either not owner or does not have a project
@@ -60,10 +60,18 @@ router.put("/:id", requireAuth, async (req, res, next) => {
   // Finds a section by ID
   const section = await Section.findOne({
     where: { id: req.params.id },
-    include: {
-      model: Project,
-      as: "Project",
-    },
+    include: [{
+      model: Card,
+      as: "Cards",
+      order: [["id", "DESC"]],
+      separate: true,
+      include: {
+        model: User,
+        as: "User",
+      },
+    },  {model: Project,
+    as: 'Project'}]
+
   });
 
   // If section does not exist, throw error

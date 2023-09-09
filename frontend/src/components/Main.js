@@ -3,7 +3,7 @@ import AppNavigation from "./Application/Navigation/AppNavigation";
 import SideMenu from "./Application/SideMenu/SideMenu";
 import AppHome from "./Application/AppHome/AppHome";
 import ProjectOverviewPage from "./Application/Project/ProjectOverviewPage";
-import Modal from "./utils/Modal";
+
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
@@ -13,11 +13,9 @@ function Main(props) {
   const userSession = useSelector((state) => state.session.user);
 
   if (!userSession) return <Redirect to="/login" />;
-
   return (
     <>
       <div className="w-full">
-        <Modal />
         <div className="flex flex-auto">
           <section className="w-full flex flex-col flex-1 h-screen">
             {compType === "home" && <AppHome />}

@@ -7,7 +7,7 @@ const { Section, Card, Comment, User} = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 
-// NOTES: GET ALL CARDS ISLOCATED IN PROJECT ROUTE
+// NOTES: GET ALL CARDS BY PROJECT ID IS LOCATED IN PROJECT ROUTE
 
 router.get('/:id', requireAuth, async (req, res, next) => {
   const card = await Card.findOne({where: {id: req.params.id}, include: {model: User, as: 'User'}})
@@ -32,6 +32,14 @@ router.get('/:id/comments', requireAuth, async (req, res, next) => {
 
     res.status(200).json(comment)
 })
+
+router.get('/', requireAuth, async (req, res, next) => {
+  const userCards = await Card.findAll({where: {userId: req.user.id}})
+
+  res.status(200).json(userCards)
+})
+
+
 // ------------------------------------ POST ENDPOINTS ---------------------------------------------
 
 router.post("/", requireAuth, async (req, res, next) => {
@@ -77,9 +85,12 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 
 
 router.put('/:id/section/:sectionId', async (req, res, next) => {
-  const { id, sectionId } = req.params
+  const { id, sectionId, projectId } = req.body
 
-  const card = await Card.findByPk(id)
+  const card = await Card.findOne({where: {id: id, projectId: projectId}, include: {
+    model: User,
+    as: 'User'
+  }});
 
   if (!card) {
     const err = new Error("Card does not exist.");
@@ -87,15 +98,16 @@ router.put('/:id/section/:sectionId', async (req, res, next) => {
     return next(err);
   }
 
-  const updatedCard = await card.update({sectionId})
+  const updatedCard = await card.update({sectionId: Number(sectionId)})
 
+  res.status(200).json(updatedCard)
 
 })
 
 // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
 router.delete("/:id", requireAuth, async (req, res, next) => {
-  const card = await Card.findByPk(req.params.id);
+  const card = await Card.findByPk(Number(req.params.id));
 
   if (!card) {
     const err = new Error("Card does not exist.");
@@ -104,10 +116,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   }
 
   await card.destroy();
-  res.status(200).json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  res.status(200).json(card);
 });
 
 module.exports = router;

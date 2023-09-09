@@ -2,6 +2,8 @@ import { NavLink, Redirect } from "react-router-dom";
 import { signup } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { LuBird } from "react-icons/lu";
+import './SignupPage.css'
 
 function SignupPage() {
   const dispatch = useDispatch();
@@ -37,13 +39,14 @@ function SignupPage() {
   };
 
   return (
-    <div className="items-center flex flex-col mx-[32px] min-h-screen">
-      <div className="flex items-center box-border h-[80px] justify-center pl-[32px] fixed w-full z-[100]">
+    <div className="items-center flex flex-col min-h-screen w-full background-image">
+      <div className="flex items-center box-border h-[80px] justify-start pl-[100px] fixed w-full">
         <NavLink
           to="/"
-          className="font-medium text-[24px] w-full max-w-[1280px]"
+          className="font-medium text-[24px] w-full max-w-[1280px] flex items-center"
         >
-          phoebe
+          <LuBird className="mr-[10px]"/>
+            Phoebe
         </NavLink>
       </div>
       <div className="flex items-center flex-col my-auto mx-0 max-w-[480px] min-h-[420px] w-full">
@@ -53,10 +56,7 @@ function SignupPage() {
             To get started, please sign up
           </span>
           <div className="flex flex-col w-full">
-            <span className="flex text-center items-center w-full mb-[20px]">
-              <span className="border-t-[1px] border-solid border-[#edeae9] flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
-              <span className="border-t-[1px] border-solid border-[#edeae9] flex-auto min-w-[1px] pt-[8px] mt-[8px]"></span>
-            </span>
+
 
             <form onSubmit={handleSubmit} className="w-full">
               {/* ----------------- FIRST AND LAST NAMES ------------------ */}

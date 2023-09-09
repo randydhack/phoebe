@@ -1,9 +1,16 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 
 
 function ErrorPage() {
-    return (
-        <div>ERROR 404</div>
-    )
+    const history = useHistory()
+
+    const user = useSelector(state => state.session.user)
+
+    if (!user) return <Redirect to='/home'/>
+
+    return history.goBack()
 }
 
 export default ErrorPage;

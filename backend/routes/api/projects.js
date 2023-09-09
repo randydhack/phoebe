@@ -10,16 +10,34 @@ const { Project, Section, Member, Card, User } = require("../../db/models");
 // **** GET ALL PROJECT FOR A SINGLE USER ****
 router.get("/", requireAuth, async (req, res) => {
   // Finds all the projects user owns or belongs to
-  const userProjects = await Project.findAll({
-    where: { ownerId: req.user.id },
-    include: [
-      {
-        model: Section,
-      },
-    ],
-  });
-  //  return json
-  res.status(200).json(userProjects);
+  // const userProjects = await Project.findAll({
+  //   where: { ownerId: req.user.id },
+  //   include: [
+  //     {
+  //       model: Section,
+  //     },
+  //   ],
+  // });
+  // res.status(200).json(userProjects);
+  const memberProjects = await Member.findAll({
+    where: {userId: req.user.id},
+    include: {
+      model: Project,
+      as: 'Project',
+      include: {
+        model: Section
+      }
+    }
+  })
+
+  let result = []
+
+  memberProjects.forEach(el => {
+    el = el.toJSON().Project
+    result.push(el)
+  })
+
+  res.status(200).json(result)
 });
 
 // **** GET PROJECT BY ID, only if they are a member of the Project ****
@@ -111,35 +129,20 @@ router.get("/:id/members", async (req, res, next) => {
 // ***** CREATES A NEW PROJECT *****
 router.post("/", requireAuth, async (req, res, next) => {
   // Body request from form
-  const { name, category, description, projectImage } = req.body;
-  // Finds existing project by name and id to prevent same Project name
-  const existingProject = await Project.findOne({
-    where: { name: name, ownerId: req.user.id },
-  });
-
-  // If the project name exist by user, throw error
-  if (
-    existingProject &&
-    name.toLowerCase() === existingProject["name"].toLowerCase()
-  ) {
-    const err = new Error("Project name already exist.");
-    err.status = 401;
-    return next(err);
-  }
+  const { name, description, backgroundColor } = req.body;
 
   // Creates a new project, name and ownerId is required
   const project = await Project.create({
     name,
     ownerId: req.user.id,
-    category,
     description,
-    projectImage,
+    backgroundColor
   });
 
   // Sets the user as a member of the Project as well
   await Member.create({ projectId: project.id, userId: req.user.id });
   // Create a default To do Section
-  await Section.create({ name: "To dos", projectId: project.id });
+  await Section.create({ name: "To do", projectId: project.id });
 
   // return json
   res.status(201).json(project);
@@ -206,7 +209,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     });
   } else {
     const err = new Error("User does not have permission");
-    err.status = 404;
+    err.status = 401;
     return next(err);
   }
 });

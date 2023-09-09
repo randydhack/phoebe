@@ -1,9 +1,11 @@
 import { csrfFetch } from "./csrf";
-import { addCardToSectionAction, getProjectSectionsThunk, updateCardSectionAction } from "./sections";
+import { changeCardSectionAction, getProjectSectionsThunk, updateCardSectionAction, deleteCardSectionAction} from "./sections";
 
 // Action Type
 const CREATE_CARDS = "cards/CREATE_CARDS ";
 const UPDATE_CARD = "cards/UPDATE_CARD ";
+const MOVE_CARD = 'cards/MOVE_CARD';
+const DELETE_CARD = 'cards/DELETE_CARD'
 
 // Action Creators
 
@@ -14,6 +16,16 @@ const createCardAction = (card) => ({
 
 const updateCardAction = (card) => ({
   type: UPDATE_CARD,
+  payload: card
+})
+
+const moveSectionCardAction = (card) => ({
+  type: MOVE_CARD,
+  payload: card
+})
+
+const deleteCardAction = (card) => ({
+  type: DELETE_CARD,
   payload: card
 })
 
@@ -61,7 +73,43 @@ export const updateCardThunk = (id, title, description, sectionId) => async disp
   if (res.ok) {
     const data = await res.json()
     await dispatch(updateCardAction(data))
+    // located in sections
     await dispatch(updateCardSectionAction(data))
+    return data
+  }
+}
+
+export const moveSectionCardThunk = (sectionId, id, projectId) => async dispatch => {
+  const res = await csrfFetch(`/api/cards/${id}/section/${sectionId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      sectionId,
+      id,
+      projectId
+    })
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(moveSectionCardAction(data))
+    // located in sections store
+    await dispatch(changeCardSectionAction(sectionId, data))
+    await dispatch(getProjectSectionsThunk(projectId))
+    return data
+  }
+}
+
+export const deleteCardThunk = (id) => async (dispatch) => {
+
+  const res = await csrfFetch(`/api/cards/${id}`, {
+    method: 'DELETE'
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    console.log(data)
+    // await dispatch(deleteCardAction(data))
+    await dispatch(deleteCardSectionAction(Number(data.sectionId), data))
     return data
   }
 }
@@ -79,6 +127,14 @@ const cardReducer = (state = {}, action) => {
     case UPDATE_CARD:
       newState = {...state};
       newState[action.payload.id] = action.payload
+      return newState
+    case MOVE_CARD:
+      newState = {...state}
+      newState[action.payload.id] = action.payload
+      return newState
+    case DELETE_CARD:
+      newState = {...state}
+      delete newState[action.payload.id]
       return newState
     default:
       return state;
