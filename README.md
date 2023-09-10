@@ -98,11 +98,11 @@ Login                      |  Sign Up
 <img width="1332" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6c6bccf8-5a84-46aa-8bcb-05125a873cae">
   |  <img width="1270" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/6056b527-5a56-49d8-a0b2-4e4a7dfa1168">
 
-Application                | 
+Application                | Application
 :-------------------------:|:-------------------------:
 <img width="1420" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/89d301ff-2078-4762-8cc2-beadc8f58297">
-| <img width="1421" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/153c4f4b-8d58-4f3f-996a-c33d3c284c0a">
-| <img width="1175" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/0f2741c5-cd11-459b-addd-fdee10cd3232"> |<img width="1194" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/2540e521-4044-4edd-b93b-0bd1458e989c">
+ <img width="1421" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/153c4f4b-8d58-4f3f-996a-c33d3c284c0a">
+| <img width="1175" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/0f2741c5-cd11-459b-addd-fdee10cd3232"> <img width="1194" alt="image" src="https://github.com/randydhack/phoebe/assets/113399691/2540e521-4044-4edd-b93b-0bd1458e989c">
 
 
 
