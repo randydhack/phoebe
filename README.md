@@ -116,8 +116,9 @@ Enjoy Phoebe!
 
 ## Future Features
 
-- **AWS**: Allow users to add image to project and profile.
+- **AWS**: Allow users to add images to projects and profiles.
 - **Drop-and-Drop**: Users can drag and drop sections and cards.
+- **Invitation Notice** User will have an inbox for invitations to accept or decline to join a project.
 
 ## Technical Implementation Details
 
