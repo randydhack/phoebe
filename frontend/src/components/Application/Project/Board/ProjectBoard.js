@@ -15,7 +15,6 @@ import {
   getProjectSectionsThunk,
   updateSectionThunk,
 } from "../../../../store/sections";
-import { InfoContext } from "../../../../context/InfoContext";
 
 // CSS / Icons
 import "./ProjectBoard.css";

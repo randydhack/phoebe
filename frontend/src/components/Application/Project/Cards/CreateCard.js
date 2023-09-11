@@ -1,12 +1,7 @@
-import { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GoCheckCircle } from "react-icons/go";
-import { createCardThunk } from "../../../../store/cards";
-import { useParams } from "react-router-dom";
 
 function CreateCard(props) {
-  const dispatch = useDispatch();
-  const { id } = useParams();
 
   const { resize, title, setTitle, outsideRef } = props;
   const user = useSelector((state) => state.session.user);

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch, NavLink, history, useHistory } from "react-router-dom";
+import {  Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from "./components/Main";
-import { LuBird } from "react-icons/lu";
 import LoginPage from "./components/LoginFormPage/LoginPage";
 import CreateProjectPage from "./components/Application/Project/CreateProjectPage";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
@@ -51,6 +50,7 @@ function App() {
         duration: 0.1
       }
     }
+
   return (
     <>
       {isLoaded && (

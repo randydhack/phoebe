@@ -107,7 +107,6 @@ export const deleteCardThunk = (id) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json()
-    console.log(data)
     // await dispatch(deleteCardAction(data))
     await dispatch(deleteCardSectionAction(Number(data.sectionId), data))
     return data

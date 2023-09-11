@@ -1,12 +1,9 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import randomColor from 'randomcolor'
 import { LiaProjectDiagramSolid} from 'react-icons/lia'
 
 function HomeProjectBox({projects }) {
 
-console.log(projects)
   return (
     projects && (
       <div className="w-[550px] bg-white m-[5px] max-h-[350px] h-[350px] rounded-[10px] hover:border-[1px] hover:border-[#42424467] hover:ease-out duration-100 overflow-scroll hover:shadow-lg shadow-[0_0_1px_1px_white] hide-scroll-bar">

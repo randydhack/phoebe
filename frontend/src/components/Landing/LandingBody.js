@@ -1,8 +1,4 @@
 import { GoCheckCircle } from "react-icons/go";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useEffect } from "react";
-import { motion, useScroll } from "framer-motion";
 
 function LandingBody({ resize }) {
   return (

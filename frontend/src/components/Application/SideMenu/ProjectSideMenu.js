@@ -4,7 +4,6 @@ import { HiPlus } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userProjectsThunk } from "../../../store/projects";
-import randomColor from 'randomcolor'
 import './SideMenu.css'
 
 function ProjectSideMenu() {
@@ -31,8 +30,6 @@ function ProjectSideMenu() {
       JSON.stringify(projectDropdown)
     );
   }, [projectDropdown]);
-
-  console.log(randomColor())
 
 
   return (

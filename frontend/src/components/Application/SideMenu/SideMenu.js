@@ -5,10 +5,6 @@ import ProjectSideMenu from "./ProjectSideMenu";
 
 function SideMenu() {
 
-  const alert = () => {
-    window.alert("'My tasks' is a future feature that allows a user to see all their tasks.\n FEATURE IS COMING SOON!");
-  }
-
   return (
     <div
       className="flex w-[240px]"

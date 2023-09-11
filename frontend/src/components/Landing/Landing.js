@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Redirect, NavLink, Link } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { LuBird } from "react-icons/lu";
 import boardExample from "../../images/board-example.png";
 import LandingBody from "./LandingBody";
