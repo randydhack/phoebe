@@ -1,14 +1,8 @@
 import { GoCheckCircle } from "react-icons/go";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from "react";
-import { motion, useScroll } from 'framer-motion'
-
 
 function LandingBody({ resize }) {
-
   return (
-    <div className="bg-white w-full z-1 relative h-full">
+    <div className="bg-white w-full relative h-full flex items-center z-[3]">
       <div
         className={`${
           resize ? "flex flex-col items-center" : "grid-body grid"
@@ -21,10 +15,15 @@ function LandingBody({ resize }) {
           } flex justify-center flex-col items-center`}
         >
           {/* CARD ONE */}
-          <div className={`${resize ? "flex justify-start w-full" : "flex justify-center w-full"}` }
-          initial={{ opacity: 0, x:-100 }}
-          animate={{x: 0, opacity: 1}}
-          transition={{opacity: 1, ease: "easeOut", duration: 1.5}}
+          <div
+            className={`${
+              resize
+                ? "flex justify-start w-full"
+                : "flex justify-center w-full"
+            }`}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ opacity: 1, ease: "easeOut", duration: 1.5 }}
           >
             <div className="bg-white rounded-[8px] h-[120px] w-[300px] p-[12px] border-[#ECEAE9] flex flex-col justify-between border-solid border-[1px] shadow-sm mt-3">
               <span className="flex">
@@ -60,7 +59,6 @@ function LandingBody({ resize }) {
                 <div>
                   <div className="bg-[#F5F3F3] w-[240px] h-[10px] rounded-lg my-1"></div>
                   <div className="bg-[#F5F3F3] w-[240px] h-[10px] rounded-lg my-1"></div>
-
                 </div>
               </span>
               <div className="mt-[10px] h-full flex items-end">
@@ -78,7 +76,13 @@ function LandingBody({ resize }) {
 
           {/* Card 3 */}
           {/* <div className="w-full flex justify-start"> */}
-          <div className={`${resize ? "flex justify-start w-full" : "flex  justify-center w-full"}`}>
+          <div
+            className={`${
+              resize
+                ? "flex justify-start w-full"
+                : "flex  justify-center w-full"
+            }`}
+          >
             <div className="bg-white rounded-[8px] h-[120px] w-[300px] p-[12px] border-[#ECEAE9] flex flex-col justify-end border-solid border-[1px] shadow-sm mt-3">
               <span className="flex">
                 <div className="flex justify-center">
@@ -118,25 +122,16 @@ function LandingBody({ resize }) {
           </div>
         </div>
       </div>
-      <div className="w-full bg-[#2A2B2C] h-[100px] text-white flex justify-between px-[20px] ">
+      {/* <div className="w-full bg-[#2A2B2C] h-[100px] text-white flex justify-between px-[20px] ">
         <div className="mt-[10px] flex justify-between w-full">
-
-            <div>
-            Phoebe 2023
-            </div>
-            <div>
-                Developer : Randy Hac
-            </div>
-            <div className="flex">
-                <div>
-                    linkedin
-                </div>
-                <div>
-                    github
-                </div>
-            </div>
+          <div>Phoebe 2023</div>
+          <div>Developer : Randy Hac</div>
+          <div className="flex">
+            <div>linkedin</div>
+            <div>github</div>
           </div>
-          </div>
+        </div>
+      </div> */}
     </div>
   );
 }

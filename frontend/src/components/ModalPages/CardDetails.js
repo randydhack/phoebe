@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
 import {moveSectionCardThunk, updateCardThunk, deleteCardThunk } from "../../store/cards";
-import CreateCardComments from "../Application/Project/Cards/CreateCardComments";
 import CardComments from "../Application/Project/Cards/CardComments";
 import "../Application/Project/Cards/Comments.css";
 import { ModalContext } from "../../context/Modal";
@@ -13,7 +12,6 @@ import { ModalContext } from "../../context/Modal";
 
 function CardDetails() {
   // Router Dom
-  const { id} = useParams()
   const dispatch = useDispatch();
 
 

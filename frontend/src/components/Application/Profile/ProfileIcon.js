@@ -1,8 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsPersonWorkspace } from "react-icons/bs";
-import { HiOutlineUserCircle } from "react-icons/hi";
-import { IoSettingsOutline } from "react-icons/io5";
 import { logout } from "../../../store/session";
 import { IoIosLogOut } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";

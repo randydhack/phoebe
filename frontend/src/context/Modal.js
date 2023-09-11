@@ -1,5 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { createContext, useState } from "react";
 
 export const ModalContext = createContext();
 
@@ -20,6 +19,7 @@ export const ModalProvider = ({ children }) => {
   const cardDetailModal = () => {
     setType('Card Details')
   }
+
   return (
     <ModalContext.Provider
       value={{

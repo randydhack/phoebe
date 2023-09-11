@@ -1,6 +1,6 @@
 import { RiMenuLine } from "react-icons/ri";
-import { NavLink, useHistory, Redirect} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ProfileIcon from "../Profile/ProfileIcon";
 import {TiPlus} from 'react-icons/ti'
 

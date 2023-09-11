@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch, history, useHistory } from "react-router-dom";
+import {  Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from "./components/Main";
 import LoginPage from "./components/LoginFormPage/LoginPage";
@@ -12,6 +12,8 @@ import SideMenu from "./components/Application/SideMenu/SideMenu";
 import Modal from "./components/utils/Modal";
 import Landing from "./components/Landing/Landing";
 import { motion } from "framer-motion";
+
+import './index.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ function App() {
   }, [closeSideMenu]);
 
 
-
   const sideMenuAnimation = !closeSideMenu
     ? {
         width: '0px',
@@ -55,8 +56,8 @@ function App() {
       {isLoaded && (
         <>
           <Modal />
-          <div className={`absolute z-[-1] w-full h-full`}>
-            <div className={`bottom-0 top-0 right-0 left-0 flex flex-col absolute overflow-hidden`}>
+          <div className={`${!userSession ? 'overflow-auto overflow-x-hidden scroll-z' : 'absolute z-[-1] w-full h-full '}`}>
+            <div className={`${userSession ? 'overflow-hidden bottom-0 top-0 right-0 left-0 flex flex-col absolute ': ''}`}>
               {userSession && (
                 <section>
                   <AppNavigation

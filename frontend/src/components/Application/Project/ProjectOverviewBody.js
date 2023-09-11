@@ -1,9 +1,7 @@
 import ProjectMembers from "./ProjectMembers";
-import ProjectTasks from "./ProjectTasks";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getSingleProjectThunk } from "../../../store/projects";
-import { useHistory, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import './Project.css'
 

@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import AppNavigation from "./Application/Navigation/AppNavigation";
-import SideMenu from "./Application/SideMenu/SideMenu";
 import AppHome from "./Application/AppHome/AppHome";
 import ProjectOverviewPage from "./Application/Project/ProjectOverviewPage";
 
@@ -11,6 +8,7 @@ function Main(props) {
   const { compType } = props;
 
   const userSession = useSelector((state) => state.session.user);
+
 
   if (!userSession) return <Redirect to="/login" />;
   return (

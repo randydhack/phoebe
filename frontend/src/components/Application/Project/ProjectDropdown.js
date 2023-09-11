@@ -5,7 +5,6 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { LiaRunningSolid } from 'react-icons/lia'
 import {
   deleteProjectThunk,
-  getSingleProjectThunk,
 } from "../../../store/projects";
 import { useParams, useHistory } from "react-router-dom";
 import { InfoContext } from "../../../context/InfoContext";
