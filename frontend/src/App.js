@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch, history, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch, NavLink, history, useHistory } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Main from "./components/Main";
+import { LuBird } from "react-icons/lu";
 import LoginPage from "./components/LoginFormPage/LoginPage";
 import CreateProjectPage from "./components/Application/Project/CreateProjectPage";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
@@ -12,11 +13,14 @@ import SideMenu from "./components/Application/SideMenu/SideMenu";
 import Modal from "./components/utils/Modal";
 import Landing from "./components/Landing/Landing";
 import { motion } from "framer-motion";
+import { InfoContext } from "./context/InfoContext";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [closeSideMenu, setCloseSideMenu] = useState(true);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const { landingNav, setLandingNav } = useContext(InfoContext)
 
   const userSession = useSelector((state) => state.session.user);
 
@@ -34,6 +38,25 @@ function App() {
   }, [closeSideMenu]);
 
 
+useEffect(() => {
+    window.addEventListener("scroll", handleScroll, {
+        passive: true
+    });
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+}, [scrollPosition]);
+
+useEffect(() => {
+   localStorage['scroll'] = scrollPosition.toString();
+}, [scrollPosition]);
+
+const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+};
+
+console.log(scrollPosition)
 
   const sideMenuAnimation = !closeSideMenu
     ? {
@@ -49,7 +72,7 @@ function App() {
         duration: 0.1
       }
     }
-
+    console.log(window.location.href)
   return (
     <>
       {isLoaded && (
@@ -57,6 +80,32 @@ function App() {
           <Modal />
           <div className={`${!userSession ? 'overflow-auto overflow-x-hidden' : 'absolute z-[-1] w-full h-full '}`}>
             <div className={`${userSession ? 'overflow-hidden bottom-0 top-0 right-0 left-0 flex flex-col absolute ': ''}`}>
+            {landingNav && <div className="flex items-center justify-between absolute w-full bg-[#EDEBEA] z-10 h-[60px] pt-5 pb-6 top-0 px-[100px] mb-[]">
+        <NavLink
+          to="/"
+          className="font-medium text-[24px] flex items-center justify-center"
+          onClick={e => setLandingNav(true)}
+        >
+          <LuBird className="mr-[10px]" />
+          Phoebe
+        </NavLink>
+        <div className="flex text-[16px] items-center">
+          <NavLink
+            to="/login"
+            className="mr-[20px] text-[#727272] font-normal hover:text-black duration-200 ease-in"
+            onClick={e => setLandingNav(false)}
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/signup"
+            onClick={e => setLandingNav(false)}
+            className="bg-black text-white h-[36px] w-[116px] rounded-[5px] flex items-center justify-center"
+          >
+            Get Started
+          </NavLink>
+        </div>
+      </div>}
               {userSession && (
                 <section>
                   <AppNavigation

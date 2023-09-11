@@ -11,6 +11,8 @@ export const InfoProvider = ({ children }) => {
     const [currentSection, setCurrentSection] = useState(null)
     const bottomEl = useRef(null)
 
+    const [landingNav, setLandingNav] = useState(false)
+
 
     return (
         <InfoContext.Provider
@@ -23,7 +25,9 @@ export const InfoProvider = ({ children }) => {
             setCardRef,
             currentSection,
             setCurrentSection,
-            bottomEl
+            bottomEl,
+            landingNav,
+            setLandingNav
           }}
         >
           {children}

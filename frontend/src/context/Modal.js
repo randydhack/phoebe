@@ -20,6 +20,7 @@ export const ModalProvider = ({ children }) => {
   const cardDetailModal = () => {
     setType('Card Details')
   }
+
   return (
     <ModalContext.Provider
       value={{
