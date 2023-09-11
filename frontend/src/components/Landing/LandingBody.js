@@ -6,7 +6,7 @@ import { motion, useScroll } from "framer-motion";
 
 function LandingBody({ resize }) {
   return (
-    <div className="bg-white w-full relative h-full flex items-center">
+    <div className="bg-white w-full relative h-full flex items-center z-[3]">
       <div
         className={`${
           resize ? "flex flex-col items-center" : "grid-body grid"
