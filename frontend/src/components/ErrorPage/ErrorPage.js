@@ -10,6 +10,7 @@ function ErrorPage() {
 
     if (!user) return <Redirect to='/home'/>
 
+
     return history.goBack()
 }
 

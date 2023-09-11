@@ -122,8 +122,8 @@ function ProjectBoard() {
   return (
     sections && (
       <div className="py-[10px] flex flex-auto flex-col relative bg-[#F9F8F8] ">
-        <div className="absolute h-full w-full overflow-auto ">
-          <div className="flex h-[calc(100%_-_65px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
+        <div className="absolute h-full w-full overflow-auto">
+          <div className="flex h-[calc(100%_-_60px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
             {/* ---------------- SECTIONS MAPPING -------------------- */}
             {sections.map((section, i) => {
               return (

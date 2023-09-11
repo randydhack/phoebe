@@ -55,8 +55,8 @@ function App() {
       {isLoaded && (
         <>
           <Modal />
-          <div className={`absolute z-[-1] w-full h-full`}>
-            <div className={`bottom-0 top-0 right-0 left-0 flex flex-col absolute overflow-hidden`}>
+          <div className={`${!userSession ? 'overflow-auto overflow-x-hidden' : 'absolute z-[-1] w-full h-full '}`}>
+            <div className={`${userSession ? 'overflow-hidden bottom-0 top-0 right-0 left-0 flex flex-col absolute ': ''}`}>
               {userSession && (
                 <section>
                   <AppNavigation
