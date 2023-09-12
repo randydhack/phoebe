@@ -38,11 +38,11 @@ function LandingBody({ resize }) {
               </span>
               <div className="mt-[10px] h-full flex items-end">
                 <div className="flex items-center justify-center">
-                  <div className="rounded-[50%] bg-[#D1AFDB] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
-                    RH
+                  <div className="rounded-[50%] bg-[#6C7059] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
+
                   </div>
                   <div className="bg-[#F5F3F3] w-[200px] h-[10px] rounded-lg flex items-center">
-                    Randy Hac
+
                   </div>
                 </div>
               </div>
@@ -63,11 +63,11 @@ function LandingBody({ resize }) {
               </span>
               <div className="mt-[10px] h-full flex items-end">
                 <div className="flex items-center justify-center">
-                  <div className="rounded-[50%] bg-[#D1AFDB] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
-                    RH
+                  <div className="rounded-[50%] bg-[#C93C20] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
+
                   </div>
                   <div className="bg-[#F5F3F3] w-[200px] h-[10px] rounded-lg flex items-center">
-                    Randy Hac
+
                   </div>
                 </div>
               </div>
@@ -96,11 +96,11 @@ function LandingBody({ resize }) {
               </span>
               <div className="mt-[10px] h-full flex items-end">
                 <div className="flex items-center justify-center">
-                  <div className="rounded-[50%] bg-[#D1AFDB] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
-                    RH
+                  <div className="rounded-[50%] bg-[#2C5545] mr-3 text-white h-[25px] w-[25px] text-[10px] flex items-center justify-center">
+
                   </div>
                   <div className="bg-[#F5F3F3] w-[200px] h-[10px] rounded-lg flex items-center">
-                    Randy Hac
+
                   </div>
                 </div>
               </div>
