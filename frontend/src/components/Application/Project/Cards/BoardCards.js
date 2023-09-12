@@ -7,33 +7,9 @@ import { ModalContext } from "../../../../context/Modal";
 function BoardCards({ section }) {
 
   // Context
-  const { setCardDetail, setCardRef, cardDetail } = useContext(InfoContext)
+  const { setCardDetail } = useContext(InfoContext)
   const { cardDetailModal } = useContext(ModalContext)
 
-  // useRefs
-  // const insideRef = useRef();
-  // const outsideRef = useRef(null);
-
-  // States
-
-  // Function for handling off click
-  // const handleClickOutside = async (event) => {
-  //   if (insideRef.current && insideRef.current.contains(event.target)) {
-  //     return;
-  //   }
-  //   if (outsideRef.current && !outsideRef.current.contains(event.target)) {
-  //     setCardDetail(null)
-  //   }
-  // };
-
-
-  // Use effect for handling off click
-  // useEffect(() => {
-  //   document.addEventListener("click", handleClickOutside, true);
-  //   return () => {
-  //     document.removeEventListener("click", handleClickOutside, true);
-  //   };
-  // }, [cardDetail]);
 
   return (
     <>

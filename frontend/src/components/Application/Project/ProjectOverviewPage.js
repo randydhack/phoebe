@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BsClipboardData } from "react-icons/bs";
 import { LiaProjectDiagramSolid } from "react-icons/lia";
-import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
-import { useEffect, useState, useContext, useRef } from "react";
+import { NavLink, useHistory, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { getSingleProjectThunk } from "../../../store/projects";
 import ProjectOverviewBody from "./ProjectOverviewBody";
 import { InfoContext } from "../../../context/InfoContext";

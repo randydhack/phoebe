@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createProjectThunk } from "../../../store/projects";
 import { Redirect, useHistory } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { BsPlus, BsThreeDots } from "react-icons/bs";
-import { GoCheckCircle } from "react-icons/go";
 import randomColor from "randomcolor";
 import CreateProjectDisplay from "./CreateProjectDisplay";
 
