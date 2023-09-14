@@ -62,6 +62,41 @@ router.post('/project/:id', validateInvite, requireAuth, async (req, res, next) 
 
 // // ------------------------------------ PUT ENDPOINTS ---------------------------------------------
 
+router.put('/project/:id', async (req, res, next) => {
+  const { memberId } = req.body
+  // console.log(memberId)
+  const project = await Project.findOne({where: {id: req.params.id, ownerId: req.user.id}})
+  const member = await Member.findByPk(memberId)
+  console.log(project)
+
+  console.log(+req.params.id, req.user.id)
+  console.log(member, 'member')
+  if (!member) {
+    const err = new Error("User is not part of the project.");
+    err.status = 401;
+    return next(err);
+  }
+
+  if (!project) {
+    const err = new Error("User does not have permission or is not the owner of the project.");
+    err.status = 401;
+    return next(err);
+  }
+
+  if (member.userId === project.ownerId) {
+    const err = new Error("User is already the owner.");
+    err.status = 401;
+    return next(err);
+  }
+
+
+  await project.update({ownerId: member.userId})
+  console.log(member.userId, project.ownerId)
+  console.log(project)
+  res.status(200).json({message: 'Tranfer of ownership is successful'})
+
+})
+
 // // ------------------------------------ DELETE ENDPOINTS ---------------------------------------------
 
 router.delete('/project/:id', async (req, res, next) => {
