@@ -1,10 +1,11 @@
 import { csrfFetch } from './csrf';
-import { getSingleProjectThunk } from './projects';
+import { getSingleProjectThunk, userProjectsThunk } from './projects';
 
 // Action Type
 const GET_PROJECT_MEMBERS = 'members/GET_PROJECT_MEMBERS'
 const LEAVE_PROJECT = 'members/LEAVE_PROJECT'
 const INVITE_MEMBER = 'members/INVITE_MEMBER'
+const REMOVE_MEMBER = 'members/REMOVE_MEMBER'
 // const GET_MEMBER_PROJECTS = 'members/GET_MEMBER_PROJECTS'
 // Action Creators
 const getAllProjectMembersAction = (members) => ({
@@ -20,6 +21,11 @@ const leaveProjectAction = (member) => ({
 const inviteMemberAction = (newMember) => ({
   type: INVITE_MEMBER,
   payload: newMember
+})
+
+const removeMemberAction = (member) => ({
+  type: REMOVE_MEMBER,
+  payload: member
 })
 
 // Thunk action creators
@@ -62,6 +68,20 @@ export const inviteMemberThunk = (id, email) => async (dispatch) => {
   }
 }
 
+export const removeMemberThunk = (id, userId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/members/remove/project/${id}`, {
+    method: 'DELETE',
+    body: JSON.stringify({userId})
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(removeMemberAction(data))
+    await dispatch(getSingleProjectThunk(id))
+    return data
+  }
+}
+
 // Initial state
 
 
@@ -81,6 +101,10 @@ const memberReducer = (state = {}, action) => {
     case INVITE_MEMBER:
       newState = {...state}
       newState[action.payload.id] = action.payload
+      return newState
+    case REMOVE_MEMBER:
+      newState = {...state}
+      delete newState[action.payload.id]
       return newState
     default:
       return state;

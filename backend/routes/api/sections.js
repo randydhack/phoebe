@@ -63,7 +63,6 @@ router.put("/:id", requireAuth, async (req, res, next) => {
     include: [{
       model: Card,
       as: "Cards",
-      order: [["id", "DESC"]],
       separate: true,
       include: {
         model: User,
