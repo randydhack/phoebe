@@ -39,7 +39,6 @@ router.get('/', requireAuth, async (req, res, next) => {
   res.status(200).json(userCards)
 })
 
-
 // ------------------------------------ POST ENDPOINTS ---------------------------------------------
 
 router.post("/", requireAuth, async (req, res, next) => {

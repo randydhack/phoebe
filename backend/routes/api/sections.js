@@ -63,7 +63,6 @@ router.put("/:id", requireAuth, async (req, res, next) => {
     include: [{
       model: Card,
       as: "Cards",
-      order: [["id", "DESC"]],
       separate: true,
       include: {
         model: User,
@@ -112,11 +111,6 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
     return next(err);
   }
   // if user is not the owner, throw error
-  if (req.user.id !== section.Project.ownerId) {
-    const err = new Error("User does not have permission");
-    err.status = 404;
-    return next(err);
-  }
 
   // Destroy Section and return a successfull deletion
   await section.destroy();
