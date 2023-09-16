@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { getAllProjectMembersThunk } from "./members";
 
 // Action Type
 const GET_USER_PROJECTS = "projects/GET_USER_PROJECTS ";
@@ -6,6 +7,7 @@ const CREATE_PROJECT = "projects/CREATE_PROJECT";
 const GET_SINGLE_PROJECT = "projects/GET_SINGLE_PROJECT";
 const DELETE_PROJECT = "projects/DELETE_PROJECT";
 const UPDATE_PROJECT = "projects/UPDATE_PROJECT";
+const TRANSFER_OWNER = "projects/TRANSFER_OWNER"
 
 // Action Creators
 
@@ -32,6 +34,11 @@ const deleteProjectAction = (id) => ({
 const updateProjectAction = (project) => ({
   type: UPDATE_PROJECT,
   payload: project
+})
+
+const transferProjectOwnerAction = (project, member) => ({
+  type: TRANSFER_OWNER,
+  payload: {project, member}
 })
 
 // Thunk action creators
@@ -106,6 +113,20 @@ export const updateProjectThunk = (name, description, id) => async (dispatch) =>
   }
 };
 
+export const transferProjectOwnerThunk = (id, memberId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/members/project/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({memberId})
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(transferProjectOwnerAction(data.project, data.member))
+    await dispatch(userProjectsThunk())
+    return data.project
+  }
+}
+
 // Initial state
 
 // Reducer
@@ -127,6 +148,11 @@ const projectReducer = (state = {}, action) => {
     case UPDATE_PROJECT:
       newState = {...state}
       newState[action.payload.id] = action.payload
+      return newState
+    case TRANSFER_OWNER:
+      newState = {...state}
+      newState[action.payload.project.id] = action.payload.project
+      newState[action.payload.project.id].Owner = action.payload.member.User
       return newState
     default:
       return state;

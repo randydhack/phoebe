@@ -20,6 +20,10 @@ export const ModalProvider = ({ children }) => {
     setType('Card Details')
   }
 
+  const memberListModal = () => {
+    setType('Member List')
+  }
+
   return (
     <ModalContext.Provider
       value={{
@@ -29,6 +33,7 @@ export const ModalProvider = ({ children }) => {
         setType,
         addMemberModal,
         cardDetailModal,
+        memberListModal
       }}
     >
       {children}

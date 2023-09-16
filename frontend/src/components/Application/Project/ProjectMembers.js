@@ -8,7 +8,7 @@ import "./ProjectMember.css";
 
 function ProjectMembers({ project }) {
   const dispatch = useDispatch();
-  const { addMemberModal } = useContext(ModalContext);
+  const { addMemberModal, memberListModal } = useContext(ModalContext);
   const { setProject } = useContext(InfoContext);
   const members = Object.values(useSelector((state) => state.members));
   const user = useSelector((state) => state.session.user);
@@ -21,7 +21,7 @@ function ProjectMembers({ project }) {
     <div className="mt-[30px] ml-[10px] mb-[10px]">
       <div className="flex items-center justify-between">
         <div className="mr-[5px] font-medium text-[18px] ">Project Roles</div>
-        <div className="text-[12px] text-blue-500 hover:underline cursor-pointer">see all</div>
+        <div className="text-[12px] text-blue-500 hover:underline cursor-pointer" onClick={e=> {memberListModal(); setProject(project)}}>see all</div>
       </div>
       <div className="grid member-grid w-[100%] box-content h-[80px] items-center">
         {user.id === project.ownerId && (

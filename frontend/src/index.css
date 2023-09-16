@@ -17,6 +17,6 @@ body {
     background-color: #EDEBEA;
 }
 
-.scroll-z::-webkit-scrollbar {
-
+body::-webkit-scrollbar {
+    all:unset;
 }
