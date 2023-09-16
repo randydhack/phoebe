@@ -122,7 +122,6 @@ export const transferProjectOwnerThunk = (id, memberId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json()
     await dispatch(transferProjectOwnerAction(data.project, data.member))
-    await dispatch(userProjectsThunk())
     return data.project
   }
 }

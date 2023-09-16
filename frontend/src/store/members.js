@@ -1,5 +1,5 @@
 import { csrfFetch } from './csrf';
-import { getSingleProjectThunk } from './projects';
+import { getSingleProjectThunk, userProjectsThunk } from './projects';
 
 // Action Type
 const GET_PROJECT_MEMBERS = 'members/GET_PROJECT_MEMBERS'
@@ -77,7 +77,7 @@ export const removeMemberThunk = (id, userId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json()
     await dispatch(removeMemberAction(data))
-    await dispatch(getAllProjectMembersThunk(id))
+    await dispatch(getSingleProjectThunk(id))
     return data
   }
 }

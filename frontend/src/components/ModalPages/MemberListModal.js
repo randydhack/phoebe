@@ -4,12 +4,19 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { InfoContext } from "../../context/InfoContext";
 import "./MemberList.css";
 import { transferProjectOwnerThunk } from "../../store/projects";
-import { getAllProjectMembersThunk, removeMemberThunk } from "../../store/members";
+import { useHistory } from "react-router-dom";
+import {
+  leaveProjectThunk,
+  removeMemberThunk,
+} from "../../store/members";
 import { getSingleProjectThunk } from "../../store/projects";
+import { ModalContext } from "../../context/Modal";
 
 function MemberListModal() {
   const dispatch = useDispatch();
-  const { project } = useContext(InfoContext);
+  const history = useHistory();
+  const { project, setProject } = useContext(InfoContext);
+  const { setType } = useContext(ModalContext)
   const members = Object.values(useSelector((state) => state.members));
   const user = useSelector((state) => state.session.user);
 
@@ -17,7 +24,7 @@ function MemberListModal() {
     memberId: null,
     isActive: false,
     projectId: null,
-    userId: null
+    userId: null,
   });
   const memberDropdownRef = useRef();
   const exitDropdownRef = useRef(null);
@@ -44,13 +51,9 @@ function MemberListModal() {
     };
   }, []);
 
-  useEffect(() => {
-    dispatch(getAllProjectMembersThunk(project.id));
-  }, [project.id]);
-
   const resetState = () => {
     setMemberDropdown({ memberId: null, isActive: false, projectId: null });
-  }
+  };
 
   const handleUpdateOwnership = async (e) => {
     await dispatch(
@@ -59,14 +62,26 @@ function MemberListModal() {
         memberDropdown.memberId
       )
     );
-    resetState()
+    const data = await dispatch(getSingleProjectThunk(project.id));
+    setProject(data);
+    resetState();
   };
 
   const handleRemoveMember = async (e) => {
-    e.preventDefault()
-    await dispatch(removeMemberThunk(memberDropdown.projectId, memberDropdown.userId))
+    e.preventDefault();
+    await dispatch(
+      removeMemberThunk(memberDropdown.projectId, memberDropdown.userId)
+    );
+    resetState();
+  };
+
+  const handleLeaveProject = async (e) => {
+    e.preventDefault();
+    await dispatch(leaveProjectThunk(project.id));
+    setType(null)
     resetState()
-  }
+    return history.push("/home");
+  };
 
   return (
     <div>
@@ -76,7 +91,7 @@ function MemberListModal() {
 
       <div className="bg-[#ECEAE9] w-full h-[1px]"></div>
 
-      <div className="w-[400px] p-3 overflow-hidden bg-[#FFFFFF] h-[500px] overflow-y-auto rounded-b-[10px] rounded-scroll-bar">
+      <div className="w-[400px] p-3 overflow-hidden bg-[#FFFFFF] h-[400px] overflow-y-auto rounded-b-[10px]">
         {members.map((member, i) => {
           return (
             <div
@@ -93,29 +108,24 @@ function MemberListModal() {
                 <div className="flex items-center justify-between w-full ml-[10px] relative">
                   {member.User.firstName} {member.User.lastName}
                   {/* OWNER: IF OWNER, SHOWS DROP FOR ALL MEMBERS BESIDE THEMSELVES */}
-                  {user.id === project.ownerId && (
-                    <div>
-                      {user.id !== member.userId ? (
-                        <div
-                          className="mr-1 member-dropdown hover:bg-gray-300 p-[2px] rounded-[3px] cursor-pointer"
-                          onClick={(e) =>
-                            setMemberDropdown({
-                              memberId: member.id,
-                              isActive: !memberDropdown.isActive,
-                              projectId: member.projectId,
-                              userId: member.userId
-                            })
-                          }
-                          ref={memberDropdownRef}
-                        >
-                          <BsThreeDots />
-                        </div>
-                      ) : (
-                        <div>Owner</div>
-                      )}
+                  {user.id === project.ownerId && user.id !== member.userId && (
+                    <div
+                      className="mr-1 member-dropdown hover:bg-gray-300 p-[2px] rounded-[3px] cursor-pointer"
+                      onClick={(e) =>
+                        setMemberDropdown({
+                          memberId: member.id,
+                          isActive: !memberDropdown.isActive,
+                          projectId: member.projectId,
+                          userId: member.userId,
+                        })
+                      }
+                      ref={memberDropdownRef}
+                    >
+                      <BsThreeDots />
                     </div>
                   )}
                   {/* IF NOT OWNER, ONLY SHOW DROPDOWN FOR THEMSLEVES */}
+                  {/* {user.id === member.userId && user.id !== project.ownerId && ( */}
                   {user.id === member.userId && user.id !== project.ownerId && (
                     <div
                       className="mr-1 member-dropdown hover:bg-gray-300 p-[2px] rounded-[3px] cursor-pointer"
@@ -124,6 +134,7 @@ function MemberListModal() {
                           memberId: member.id,
                           isActive: !memberDropdown.isActive,
                           projectId: member.projectId,
+                          userId: member.userId,
                         })
                       }
                       ref={memberDropdownRef}
@@ -131,6 +142,8 @@ function MemberListModal() {
                       <BsThreeDots />
                     </div>
                   )}
+                  {project.ownerId === member.userId ? <div>Owner</div> : null}
+                  {/* )} */}
                   {memberDropdown.isActive &&
                     memberDropdown.memberId === member.id && (
                       <div
@@ -146,12 +159,18 @@ function MemberListModal() {
                               >
                                 Transfer Ownership
                               </div>
-                              <div className="text-[#c92f54] w-full flex my-[4px] flex-col px-[15px] py-[5px] hover:bg-[#ECEAE9]" onClick={e => handleRemoveMember(e)}>
+                              <div
+                                className="text-[#c92f54] w-full flex my-[4px] flex-col px-[15px] py-[5px] hover:bg-[#ECEAE9]"
+                                onClick={(e) => handleRemoveMember(e)}
+                              >
                                 Remove Member
                               </div>
                             </>
                           ) : (
-                            <div className="text-[#c92f54] w-full flex my-[4px] flex-col px-[15px] py-[5px] hover:bg-[#ECEAE9] ">
+                            <div
+                              className="text-[#c92f54] w-full flex my-[4px] flex-col px-[15px] py-[5px] hover:bg-[#ECEAE9]"
+                              onClick={(e) => handleLeaveProject(e)}
+                            >
                               Leave Project
                             </div>
                           )}
