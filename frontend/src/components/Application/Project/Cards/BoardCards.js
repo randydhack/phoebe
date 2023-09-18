@@ -15,7 +15,7 @@ function BoardCards({ section }) {
       {section.Cards
         ? section.Cards.map((card, i) => {
             return (
-              <Draggable key={i} draggableId={`${card.id}`} index={i}>
+              <Draggable key={card.id} draggableId={`${card.id}`} index={i}>
                 {(provided) => (
                   <div
                     className="w-[280px] bg-white rounded-[8px] my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]"
