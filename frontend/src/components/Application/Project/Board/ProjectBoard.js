@@ -151,11 +151,11 @@ function ProjectBoard() {
             <DragDropContext onDragEnd={handleDragDrop}>
             {sections.map((section, i) => {
               return (
-                  <Droppable droppableId={`${section.id}`} type="section" key={section.id}>
+                  <Droppable droppableId={`${section.id}`} type="section" key={i}>
 
                     {(provided) => (
                       <div
-                        className="w-[300px] rounded-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px] scrollbar-none"
+                        className="w-[300px] rounded-t-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px] scrollbar-none"
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                       >

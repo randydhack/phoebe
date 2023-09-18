@@ -52,7 +52,6 @@ router.post("/project/:id", requireAuth, async (req, res, next) => {
 // ------------------------------------ PUT ENDPOINTS ---------------------------------------------
 
 // **** UPDATE SECTION BY ID ****
-// Make only owners can update
 router.put("/:id", requireAuth, async (req, res, next) => {
   // Body Request
   const { name } = req.body;
