@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
 
       Project.hasMany(models.Card, {
         foreignKey: 'projectId',
+        onDelete: 'CASCADE',
+        hooks: true
       })
 
     }
