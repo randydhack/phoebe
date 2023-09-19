@@ -5,17 +5,17 @@ import "../Section/Section.css";
 import { ModalContext } from "../../../../context/Modal";
 import { Draggable } from "react-beautiful-dnd";
 
-function BoardCards({ section }) {
+function BoardCards({ section, cardArr, index }) {
   // Context
   const { setCardDetail } = useContext(InfoContext);
   const { cardDetailModal } = useContext(ModalContext);
 
   return (
     <>
-      {section.Cards
-        ? section.Cards.map((card, i) => {
+      {cardArr
+        ? Object.values(cardArr)[index]?.Cards.map((card, i) => {
             return (
-              <Draggable key={card.id} draggableId={`${card.id}`} index={i}>
+              <Draggable key={`${card.id}${i}`} draggableId={`${card.id}`} index={i}>
                 {(provided) => (
                   <div
                     className="w-[280px] bg-white rounded-[8px] my-[5px] border-[#ECEAE9] border-solid border-[1px] shadow-sm hover:border-gray-400 hover:ease-out duration-200 cursor-pointer p-[10px]"
