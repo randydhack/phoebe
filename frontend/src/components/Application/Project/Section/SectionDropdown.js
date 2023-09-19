@@ -1,9 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import { PiTrashThin } from "react-icons/pi";
 import { deleteSectionThunk } from "../../../../store/sections";
+import { InfoContext } from "../../../../context/InfoContext";
 
 function SectionDropdown({
   sectionId,
@@ -11,9 +12,9 @@ function SectionDropdown({
   allowEditSectionName,
   section,
   setChangeSectionName,
-  focusRef
 }) {
   const dispatch = useDispatch();
+  const { cardArr, setCardArr } = useContext(InfoContext)
 
   const [openDropdown, setToggleDropdown] = useState(false);
   const navRef = useRef();
@@ -38,7 +39,12 @@ function SectionDropdown({
 
   const handleDeleteSection = async (e) => {
     e.preventDefault();
-    await dispatch(deleteSectionThunk(sectionId));
+    const data = await dispatch(deleteSectionThunk(sectionId));
+
+    const copy = {...cardArr}
+    delete copy[data.section.id]
+    console.log(copy, data.section.id)
+    setCardArr({...copy})
   };
 
   const focusInputField = () => {

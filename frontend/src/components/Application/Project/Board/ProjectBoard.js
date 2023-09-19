@@ -108,6 +108,7 @@ function ProjectBoard() {
     if (insideRef.current && insideRef.current.contains(event.target)) {
       return;
     }
+
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
       if (title.length !== 0) {
         const data = await dispatch(
@@ -121,6 +122,7 @@ function ProjectBoard() {
         // Create a shallow copy then push it into the new created card into it's section list
         const copyArr = { ...cardArr };
         copyArr[addCard?.id || createTaskBottom?.id].Cards.push(data);
+        console.log(copyArr)
         setCardArr({ ...copyArr });
       }
       // Reset the state
@@ -157,7 +159,8 @@ function ProjectBoard() {
     const destinationDroppableId = destination.droppableId;
 
     let index = 1024;
-    if (copy[destinationDroppableId].Cards[destinationIndex]) {
+
+    if (copy[destinationDroppableId].Cards.length) {
       index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1)
     } else {
       index = copy[destinationDroppableId].Cards[destinationIndex] ? (copy[destinationDroppableId].Cards[destinationIndex].indexNumber * (copy[destinationDroppableId].Cards.length + 1)) : index
@@ -169,7 +172,7 @@ function ProjectBoard() {
 
     // Reset the cardArr with the updated list
     setCardArr({ ...copy });
-
+    console.log(cardArr)
     await dispatch(
       moveSectionCardThunk(
         destination.droppableId,
@@ -178,6 +181,7 @@ function ProjectBoard() {
         index
       )
     );
+    await dispatch(getProjectSectionsThunk(id))
   };
 
   return (

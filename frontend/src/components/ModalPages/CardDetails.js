@@ -39,7 +39,12 @@ function CardDetails() {
   // Card Update
   const updateCardHandler = async (e) => {
     e.preventDefault();
-    await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription));
+    const data = await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription));
+    const copy = {...cardArr}
+    const updated = copy[data.sectionId].Cards.map(el => el.id === data.id ? el = data : el
+    )
+    copy[data.sectionId].Cards = updated
+    setCardArr({...copy})
   };
 
   // Change Section for Card
@@ -80,7 +85,6 @@ function CardDetails() {
     copyArr[cardDetail.sectionId].Cards = newCardArr
 
     setCardArr({...copyArr})
-    console.log(cardArr, 'new')
     setType(null)
     setCardDetail(null)
   }
