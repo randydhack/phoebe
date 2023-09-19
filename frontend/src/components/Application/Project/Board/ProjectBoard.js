@@ -121,7 +121,11 @@ function ProjectBoard() {
         );
         // Create a shallow copy then push it into the new created card into it's section list
         const copyArr = { ...cardArr };
-        copyArr[addCard?.id || createTaskBottom?.id].Cards.push(data);
+        if (addCard && addCard.id) {
+          copyArr[addCard.id].Cards.unshift(data);
+        } else {
+          copyArr[createTaskBottom.id].Cards.push(data);
+        }
         console.log(copyArr)
         setCardArr({ ...copyArr });
       }
@@ -160,10 +164,18 @@ function ProjectBoard() {
 
     let index = 1024;
 
-    if (copy[destinationDroppableId].Cards.length) {
+    if (copy[destinationDroppableId].Cards.length - 1 === destinationIndex) {
       index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1)
+    } else if (copy[destinationDroppableId].Cards.length && copy[destinationDroppableId].Cards[destinationIndex]) {
+      index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber * (copy[destinationDroppableId].Cards.length + 1))
+    } else if (copy[destinationDroppableId].Cards[destinationIndex]){
+      index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1)
+    }else if (!copy[destinationDroppableId].Cards[destinationIndex]){
+      index = index
+
     } else {
-      index = copy[destinationDroppableId].Cards[destinationIndex] ? (copy[destinationDroppableId].Cards[destinationIndex].indexNumber * (copy[destinationDroppableId].Cards.length + 1)) : index
+      console.log(copy[destinationDroppableId].Cards[destinationIndex - 1])
+      index = (copy[destinationDroppableId].Cards[destinationIndex - 1].indexNumber - 1)
     }
 
     // source of index is where it was located in the section and the source of droppableid is what section
@@ -303,6 +315,7 @@ function ProjectBoard() {
                                               setTitle(e.target.value);
                                               resize();
                                             }}
+                                            maxLength={255}
                                             placeholder="Write a task name"
                                           />
                                         </div>
@@ -339,7 +352,7 @@ function ProjectBoard() {
 
                                       </div>
                                     </div>
-                                    {provided.placeholder}
+
                                   </div>
                                 )}
                               </Droppable>
