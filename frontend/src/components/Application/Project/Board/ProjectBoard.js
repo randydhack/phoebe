@@ -23,11 +23,13 @@ import { GoCheckCircle } from "react-icons/go";
 
 // Drag and Drop
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { InfoContext } from "../../../../context/InfoContext";
 
 function ProjectBoard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
+  const { cardArr, setCardArr } = useContext(InfoContext);
   const sections = Object.values(useSelector((state) => state.sections));
   const user = useSelector((state) => state.session.user);
 
@@ -41,6 +43,7 @@ function ProjectBoard() {
     status: false,
     bottom: false,
   });
+  // const [cardArr, setCardArr] = useState({});
 
   const [changeSectionName, setChangeSectionName] = useState("");
   const [allowEditSectionName, setAllowEditSectionName] = useState({
@@ -54,8 +57,11 @@ function ProjectBoard() {
       if (!data) {
         return history.push("/home");
       }
-
-      await dispatch(getProjectSectionsThunk(id));
+      const cards = {};
+      data.forEach((el) => {
+        cards[el.id] = el;
+      });
+      setCardArr(cards);
     })();
   }, [id]);
 
@@ -104,15 +110,20 @@ function ProjectBoard() {
     }
     if (outsideRef.current && !outsideRef.current.contains(event.target)) {
       if (title.length !== 0) {
-        await dispatch(
+        const data = await dispatch(
           createCardThunk(
-            title,
+            title.trim(),
             (addCard && addCard.id) ||
               (createTaskBottom && createTaskBottom.id),
             id
           )
         );
+        // Create a shallow copy then push it into the new created card into it's section list
+        const copyArr = { ...cardArr };
+        copyArr[addCard?.id || createTaskBottom?.id].Cards.push(data);
+        setCardArr({ ...copyArr });
       }
+      // Reset the state
       setTitle("");
       setAddCard({ id: null, status: false });
       setCreateTaskBottom({ id: null, status: false, bottom: false });
@@ -126,8 +137,9 @@ function ProjectBoard() {
     };
   }, [addCard, title, createTaskBottom]);
 
+  // Drag and Drop
   const handleDragDrop = async (results) => {
-    const { source, destination, type, draggableId } = results;
+    const { source, destination, draggableId } = results;
 
     if (!destination) return;
     if (
@@ -136,9 +148,35 @@ function ProjectBoard() {
     )
       return;
 
-      console.log(results)
+    // Shallow copy of the array to make changes
+    const copy = { ...cardArr };
+    // current source of where the card came from
+    const sourceIndex = source.index;
+    // destination index of where u want to palce in the section
+    const destinationIndex = destination.index;
+    const destinationDroppableId = destination.droppableId;
+
+    let index = 1024;
+    if (copy[destinationDroppableId].Cards[destinationIndex]) {
+      index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1)
+    } else {
+      index = copy[destinationDroppableId].Cards[destinationIndex] ? (copy[destinationDroppableId].Cards[destinationIndex].indexNumber * (copy[destinationDroppableId].Cards.length + 1)) : index
+    }
+
+    // source of index is where it was located in the section and the source of droppableid is what section
+    const [removedCard] = copy[source.droppableId].Cards.splice(sourceIndex, 1); // remove the card from it's current spot
+    copy[destinationDroppableId].Cards.splice(destinationIndex, 0, removedCard);
+
+    // Reset the cardArr with the updated list
+    setCardArr({ ...copy });
+
     await dispatch(
-      moveSectionCardThunk(destination.droppableId, draggableId, id)
+      moveSectionCardThunk(
+        destination.droppableId,
+        draggableId,
+        id,
+        index
+      )
     );
   };
 
@@ -149,16 +187,20 @@ function ProjectBoard() {
           <div className="flex h-[calc(100%_-_60px)] pl-[10px] z-0 flex-auto overflow-y-hidden overflow-x-scroll">
             {/* ---------------- SECTIONS MAPPING -------------------- */}
             <DragDropContext onDragEnd={handleDragDrop}>
-            {sections.map((section, i) => {
-              return (
-                  <Droppable droppableId={`${section.id}`} type="section" key={i}>
-
+              {sections.map((section, i) => {
+                return (
+                  <Droppable
+                    droppableId={`${section.id}${i}`}
+                    type="section"
+                    key={`${i}`}
+                  >
                     {(provided) => (
                       <div
                         className="w-[300px] rounded-t-[5px] overflow-hidden flex-[0_0_auto] relative flex flex-col items-center hover:border-[#ECEAE9] border-transparent border-solid border-[1px] scrollbar-none"
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                       >
+                        {provided.placeholder}
                         <div className="h-full overflow-y-scroll overflow-x-hidden flex flex-col w-full scrollbar-none">
                           <div className="flex items-center justify-between p-[10px] w-full">
                             {allowEditSectionName.allowEdit &&
@@ -216,6 +258,7 @@ function ProjectBoard() {
                                   title={title}
                                   setTitle={setTitle}
                                   outsideRef={outsideRef}
+                                  provided={provided}
                                 />
                               ) : null}
                               {/* ---------------------------- CARDS MAPPING ---------------------------- */}
@@ -227,76 +270,85 @@ function ProjectBoard() {
                                   <div
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
+                                    className="w-full flex flex-col items-center justify-center"
                                   >
-                                    <BoardCards section={section} />
+                                    <BoardCards
+                                      section={section}
+                                      cardArr={cardArr}
+                                      index={i}
+                                    />
+
+                                    {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
+                                    {createTaskBottom.status &&
+                                    createTaskBottom.bottom &&
+                                    section.id === createTaskBottom.id ? (
+                                      <form
+                                        className="w-[280px] h-auto bg-white rounded-[8px] my-[5px] border-solid border-[1px] shadow-sm border-gray-400 hover:ease-out duration-200 p-[10px]"
+                                        onClick={(e) => e.stopPropagation()}
+                                        ref={outsideRef}
+                                      >
+                                        <div className="flex">
+                                          <span>
+                                            <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
+                                          </span>
+                                          <textarea
+                                            className="textarea whitespace-pre-wrap break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
+                                            value={title}
+                                            onChange={(e) => {
+                                              //Whatever you put here will act just like an onChange event
+                                              setTitle(e.target.value);
+                                              resize();
+                                            }}
+                                            placeholder="Write a task name"
+                                          />
+                                        </div>
+                                        <div className="mt-[10px] flex justify-between cursor-default">
+                                          {user.profileImage ? (
+                                            <div className="rounded-[50%] h-[25px] w-[25px] border-[1px] border-[#c3c3c3]">
+                                              {user.profileImage}
+                                            </div>
+                                          ) : (
+                                            <div className="text-[10px] rounded-[50%] bg-yellow-300 h-[25px] w-[25px] flex items-center justify-center border-[1px] border-[#c3c3c3]">
+                                              {user.firstName[0].toUpperCase()}
+                                              {user.lastName[0].toUpperCase()}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </form>
+                                    ) : null}
+
+                                    {provided.placeholder}
+                                    <div
+                                      className="mb-[5px] w-[95%] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
+                                      ref={insideRef}
+                                      onClick={(e) => {
+                                        setCreateTaskBottom({
+                                          id: section.id,
+                                          status: !addCard.status,
+                                          bottom: !addCard.bottom,
+                                        });
+                                      }}
+                                    >
+                                      <div className="flex items-center justify-center">
+                                      <BsPlus className="text-[25px]" />
+                                      <div className="w-full">Add Task</div>
+
+                                      </div>
+                                    </div>
+                                    {provided.placeholder}
                                   </div>
                                 )}
                               </Droppable>
 
-                              {/* ---------------------------- ADD TASK BOTTOM -------------------------- */}
 
-                              {provided.placeholder}
-                              {createTaskBottom.status &&
-                              createTaskBottom.bottom &&
-                              section.id === createTaskBottom.id ? (
-                                <form
-                                  className="w-[280px] h-auto bg-white rounded-[8px] my-[5px] border-solid border-[1px] shadow-sm border-gray-400 hover:ease-out duration-200 p-[10px]"
-                                  onClick={(e) => e.stopPropagation()}
-                                  ref={outsideRef}
-                                >
-                                  <div className="flex">
-                                    <span>
-                                      <GoCheckCircle className="text-[18px] w-[18px] h-[18px] mr-[5px] mt-[2px] cursor-default" />
-                                    </span>
-                                    <textarea
-                                      className="textarea whitespace-pre-wrap break-words line max-w-[230px] resize-none max-h-[100px] outline-none w-[240px] inline-block cursor-text createCard"
-                                      value={title}
-                                      onChange={(e) => {
-                                        //Whatever you put here will act just like an onChange event
-                                        setTitle(e.target.value);
-                                        resize();
-                                      }}
-                                      placeholder="Write a task name"
-                                    />
-                                  </div>
-                                  <div className="mt-[10px] flex justify-between cursor-default">
-                                    {user.profileImage ? (
-                                      <div className="rounded-[50%] h-[25px] w-[25px] border-[1px] border-[#c3c3c3]">
-                                        {user.profileImage}
-                                      </div>
-                                    ) : (
-                                      <div className="text-[10px] rounded-[50%] bg-yellow-300 h-[25px] w-[25px] flex items-center justify-center border-[1px] border-[#c3c3c3]">
-                                        {user.firstName[0].toUpperCase()}
-                                        {user.lastName[0].toUpperCase()}
-                                      </div>
-                                    )}
-                                  </div>
-                                </form>
-                              ) : null}
-
-                              <div
-                                className="mb-[5px] w-[95%] text-[#6D6E6F] hover:text-black flex ease-in duration-100 cursor-pointer py-[6px] rounded-[5px] hover:bg-[#ECEAE9] items-center justify-center"
-                                ref={insideRef}
-                                onClick={(e) => {
-                                  setCreateTaskBottom({
-                                    id: section.id,
-                                    status: !addCard.status,
-                                    bottom: !addCard.bottom,
-                                  });
-                                }}
-                              >
-                                <BsPlus className="text-[25px]" />
-                                <div>Add Task</div>
-                              </div>
                             </div>
                           </div>
                         </div>
-
                       </div>
                     )}
                   </Droppable>
-              );
-            })}
+                );
+              })}
             </DragDropContext>
             <CreateSection />
           </div>

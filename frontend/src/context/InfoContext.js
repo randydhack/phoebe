@@ -9,6 +9,7 @@ export const InfoProvider = ({ children }) => {
     const [cardRef, setCardRef] = useState(null)
     const [currentSection, setCurrentSection] = useState(null)
     const bottomEl = useRef(null)
+    const [cardArr, setCardArr] = useState({});
 
     return (
         <InfoContext.Provider
@@ -21,7 +22,9 @@ export const InfoProvider = ({ children }) => {
             setCardRef,
             currentSection,
             setCurrentSection,
-            bottomEl
+            bottomEl,
+            cardArr,
+            setCardArr
           }}
         >
           {children}

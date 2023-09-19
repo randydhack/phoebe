@@ -79,13 +79,14 @@ export const updateCardThunk = (id, title, description, sectionId) => async disp
   }
 }
 
-export const moveSectionCardThunk = (sectionId, id, projectId) => async dispatch => {
+export const moveSectionCardThunk = (sectionId, id, projectId, index) => async dispatch => {
   const res = await csrfFetch(`/api/cards/${id}/section/${sectionId}`, {
     method: 'PUT',
     body: JSON.stringify({
       sectionId,
       id,
-      projectId
+      projectId,
+      index
     })
   })
 
@@ -93,7 +94,7 @@ export const moveSectionCardThunk = (sectionId, id, projectId) => async dispatch
     const data = await res.json()
     await dispatch(moveSectionCardAction(data))
     // located in sections store
-    await dispatch(changeCardSectionAction(sectionId, data))
+    await dispatch(changeCardSectionAction(sectionId, data, index))
     await dispatch(getProjectSectionsThunk(projectId))
     return data
   }

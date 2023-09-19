@@ -14,13 +14,12 @@ function CardDetails() {
   // Router Dom
   const dispatch = useDispatch();
 
-
   // Use Ref
   const cardDetailRef = useRef()
   const outsideCardDetailRef = useRef(null)
 
   // Use Context
-  const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
+  const { cardDetail, cardRef, setCardDetail, setCardArr, cardArr } = useContext(InfoContext);
   const { setType } = useContext(ModalContext)
 
   // Use Selectors
@@ -75,6 +74,13 @@ function CardDetails() {
   const handleDeleteTask = async (e) => {
     e.preventDefault()
     await dispatch(deleteCardThunk(cardDetail.id))
+
+    const copyArr = {...cardArr}
+    const newCardArr = copyArr[cardDetail.sectionId].Cards.filter(el => el.id !== cardDetail.id)
+    copyArr[cardDetail.sectionId].Cards = newCardArr
+
+    setCardArr({...copyArr})
+    console.log(cardArr, 'new')
     setType(null)
     setCardDetail(null)
   }

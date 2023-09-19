@@ -45,6 +45,7 @@ router.post("/", requireAuth, async (req, res, next) => {
   const { sectionId, title, projectId } = req.body;
 
   const section = await Section.findByPk(sectionId);
+  const allCards = await Card.findAll({where: {sectionId: sectionId}})
 
   if (!section) {
     const err = new Error("Section does not exist.");
@@ -57,9 +58,12 @@ router.post("/", requireAuth, async (req, res, next) => {
     title,
     userId: req.user.id,
     projectId,
+    indexNumber: allCards.length !== 0 ? 1024 * (allCards.length + 1) : 1024
   });
 
-  res.status(200).json(newCard);
+  const result = await Card.findOne({where: {id: newCard.id}, include: {model: User, as: 'User'}})
+
+  res.status(200).json(result);
 });
 
 // ------------------------------------ PUT ENDPOINTS ---------------------------------------------
@@ -83,13 +87,16 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 });
 
 
+//
 router.put('/:id/section/:sectionId', async (req, res, next) => {
-  const { id, sectionId, projectId } = req.body
+  const { id, sectionId, projectId, index } = req.body
 
   const card = await Card.findOne({where: {id: id, projectId: projectId}, include: {
     model: User,
     as: 'User'
   }});
+
+
 
   if (!card) {
     const err = new Error("Card does not exist.");
@@ -97,9 +104,11 @@ router.put('/:id/section/:sectionId', async (req, res, next) => {
     return next(err);
   }
 
-  const updatedCard = await card.update({sectionId: Number(sectionId)})
+  // const allCards = await Card.findAll({where: { sectionId: sectionId }})
+  // console.log(allCards[index])
+    const updatedCard = await card.update({sectionId: Number(sectionId), indexNumber: index})
+    res.status(200).json(updatedCard)
 
-  res.status(200).json(updatedCard)
 
 })
 
