@@ -80,7 +80,7 @@ router.get("/:id/sections", async (req, res) => {
     include: {
       model: Card,
       as: "Cards",
-      order: [["id", "DESC"]],
+      order: [["indexNumber", "ASC"]],
       separate: true,
       include: {
         model: User,
@@ -101,7 +101,6 @@ router.get("/:id/cards", requireAuth, async (req, res, next) => {
       as: "Project",
       attributes: ["id", "name", "ownerId"],
     },
-    order: [["id", "desc"]],
   });
 
   if (!cards) {

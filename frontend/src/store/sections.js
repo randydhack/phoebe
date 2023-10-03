@@ -30,10 +30,10 @@ const deleteSectionAction = (id) => ({
   payload: id,
 });
 
-export const changeCardSectionAction = (sectionId, card) => ({
+export const changeCardSectionAction = (sectionId, card, index) => ({
   type: CHANGE_CARD_SECTION,
   payload: {
-    sectionId, card
+    sectionId, card, index
   }
 })
 
@@ -142,8 +142,8 @@ const sectionReducer = (state = {}, action) => {
     case CHANGE_CARD_SECTION:
       newState = {...state}
       cardArray = newState[action.payload.sectionId].Cards
-      const cardArrayLength = cardArray.length || 0
-      cardArray[cardArrayLength] = action.payload.card
+
+      newState[action.payload.sectionId].Cards = cardArray
       return newState
 
     case DELETE_CARD_SECTION:

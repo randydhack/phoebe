@@ -16,6 +16,7 @@ module.exports = {
           userId: 1,
           sectionId: 1,
           projectId: 1,
+          indexNumber: 1024
         },
         {
           title: "Working on Login",
@@ -23,6 +24,7 @@ module.exports = {
           userId: 2,
           sectionId: 1,
           projectId: 1,
+          indexNumber: 2048
         },
       ],
       {}
@@ -36,7 +38,7 @@ module.exports = {
       options,
       {
         id: {
-          [Op.in]: [1],
+          [Op.in]: [1, 2],
         },
       },
       {}

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
-const { Project, Section, Card, User} = require("../../db/models");
+const { Project, Section, Card, User } = require("../../db/models");
 
 // ------------------------------------ GET ENDPOINTS ---------------------------------------------
 // NOTES: GET ALL SECTIONS BY ID IS LOCATED IN THE PROJECT ROUTE
@@ -44,15 +44,26 @@ router.post("/project/:id", requireAuth, async (req, res, next) => {
 
   // Create the section with the name and project id
   const section = await Section.create({ name: name, projectId: project.id });
-
+  const result = await Section.findOne({
+    where: { id: section.id },
+    include: {
+      model: Card,
+      as: "Cards",
+      order: [["indexNumber", "ASC"]],
+      separate: true,
+      include: {
+        model: User,
+        as: "User",
+      },
+    },
+  });
   // return json
-  res.status(200).json(section);
+  res.status(200).json(result);
 });
 
 // ------------------------------------ PUT ENDPOINTS ---------------------------------------------
 
 // **** UPDATE SECTION BY ID ****
-// Make only owners can update
 router.put("/:id", requireAuth, async (req, res, next) => {
   // Body Request
   const { name } = req.body;
@@ -60,17 +71,18 @@ router.put("/:id", requireAuth, async (req, res, next) => {
   // Finds a section by ID
   const section = await Section.findOne({
     where: { id: req.params.id },
-    include: [{
-      model: Card,
-      as: "Cards",
-      separate: true,
-      include: {
-        model: User,
-        as: "User",
+    include: [
+      {
+        model: Card,
+        as: "Cards",
+        separate: true,
+        include: {
+          model: User,
+          as: "User",
+        },
       },
-    },  {model: Project,
-    as: 'Project'}]
-
+      { model: Project, as: "Project" },
+    ],
   });
 
   // If section does not exist, throw error
@@ -117,6 +129,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   res.status(200).json({
     message: "Successfully deleted",
     statusCode: 200,
+    section
   });
 });
 

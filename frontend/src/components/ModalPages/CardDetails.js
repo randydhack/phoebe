@@ -14,13 +14,12 @@ function CardDetails() {
   // Router Dom
   const dispatch = useDispatch();
 
-
   // Use Ref
   const cardDetailRef = useRef()
   const outsideCardDetailRef = useRef(null)
 
   // Use Context
-  const { cardDetail, cardRef, setCardDetail } = useContext(InfoContext);
+  const { cardDetail, cardRef, setCardDetail, setCardArr, cardArr } = useContext(InfoContext);
   const { setType } = useContext(ModalContext)
 
   // Use Selectors
@@ -40,7 +39,12 @@ function CardDetails() {
   // Card Update
   const updateCardHandler = async (e) => {
     e.preventDefault();
-    await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription));
+    const data = await dispatch(updateCardThunk(cardDetail.id, cardTitle, cardDescription));
+    const copy = {...cardArr}
+    const updated = copy[data.sectionId].Cards.map(el => el.id === data.id ? el = data : el
+    )
+    copy[data.sectionId].Cards = updated
+    setCardArr({...copy})
   };
 
   // Change Section for Card
@@ -75,9 +79,18 @@ function CardDetails() {
   const handleDeleteTask = async (e) => {
     e.preventDefault()
     await dispatch(deleteCardThunk(cardDetail.id))
+
+    const copyArr = {...cardArr}
+    const newCardArr = copyArr[cardDetail.sectionId].Cards.filter(el => el.id !== cardDetail.id)
+    copyArr[cardDetail.sectionId].Cards = newCardArr
+
+    setCardArr({...copyArr})
     setType(null)
     setCardDetail(null)
   }
+
+
+  console.log(cardDescription)
 
   return (
     cardDetail && (

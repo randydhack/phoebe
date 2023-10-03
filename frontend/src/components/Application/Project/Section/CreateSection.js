@@ -1,13 +1,16 @@
 import { BsPlus } from "react-icons/bs";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createSectionThunk } from "../../../../store/sections";
 import './Section.css'
+import { InfoContext } from "../../../../context/InfoContext";
+import { getProjectSectionsThunk } from "../../../../store/sections";
 
 
 function CreateSection() {
     const dispatch = useDispatch()
+    const { cardArr, setCardArr} = useContext(InfoContext)
 
   const insideSectionRef = useRef();
   const outsideSectionRef = useRef(null);
@@ -22,7 +25,14 @@ function CreateSection() {
     if (outsideSectionRef.current && !outsideSectionRef.current.contains(event.target)) {
         if (sectionName.length > 0) {
             await dispatch(createSectionThunk(id, sectionName))
+            const data = await dispatch(getProjectSectionsThunk(id))
+            setCardArr(() => {
+              const sections = {}
+              data.forEach(el => sections[el.id] = el)
+              return sections
+            })
         }
+
       setSectionForm(false);
       setSectionName('')
     }

@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: { type: DataTypes.INTEGER, allowNull: false },
       sectionId: { type: DataTypes.INTEGER, allowNull: false },
       projectId: { type: DataTypes.INTEGER, allowNull: false },
+      indexNumber: {type: DataTypes.INTEGER, allowNull: true}
     },
     {
       sequelize,

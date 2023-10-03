@@ -72,6 +72,8 @@ function MemberListModal() {
     await dispatch(
       removeMemberThunk(memberDropdown.projectId, memberDropdown.userId)
     );
+    const data = await dispatch(getSingleProjectThunk(project.id));
+    setProject(data);
     resetState();
   };
 
