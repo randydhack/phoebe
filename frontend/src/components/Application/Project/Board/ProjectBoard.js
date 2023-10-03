@@ -121,8 +121,12 @@ function ProjectBoard() {
         );
         // Create a shallow copy then push it into the new created card into it's section list
         const copyArr = { ...cardArr };
-        copyArr[addCard?.id || createTaskBottom?.id].Cards.push(data);
-        console.log(copyArr)
+        if (addCard && addCard.id) {
+          const firstIndex = copyArr[addCard.id].Cards[0];
+          copyArr[addCard.id].Cards.unshift(data);
+        } else {
+          copyArr[createTaskBottom.id].Cards.push(data);
+        }
         setCardArr({ ...copyArr });
       }
       // Reset the state
@@ -141,6 +145,7 @@ function ProjectBoard() {
 
   // Drag and Drop
   const handleDragDrop = async (results) => {
+    // source is where it comes from, destination is where it is being palces, draggableId is unique key for each card
     const { source, destination, draggableId } = results;
 
     if (!destination) return;
@@ -154,34 +159,31 @@ function ProjectBoard() {
     const copy = { ...cardArr };
     // current source of where the card came from
     const sourceIndex = source.index;
-    // destination index of where u want to palce in the section
+    // destination index of where u want to place in the section
     const destinationIndex = destination.index;
     const destinationDroppableId = destination.droppableId;
 
     let index = 1024;
 
-    if (copy[destinationDroppableId].Cards.length) {
-      index = (copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1)
-    } else {
-      index = copy[destinationDroppableId].Cards[destinationIndex] ? (copy[destinationDroppableId].Cards[destinationIndex].indexNumber * (copy[destinationDroppableId].Cards.length + 1)) : index
+    if (copy[destinationDroppableId].Cards[destinationIndex]) {
+      index = copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1;
+    }
+
+    if (copy[destinationDroppableId].Cards[destinationIndex - 1]) {
+      index = copy[destinationDroppableId].Cards[destinationIndex - 1].indexNumber - 1;
     }
 
     // source of index is where it was located in the section and the source of droppableid is what section
-    const [removedCard] = copy[source.droppableId].Cards.splice(sourceIndex, 1); // remove the card from it's current spot
+    const [ removedCard ] = copy[source.droppableId].Cards.splice(sourceIndex, 1); // remove the card from it's current spot
     copy[destinationDroppableId].Cards.splice(destinationIndex, 0, removedCard);
 
     // Reset the cardArr with the updated list
     setCardArr({ ...copy });
-    console.log(cardArr)
+
     await dispatch(
-      moveSectionCardThunk(
-        destination.droppableId,
-        draggableId,
-        id,
-        index
-      )
+      moveSectionCardThunk(destination.droppableId, draggableId, id, index)
     );
-    await dispatch(getProjectSectionsThunk(id))
+    await dispatch(getProjectSectionsThunk(id));
   };
 
   return (
@@ -303,6 +305,7 @@ function ProjectBoard() {
                                               setTitle(e.target.value);
                                               resize();
                                             }}
+                                            maxLength={255}
                                             placeholder="Write a task name"
                                           />
                                         </div>
@@ -334,17 +337,13 @@ function ProjectBoard() {
                                       }}
                                     >
                                       <div className="flex items-center justify-center">
-                                      <BsPlus className="text-[25px]" />
-                                      <div className="w-full">Add Task</div>
-
+                                        <BsPlus className="text-[25px]" />
+                                        <div className="w-full">Add Task</div>
                                       </div>
                                     </div>
-                                    {provided.placeholder}
                                   </div>
                                 )}
                               </Droppable>
-
-
                             </div>
                           </div>
                         </div>

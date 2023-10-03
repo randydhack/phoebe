@@ -89,6 +89,9 @@ function CardDetails() {
     setCardDetail(null)
   }
 
+
+  console.log(cardDescription)
+
   return (
     cardDetail && (
 
