@@ -22,7 +22,6 @@ function Landing() {
   const userSession = useSelector((state) => state.session.user);
   const [resize, setResize] = useState(null);
   const [height, setHeight] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     const resizable = () => setResize(widthChange());
@@ -41,8 +40,8 @@ function Landing() {
 
   return (
     <div className="flex flex-col min-h-screen h-screen w-full bg-[#EDEBEA] ">
-        <div className="flex box-border flex-col h-screen bg-[#EDEBEA] w-full">
-          <div className="flex items-center justify-between w-full bg-[#EDEBEA] z-10 h-[60px] pt-5  pb-6 top-0 px-[100px] mb-[] border-b-2">
+        <div className="flex box-border flex-col h-screen bg-white w-full">
+          <div className="flex items-center justify-between w-full bg-white z-10 h-[60px] pt-5 pb-6 top-0 px-[100px] border-b-1 shadow-md">
             <NavLink
               to="/"
               className="font-medium text-[24px] flex items-center justify-center"
@@ -66,7 +65,7 @@ function Landing() {
             </div>
           </div>
           <div
-            className="px-[100px] pt-[40px] flex flex-col w-full relative"
+            className="px-[100px] pt-[40px] flex flex-col w-full relative shadow-sm border-b-1"
             id="landing-body"
           >
             <div className="flex items-center flex-col w-full justify-center">
@@ -86,7 +85,7 @@ function Landing() {
             <div className="w-full flex items-center justify-center relative h-[500px] z-2">
               <motion.img
                 src={boardExample}
-                className="w-[1000px] max-w-[1000px] rounded-xl absolute top-[50px] overflow-hidden"
+                className="w-[1000px] max-w-[1000px] rounded-xl absolute top-[50px] overflow-hidden shadow-sm border"
                 initial={{ width: "900px", opacity: 0, scale: 0.5 }}
                 animate={{ width: "1000px", opacity: 1, scale: 1 }}
                 transition={{

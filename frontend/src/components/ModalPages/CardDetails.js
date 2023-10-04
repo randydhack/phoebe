@@ -24,16 +24,16 @@ function CardDetails() {
 
   // Use Selectors
   const project = useSelector((state) => state.projects)[cardDetail.projectId];
-  const sections = Object.values(useSelector((state) => state.sections));
+  const sections = useSelector((state) => state.sections)
 
   // Use States
   const [cardTitle, setCardTitle] = useState(cardDetail.title);
   const [cardDescription, setCardDescription] = useState(
     cardDetail.description || ""
   );
-  const [selectSection, setSelectSection] = useState(
-    Number(cardDetail.sectionId)
-  );
+  // const [selectSection, setSelectSection] = useState(
+  //   Number(cardDetail.sectionId)
+  // );
   const [cardDetailDropdown, setCardDetailDropdown] = useState(false);
 
   // Card Update
@@ -48,17 +48,17 @@ function CardDetails() {
   };
 
   // Change Section for Card
-  const changeSectionHandler = async (e) => {
-    e.preventDefault();
-    const card = await dispatch(
-      moveSectionCardThunk(
-        Number(selectSection),
-        cardDetail.id,
-        cardDetail.projectId
-      )
-    );
-    setCardDetail(card);
-  };
+  // const changeSectionHandler = async (e) => {
+  //   e.preventDefault();
+  //   const card = await dispatch(
+  //     moveSectionCardThunk(
+  //       Number(selectSection),
+  //       cardDetail.id,
+  //       cardDetail.projectId
+  //     )
+  //   );
+  //   setCardDetail(card);
+  // };
 
   const handleClickOutside = async (event) => {
     if (cardDetailRef.current && cardDetailRef.current.contains(event.target)) {
@@ -89,8 +89,7 @@ function CardDetails() {
     setCardDetail(null)
   }
 
-
-  console.log(cardDescription)
+  console.log(sections)
 
   return (
     cardDetail && (
@@ -181,28 +180,13 @@ function CardDetails() {
                   >
                     Sections
                   </label>
-                  <select
+                  <div
                     name="section-dropdown"
                     id="section-dropdown"
-                    defaultValue={selectSection} // ADD DEFAUTL VALUE BASED ON THE SELECTED SECTION
-                    onBlur={(e) => changeSectionHandler(e)}
-                    onChange={(e) => {
-                      setSelectSection(e.target.value);
-                    }}
                     className="cursor-pointer hover:border-[#c3c1c0] border-[1px] border-transparent rounded-[3px] w-[120px] text-ellipsis overflow-hidden whitespace-nowrap"
                   >
-                    {sections.map((section, i) => {
-                      return (
-                        <option
-                          key={`${section}${i}`}
-                          value={section.id}
-                          className="text-ellipsis overflow-hidden whitespace-nowrap"
-                        >
-                          {section.name}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    {sections[cardDetail.sectionId].name}
+                  </div>
                 </div>
 
                 <div className="relative pl-[22px]">
