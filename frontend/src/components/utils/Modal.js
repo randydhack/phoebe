@@ -4,6 +4,7 @@ import "./modal.css";
 import AddMemberModal from "../ModalPages/AddMemberModal";
 import CardDetails from "../ModalPages/CardDetails";
 import MemberListModal from "../ModalPages/MemberListModal";
+import DeleteLeaveProjectModal from "../ModalPages/DeleteLeaveProjectModal";
 
 export default function Modal(props) {
   const { type, setType } = useContext(ModalContext);
@@ -35,6 +36,7 @@ export default function Modal(props) {
           {type === "Add Member" && <AddMemberModal />}
           {type === 'Card Details' && <CardDetails />}
           {type === 'Member List' && <MemberListModal />}
+          {type === 'Leave Delete' && <DeleteLeaveProjectModal />}
         </div>
         <div className="modalBackdrop" onClick={handleContent} />
       </div>
