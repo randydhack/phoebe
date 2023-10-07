@@ -1,0 +1,12 @@
+.invite-notification-content:first-child(1) {
+    text-transform: capitalize;
+}
+
+.invite-notification-content {
+    padding: 10px 15px;
+    height: fit-content;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}

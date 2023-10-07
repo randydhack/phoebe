@@ -57,7 +57,7 @@ function CreateProjectPage() {
                   } bg-[#F9F8F8]`}
                   value={name}
                   onChange={(e) => {
-                    setName(e.target.value.trim());
+                    setName(e.target.value);
                     setErrors({});
                   }}
                   maxLength={255}

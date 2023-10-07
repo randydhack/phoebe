@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {  Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
@@ -14,6 +14,8 @@ import Landing from "./components/Landing/Landing";
 import { motion } from "framer-motion";
 
 import './index.css'
+import MemberInviteNotification from "./components/ModalPages/MemberInviteNotification";
+import { InfoContext } from "./context/InfoContext";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +57,7 @@ function App() {
     <>
       {isLoaded && (
         <>
+
           <Modal />
           <div className={`${!userSession ? 'overflow-auto overflow-x-hidden scroll-z' : 'absolute z-[-1] w-full h-full '}`}>
             <div className={`${userSession ? 'overflow-hidden bottom-0 top-0 right-0 left-0 flex flex-col absolute ': ''}`}>
