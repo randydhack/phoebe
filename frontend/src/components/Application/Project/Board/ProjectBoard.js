@@ -116,7 +116,7 @@ function ProjectBoard() {
             title.trim(),
             (addCard && addCard.id) ||
               (createTaskBottom && createTaskBottom.id),
-            id
+            id, createTaskBottom.bottom
           )
         );
         // Create a shallow copy then push it into the new created card into it's section list
@@ -163,25 +163,25 @@ function ProjectBoard() {
     const destinationIndex = destination.index;
     const destinationDroppableId = destination.droppableId;
 
-    let index = 1024;
 
-    if (copy[destinationDroppableId].Cards[destinationIndex]) {
-      index = copy[destinationDroppableId].Cards[destinationIndex].indexNumber - 1;
-    }
+    // for (let i = 0; i < cardArr[destinationDroppableId].length; i++) {
+    //   const el = cardArr[destinationDroppableId][i]
+    //   if (el.)
+    // }
 
-    if (copy[destinationDroppableId].Cards[destinationIndex - 1]) {
-      index = copy[destinationDroppableId].Cards[destinationIndex - 1].indexNumber - 1;
-    }
 
     // source of index is where it was located in the section and the source of droppableid is what section
     const [ removedCard ] = copy[source.droppableId].Cards.splice(sourceIndex, 1); // remove the card from it's current spot
     copy[destinationDroppableId].Cards.splice(destinationIndex, 0, removedCard);
 
+
     // Reset the cardArr with the updated list
     setCardArr({ ...copy });
 
+    console.log(cardArr)
+
     await dispatch(
-      moveSectionCardThunk(destination.droppableId, draggableId, id, index)
+      moveSectionCardThunk(destination.droppableId, draggableId, id, destinationIndex)
     );
     await dispatch(getProjectSectionsThunk(id));
   };
