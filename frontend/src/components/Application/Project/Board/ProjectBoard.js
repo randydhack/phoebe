@@ -164,21 +164,28 @@ function ProjectBoard() {
     const destinationDroppableId = destination.droppableId;
 
 
-    // for (let i = 0; i < cardArr[destinationDroppableId].length; i++) {
-    //   const el = cardArr[destinationDroppableId][i]
-    //   if (el.)
+
+    // console.log(destinationIndex)
+    // if (destinationIndex === 0) {
+    //   console.log(destinationDroppableId)
+    //   for (let i = destinationIndex + 1; i < copy[destinationDroppableId].Cards.length; i++) {
+    //     console.log(copy[destinationDroppableId].Cards[i])
+    //     copy[destinationDroppableId].Cards[i].indexNumber = i
+
+    //   }
+    //   console.log(copy)
     // }
 
 
     // source of index is where it was located in the section and the source of droppableid is what section
     const [ removedCard ] = copy[source.droppableId].Cards.splice(sourceIndex, 1); // remove the card from it's current spot
     copy[destinationDroppableId].Cards.splice(destinationIndex, 0, removedCard);
-
+    copy[destinationDroppableId].Cards[destinationIndex].indexNumber = destinationIndex
 
     // Reset the cardArr with the updated list
     setCardArr({ ...copy });
 
-    console.log(cardArr)
+    console.log(cardArr, copy)
 
     await dispatch(
       moveSectionCardThunk(destination.droppableId, draggableId, id, destinationIndex)
@@ -331,8 +338,8 @@ function ProjectBoard() {
                                       onClick={(e) => {
                                         setCreateTaskBottom({
                                           id: section.id,
-                                          status: !addCard.status,
-                                          bottom: !addCard.bottom,
+                                          status: true,
+                                          bottom: true,
                                         });
                                       }}
                                     >

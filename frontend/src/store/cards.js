@@ -32,12 +32,13 @@ const deleteCardAction = (card) => ({
 
 // Thunk action creators
 export const createCardThunk = (title, sectionId, projectId, bottom) => async (dispatch) => {
-  const res = await csrfFetch(`${bottom ? '/api/cards/lastrow' : '/api/cards'}`, {
+  const res = await csrfFetch('/api/cards', {
     method: "POST",
     body: JSON.stringify({
         title,
         sectionId,
-        projectId
+        projectId,
+        bottom
     }),
   });
 

@@ -14,18 +14,20 @@ function DeleteLeaveProjectModal() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const { id } = useParams()
+
   const { project } = useContext(InfoContext);
   const { setType } = useContext(ModalContext);
   const user = useSelector((state) => state.session.user);
 
   const handleDeleteProject = async () => {
-    await dispatch(deleteProjectThunk(project.id));
+    await dispatch(deleteProjectThunk(project.id || id));
     setType(null);
     return history.push("/home");
   };
 
   const handleLeaveProject = async () => {
-    await dispatch(leaveProjectThunk(project.id));
+    await dispatch(leaveProjectThunk(project.id || id));
     setType(null);
     return history.push("/home");
   };
@@ -57,12 +59,12 @@ function DeleteLeaveProjectModal() {
           Cancel
         </div>
         {user.id !== project.userId ? (
-          <div className="border px-[14px] h-[36px] items-center border-[#d33e5d] bg-[#d33e5d] text-[#fff] fill-[#6d6e6f] rounded-[5px] flex cursor-pointer"onClick={handleLeaveProject} >
-            Leave
+          <div className="border px-[14px] h-[36px] items-center border-[#d33e5d] bg-[#d33e5d] text-[#fff] fill-[#6d6e6f] rounded-[5px] flex cursor-pointer" onClick={ e=> handleDeleteProject(e)} >
+            Delete
           </div>
         ) : (
-          <div className="border px-[14px] h-[36px] items-center border-[#d33e5d] bg-[#d33e5d] text-[#fff] fill-[#6d6e6f] rounded-[5px] flex cursor-pointer" onClick={handleDeleteProject}>
-            Delete
+          <div className="border px-[14px] h-[36px] items-center border-[#d33e5d] bg-[#d33e5d] text-[#fff] fill-[#6d6e6f] rounded-[5px] flex cursor-pointer" onClick={e => handleLeaveProject(e)}>
+            Leave
           </div>
         )}
       </div>
