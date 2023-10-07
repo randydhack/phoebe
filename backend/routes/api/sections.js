@@ -76,6 +76,7 @@ router.put("/:id", requireAuth, async (req, res, next) => {
         model: Card,
         as: "Cards",
         separate: true,
+        order: [["indexNumber", "ASC"]],
         include: {
           model: User,
           as: "User",

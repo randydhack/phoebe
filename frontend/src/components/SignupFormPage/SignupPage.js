@@ -22,7 +22,17 @@ function SignupPage() {
     e.preventDefault();
     setErrors({});
 
-    return dispatch(
+    if (password.length < 6 || confirmPassword.length < 6) {
+      setErrors({password: 'Password must be 6 characters or more.'})
+      return
+    }
+
+    if (confirmPassword !== password) {
+      setErrors({password: 'Password must match'})
+      return
+    }
+
+    dispatch(
       signup({
         firstName,
         lastName,

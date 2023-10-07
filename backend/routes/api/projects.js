@@ -101,6 +101,7 @@ router.get("/:id/cards", requireAuth, async (req, res, next) => {
       as: "Project",
       attributes: ["id", "name", "ownerId"],
     },
+    order: [["indexNumber", "ASC"]],
   });
 
   if (!cards) {
@@ -193,6 +194,7 @@ router.put("/:id", requireAuth, async (req, res, next) => {
 router.delete("/:id", requireAuth, async (req, res, next) => {
   const project = await Project.findByPk(req.params.id);
 
+  console.log('dasdasd')
   if (!project) {
     const err = new Error("Project couldn't be found");
     err.status = 404;
