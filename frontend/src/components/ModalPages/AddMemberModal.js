@@ -1,15 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InfoContext } from "../../context/InfoContext";
 import { ModalContext } from "../../context/Modal";
 import { IoMdClose } from 'react-icons/io'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { inviteMemberThunk } from "../../store/members";
 
 
 function AddMemberModal() {
   const dispatch = useDispatch()
-  const { project } = useContext(InfoContext);
+  const { project, setMember} = useContext(InfoContext);
   const { setType } = useContext(ModalContext)
+
+  const members = Object.values(useSelector(state => state.members))
 
   const [email, setEmail] = useState('')
   const [success, setSuccess] = useState(null)
@@ -27,8 +29,14 @@ function AddMemberModal() {
 
     if (member) {
       setSuccess({msg: 'User has been invited.'})
+      setMember(member)
+    } else {
+      setMember(null)
     }
   }
+
+  console.log(members)
+
 
   return (
     <div className="w-[500px] h-[350px] bg-white rounded-[10px]">
@@ -63,7 +71,7 @@ function AddMemberModal() {
 
       {/* INFORMATION OF PROJECT ADMIN AND NUMBER OF MEMBERS */}
       <div className="px-[20px] py-[20px]">
-        <div className="font-medium">Members ({project.Members.length})</div>
+        <div className="font-medium">Members ({members.length})</div>
         <div className="flex items-center mt-[15px]">
           <div className="rounded-[50%] w-[40px] h-[40px] bg-yellow-300 flex items-center justify-center mr-[15px]">
             {project.Owner.firstName[0].toUpperCase()}
