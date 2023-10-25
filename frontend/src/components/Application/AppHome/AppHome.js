@@ -10,7 +10,8 @@ import { getAllUserCardsThunk } from "../../../store/userCards";
 function AppHome() {
   const dispatch = useDispatch();
   const projects = Object.values(useSelector((state) => state.projects));
-  const userCards = Object.values(useSelector(state => state.userCards))
+  const userCards = Object.values(useSelector(state => state.userCards));
+  const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     (async () => {
@@ -19,6 +20,7 @@ function AppHome() {
     })()
   }, []);
 
+  console.log(user)
   return (
     projects && (
       <div className="w-full px-[32px] background-gradient pb-[20px] h-full background-home">
@@ -31,7 +33,7 @@ function AppHome() {
               {moment().format("dddd, MMMM Do")}
             </div>
             <h2 className="text-[32px] font-semibold text-black">
-              Welcome Home, Randy
+              Welcome Home, {`${user.firstName} ${user.lastName}`}
             </h2>
             <p className="text-black">You have some work to do!</p>
             <div className="flex bg-white px-[30px] py-[15px] rounded-[20px] mt-[15px] text-black items-center">
